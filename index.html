@@ -23,6 +23,31 @@
       margin: 25px 0;
     }
   </style>
+
+  <!-- Google Analytics 4 (Cookieless & Privacy-Centric via Consent Mode) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWQ3VYSY41"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    // Privacy-centric Consent Mode: denies analytics & ad storage to prevent any cookies from being set
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied'
+    });
+
+    gtag('js', new Date());
+
+    // Configuration: dynamic SPA routing tracked via Docsify hook below
+    gtag('config', 'G-KWQ3VYSY41', {
+      'send_page_view': false,
+      'anonymize_ip': true,
+      'allow_google_signals': false,
+      'allow_ad_personalization_signals': false
+    });
+  </script>
 </head>
 <body>
   <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
@@ -45,7 +70,21 @@
         buttonText: 'Copy',
         errorText: 'Error',
         successText: 'Copied'
-      }
+      },
+      plugins: [
+        function(hook) {
+          hook.doneEach(function() {
+            // Track pageviews on SPA route changes (e.g., #/ and #/TECHNICAL_DESIGN_DOCUMENT)
+            if (typeof gtag === 'function') {
+              gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.hash || '/'
+              });
+            }
+          });
+        }
+      ]
     }
   </script>
   <!-- Docsify Core -->
