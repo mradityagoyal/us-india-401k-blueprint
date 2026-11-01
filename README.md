@@ -10,6 +10,7 @@
 
 ---
 
+<a id="legal--tax-disclaimer"></a>
 > [!CAUTION]
 > **Legal & Tax Disclaimer**: This repository and architectural blueprint are created strictly for educational, informational, and systems-engineering analysis. It does **not** constitute formal tax, legal, or investment advice. Cross-border tax execution involves individualized facts (including state domicile severance, trailing equity sourcing, and custodian compliance). You should consult a licensed US Certified Public Accountant (CPA) and Indian Chartered Accountant (CA) specializing in cross-border taxation before executing any rollovers, conversions, or distributions.
 
@@ -70,7 +71,7 @@ sequenceDiagram
 3. **Phase 3: 5-Year FIFO Principal Unlock & Estate Tax Exit (`Year T+5+` — India ROR)**
    - Under **`IRC § 408A(d)(3)(F)`**, converted principal is permanently exempt from the 10% early withdrawal penalty after 5 tax years.
    - Under **Roth `FIFO` ordering (`IRC § 408A(d)(4)`)**, you can withdraw **100% of converted principal tax- and penalty-free at any age**.
-   - Under **`FEMA § 6(4)`**, redeploy the USD offshore into **Irish-domiciled UCITS ETFs**, eliminating the catastrophic **40% US Estate Tax cliff** above \$60,000 (`IRC § 2102(b)(1)`).
+   - Under **`FEMA § 6(4)`**, redeploy the USD offshore into **Irish-domiciled UCITS ETFs**, eliminating the catastrophic **40% US Estate Tax cliff** on migrated assets above \$60,000 (`IRC § 2102(b)(1)` & `§ 2105`).
 
 ---
 
@@ -82,7 +83,7 @@ Modeled on a high-tax state baseline (`41.3%` combined CA/NY marginal tax, a `$1
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **1. Proposed: Pre-Tax 401(k) ➔ RNOR Roth Pipeline** | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **\$7,552** (`\$4,552` ECI + `\$3,000` FDAP; `\$0` penalty; `₹0` India) | **\$42,448** *(+ post-conversion Roth gains)* | **5 tax years** (`T+5` principal; `59½` gains) | **Moderate** (`1040-NR` filing, `Form 8606`, `Schedule FA` in ROR) |
 | **2. Alt A: Pre-Tax 401(k) ➔ Direct Cash-Out in RNOR** *(Skip Roth, pay 10% penalty)* | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **\$12,552** (`\$4,552` ECI + `\$3,000` FDAP + **\$5,000 penalty**; `₹0` India) | **\$37,448** | **Immediate in RNOR** (`Year T_1..T_3`) | **Low** (One-time `1040-NR`; zero Roth blocks, zero 5-yr lock) |
-| **3. Alt B: Hybrid Split** *(401k to Match + Excess in Taxable Brokerage)* | **\$25,000** in 401k + **\$8,805** in Brokerage | **\$31,250** (401k) + **\$11,006** (Brokerage) | **\$4,627** on 401k + **\$0 tax on Brokerage gain in RNOR** | **\$37,629** (`\$26,623` Roth + `\$11,006` Brokerage) | **\$11,006 Immediate**; **\$26,623 at `T+5`** | **Moderate** (Captures 100% match, leaves half liquid) |
+| **3. Alt B: Hybrid Split** *(401(k) to Match + Excess in Taxable Brokerage)* | **\$25,000** in 401(k) + **\$8,805** in Brokerage | **\$31,250** (401k) + **\$11,006** (Brokerage) | **\$4,627** on 401k + **\$0 tax on Brokerage gain in RNOR** | **\$37,629** (`\$26,623` Roth + `\$11,006` Brokerage) | **\$11,006 Immediate**; **\$26,623 at `T+5`** | **Moderate** (Captures 100% match, leaves half liquid) |
 | **4. Alt C: Leave in 401(k) Until Age 59½** *(File India Form 40)* | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **~31.2%–39% Indian ROR slab tax** on 100% of withdrawals at 59½ | **~\$30,500–\$34,400** *(present value)* | **20–30+ years** (Locked until `59½`) | **High long-term** (25 yrs of `Schedule FA` + **40% US Estate Tax** risk) |
 | **5. Alt D: Skip 401(k) Completely** *(Taxable Brokerage)* | **\$17,610** (`\$0` match; `\$12,390` upfront tax) | **\$22,013** | **\$0 US tax & ₹0 Indian tax** during RNOR | **\$22,013** | **Immediate** (`T_0 / T_1`) | **Trivial** (Standard brokerage; **-\$20,435 net deficit**) |
 
@@ -94,9 +95,10 @@ Modeled on a high-tax state baseline (`41.3%` combined CA/NY marginal tax, a `$1
 
 | Tier | Pipeline Mechanism | Governing Law | Practical Reality & Friction |
 | :--- | :--- | :--- | :--- |
-| **Tier 1: Settled Law** *(100% codified)* | • **0% State Tax** on non-resident retirement payouts<br>• **₹0 Indian Tax in RNOR** on foreign payouts<br>• **5-Tax-Year FIFO Unlock** (`Tier 2` principal out first)<br>• **Direct 401k ➔ Roth IRA rollover mandate**<br>• **\$60,000 Estate Tax Cliff** on US-situs assets | • `4 U.S.C. § 114`<br>• `Income-tax Act, 2025 § 5(1)`<br>• `IRC § 408A(d)(3)(F) & (d)(4)`<br>• `IRC § 401(a)(31)`, `Notice 2008-30`<br>• `IRC § 2102(b)(1) & § 2105` | **Unambiguous statute.** Only procedural error (e.g. wiring funds directly into an Indian INR bank account instead of US account first) can break these. |
-| **Tier 2: Chained Interpretation** *(Manual reporting)* | • **Splitting Roth conversion into `ECI` (10%–12%) and `FDAP` (flat 30%)** | • `IRC § 408A(d)(3)(A)`<br>• `IRC § 864(c)(6)` & `IRS Pub 519 (Pensions)` | **Law is explicit, but custodians are blind.** US custodians issue `Form 1042-S` with flat 30% withholding on IRAs. Your CPA must manually split `ECI` vs. `FDAP` on `Form 1040-NR` to claim refunds. |
-| **Tier 3: Gray Areas** *(Defensive posture)* | • **Indian ROR Return-of-Capital at `Year T+5`**<br>• **Post-conversion Roth growth in ROR** (`Tier 3`) | • `India IT Act § 2(24)` (capital is not income)<br>• `Section 158` / `Form 40` does not cover Roths | **No Roth statute in India.** Defending `Year T+5` tax-free return of capital during an Indian scrutiny audit requires retaining your 5-year archive of US `Form 1040-NR` and `Form 8606` cost basis. |
+| **Tier 1: Settled Black-Letter Statute** *(100% codified)* | • **0% State Tax** on non-resident retirement payouts<br>• **General RNOR Exclusion** on foreign payouts received outside India<br>• **5-Tax-Year FIFO Unlock** (`Tier 2` principal out first)<br>• **Direct 401(k) ➔ Roth IRA rollover mandate**<br>• **\$60,000 Estate Tax Cliff** on US-situs assets | • `4 U.S.C. § 114`<br>• `Income-tax Act, 2025 § 5(1)(c) & § 6(13)`<br>• `IRC § 408A(d)(3)(F) & (d)(4)`<br>• `IRC § 401(a)(31)`, `Notice 2008-30`<br>• `IRC § 2102(b)(1) & § 2105` | **Unambiguous statute.** The statutory baseline is firm; operational error (e.g. wiring distributions directly into an Indian INR account as first receipt) is the only failure point. |
+| **Tier 2: Administrative Foundation** *(Manual reporting)* | • **Splitting Roth conversion into `ECI` (10%–12%) and `FDAP` (flat 30%)** | • `IRC § 408A(d)(3)(A)`<br>• `IRC § 864(c)(6)` & `IRS Pub 519 (Pensions)` | **Law is explicit, but custodians are blind.** US custodians issue `Form 1042-S` with flat 30% withholding on IRAs. Your CPA must manually split `ECI` vs. `FDAP` on `Form 1040-NR` to claim refunds. |
+| **Tier 3: Fact-Dependent Execution** *(Operational rigor)* | • **Preserving foreign "First Point of Receipt" outside India**<br>• **60-Day Rollover Top-Up Protocol** (`Path 2`) | • `India IT Act § 5(1)(a)`<br>• `IRC § 402(c)(3)` | **Strict compliance required.** Rollover rails must settle offshore first. Cash top-ups must fund within exactly 60 calendar days to avoid early withdrawal penalties. |
+| **Tier 4: Uncodified Gray Areas** *(Defensive posture)* | • **Indian ROR Return-of-Capital at `Year T+5`**<br>• **Post-conversion Roth growth in ROR** (`Tier 3`) | • `India IT Act § 2(24)` (capital is not income)<br>• `Section 158` / `Form 40` does not cover Roths | **No Roth statute in India.** Defending `Year T+5` tax-free return of capital during an Indian scrutiny audit requires retaining your 5-year archive of US `Form 1040-NR` and `Form 8606` cost basis. |
 
 ---
 
@@ -112,7 +114,7 @@ Modeled on a high-tax state baseline (`41.3%` combined CA/NY marginal tax, a `$1
    - [Phase 3: 5-Year Seasoning & FIFO Dequeue](TECHNICAL_DESIGN_DOCUMENT.md#3-five-year-seasoning--fifo-dequeue-year-t5--india-ror)
 6. [Production Constraints, Gotchas & Guardrails](TECHNICAL_DESIGN_DOCUMENT.md#production-constraints-gotchas--guardrails)
    - [The 3 Custodian Execution Paths (Fidelity vs. Schwab vs. In-Plan Roth)](TECHNICAL_DESIGN_DOCUMENT.md#1-custodian--plan-routing-gotchas-the-3-execution-paths)
-   - [The Mandatory Withholding Penalty Trap & 60-Day Top-Up Protocol](TECHNICAL_DESIGN_DOCUMENT.md#2-path-2-if-funds-are-already-in-a-traditional-ira-traditional-ira--roth-ira-via-charles-schwab-international--30-withholding-top-up)
+   - [The Mandatory Withholding Penalty Trap & 60-Day Top-Up Protocol](TECHNICAL_DESIGN_DOCUMENT.md#path-2-schwab-withholding-top-up)
    - [Taxable Brokerage Cost-Basis Step-Up at 0% Tax](TECHNICAL_DESIGN_DOCUMENT.md#2-taxable-brokerage-cost-basis-step-up-the-rnor-basis-reset-gotcha)
 7. [Alternatives Considered & Objective Trade-Off Analysis](TECHNICAL_DESIGN_DOCUMENT.md#alternatives-considered)
 8. [Sensitivity Analysis, Boundary Conditions & Failure Modes](TECHNICAL_DESIGN_DOCUMENT.md#sensitivity-analysis-boundary-conditions--failure-modes)

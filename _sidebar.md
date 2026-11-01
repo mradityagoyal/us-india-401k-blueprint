@@ -17,7 +17,7 @@
     * [Phase 3: 5-Year FIFO Unlock](TECHNICAL_DESIGN_DOCUMENT.md#3-five-year-seasoning--fifo-dequeue-year-t5--india-ror)
   * [6. Production Gotchas](TECHNICAL_DESIGN_DOCUMENT.md#production-constraints-gotchas--guardrails)
     * [The 3 Custodian Paths](TECHNICAL_DESIGN_DOCUMENT.md#1-custodian--plan-routing-gotchas-the-3-execution-paths)
-    * [60-Day Top-Up Protocol](TECHNICAL_DESIGN_DOCUMENT.md#2-path-2-if-funds-are-already-in-a-traditional-ira-traditional-ira--roth-ira-via-charles-schwab-international--30-withholding-top-up)
+    * [60-Day Top-Up Protocol](TECHNICAL_DESIGN_DOCUMENT.md#path-2-schwab-withholding-top-up)
     * [Taxable Basis Reset](TECHNICAL_DESIGN_DOCUMENT.md#2-taxable-brokerage-cost-basis-step-up-the-rnor-basis-reset-gotcha)
   * [7. Alternatives Considered](TECHNICAL_DESIGN_DOCUMENT.md#alternatives-considered)
   * [8. Sensitivity Analysis](TECHNICAL_DESIGN_DOCUMENT.md#sensitivity-analysis-boundary-conditions--failure-modes)
