@@ -1,10 +1,10 @@
 # US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Version: v0.1](https://img.shields.io/badge/version-v0.1-blue.svg)](https://github.com/mradityagoyal/us-india-401k-blueprint)
+[![Version: v0.2](https://img.shields.io/badge/version-v0.2-blue.svg)](https://github.com/mradityagoyal/us-india-401k-blueprint)
 [![Read Online](https://img.shields.io/badge/web-docsify_live-success.svg)](https://mradityagoyal.github.io/us-india-401k-blueprint/)
 
-> An open-source, peer-reviewed technical architecture and execution blueprint for Indian software engineers returning from the United States (H-1B / L-1) to India. Models a cross-border legal pipeline to arbitrage peak US marginal taxes down to 10%–12%, capture 100% employer match, bypass the 40% US Estate Tax cliff, and unlock principal decades before age 59½.
+> An open-source, adversarially audited technical architecture and execution blueprint for Indian software engineers returning from the United States (H-1B / L-1) to India. Models a cross-border legal pipeline to arbitrage peak US marginal taxes down to 10%–12%, capture 100% employer match, bypass the 40% US Estate Tax cliff, and unlock principal decades before age 59½.
 
 📖 **[Read the Full Technical Design Document (TDD)](TECHNICAL_DESIGN_DOCUMENT.md)** | 🌐 **[Interactive Web Version](https://mradityagoyal.github.io/us-india-401k-blueprint/)**
 
@@ -81,7 +81,7 @@ Modeled on a high-tax state baseline (`41.3%` combined CA/NY marginal tax, a `$1
 
 | Strategy | Invested at `T_0` | Value After `25%` Growth | Tax + Penalty Paid at Exit | **Net After-Tax USD Capital** | Liquidity Timeline | Operational Friction |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **1. Proposed: Pre-Tax 401(k) ➔ RNOR Roth Pipeline** | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **\$7,552** (`\$4,552` ECI + `\$3,000` FDAP; `\$0` penalty; `₹0` India) | **\$42,448** *(+ post-conversion Roth gains)* | **5 tax years** (`T+5` principal; `59½` gains) | **Moderate** (`1040-NR` filing, `Form 8606`, `Schedule FA` in ROR) |
+| **1. Proposed: Pre-Tax 401(k) ➔ RNOR Roth Pipeline** | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **\$7,552** (`\$4,552` ECI + `\$3,000` FDAP; `\$0` penalty; `₹0` India) | **\$42,448** *(+ post-conversion Roth gains)* | **5 tax years** (`T+5` principal; `59½` gains) | **Moderate–High** (`1040-NR` ECI/FDAP split, `1099-R` basis archive, `Form 8606`, `Schedule FA` in ROR) |
 | **2. Alt A: Pre-Tax 401(k) ➔ Direct Cash-Out in RNOR** *(Skip Roth, pay 10% penalty)* | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **\$12,552** (`\$4,552` ECI + `\$3,000` FDAP + **\$5,000 penalty**; `₹0` India) | **\$37,448** | **Immediate in RNOR** (`Year T_1..T_3`) | **Low** (One-time `1040-NR`; zero Roth blocks, zero 5-yr lock) |
 | **3. Alt B: Hybrid Split** *(401(k) to Match + Excess in Taxable Brokerage)* | **\$25,000** in 401(k) + **\$8,805** in Brokerage | **\$31,250** (401k) + **\$11,006** (Brokerage) | **\$4,627** on 401k + **\$0 tax on Brokerage gain in RNOR** | **\$37,629** (`\$26,623` Roth + `\$11,006` Brokerage) | **\$11,006 Immediate**; **\$26,623 at `T+5`** | **Moderate** (Captures 100% match, leaves half liquid) |
 | **4. Alt C: Leave in 401(k) Until Age 59½** *(File India Form 40)* | **\$40,000** (`\$30k` + `\$10k` match) | **\$50,000** | **~31.2%–39% Indian ROR slab tax** on 100% of withdrawals at 59½ | **~\$30,500–\$34,400** *(present value)* | **20–30+ years** (Locked until `59½`) | **High long-term** (25 yrs of `Schedule FA` + **40% US Estate Tax** risk) |

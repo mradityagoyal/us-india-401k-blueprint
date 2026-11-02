@@ -3,11 +3,12 @@
 **Self link**: [https://github.com/mradityagoyal/us-india-401k-blueprint](https://github.com/mradityagoyal/us-india-401k-blueprint)
 **Web version**: [https://mradityagoyal.github.io/us-india-401k-blueprint](https://mradityagoyal.github.io/us-india-401k-blueprint)
 **Visibility**: Public (US → India Engineering Returnee Community)
-**Status**: Published `v0.1` (Community Review / RFC)
+**Status**: Published `v0.2` (Community Review / Open-Source RFC)
 **Authors**: [Aditya Goyal](https://www.linkedin.com/in/mradityagoyal/)
-**Contributors**: Google Gemini Argon (high), Google Gemini Flash 3.8 (high)
-**Reviewers**: Claude Opus 5.5
-**Last major revision**: 2026-11-01
+**Methodology & Research**: Manual research and Automated Statutory Research & Cross-Border Systems Modeling
+**Adversarial Audit**: Multi-Model LLM Testing (Claude Opus 5.5, Gemini Pro 3.8) & Primary Statutory Code Verification
+**Community Call**: I actively solicit formal review and critique from licensed US CPAs, Enrolled Agents (EAs), and Indian Chartered Accountants (CAs).
+**Last major revision**: 2026-11-02
 
 ---
 
@@ -465,7 +466,7 @@ Rather than pitching the Roth conversion pipeline as a one-size-fits-all solutio
 | **1. Proposed: Pre-Tax 401(k) → RNOR Roth Pipeline**                                         | **\$40,000** (`\$30k` deferral + `\$10k` match)                                                      | **\$50,000**                                         | **\$7,552** (`\$4,552` ECI + `\$3,000` FDAP; `\$0` penalty; `₹0` India)                       | **\$42,448** *(+ post-conversion Roth growth)*                    | **5 tax years** (`Year T+5` for principal; `59½` for Roth gains) | **Moderate–High** (`1040-NR` ECI/FDAP split, `1099-R` basis archive, `Form 8606`, `Schedule FA` in ROR)                                              |
 | **2. Alt A: Pre-Tax 401(k) → Direct Cash-Out in RNOR** *(Pay 10% Penalty, Skip Roth)*      | **\$40,000** (`\$30k` deferral + `\$10k` match)                                                      | **\$50,000**                                         | **\$12,552** (`\$4,552` ECI + `\$3,000` FDAP + **\$5,000 10% penalty**; `₹0` India)       | **\$37,448**                                                        | **Immediate in RNOR** (`Year T_1..T_3`)                             | **Low–Moderate** (One-time `1040-NR`; **zero** Roth conversion blocks, **zero** 5-yr wait, **zero** ROR `Schedule FA`) |
 | **3. Alt B: The Hybrid Split — 401(k) *Only* Up to Match + Excess in Taxable Brokerage**   | **\$25,000** in 401k (`\$15k` + `\$10k` match) + **\$8,805** in Brokerage (`\$15k` post-tax) | **\$31,250** (401k) + **\$11,006** (Brokerage) | **\$4,627** on 401k (`\$2,752` ECI + `\$1,875` FDAP) + **\$0 tax on Brokerage gain in RNOR** | **\$37,629** (`\$26,623` Roth + `\$11,006` Brokerage)           | **\$11,006 Immediate** (`T_0/T_1`); **\$26,623 at `T+5`**   | **Moderate** (Captures 100% of match while keeping half of savings liquid with `0%` RNOR capital gains tax)                                 |
-| **4. Alt C: Leave in Pre-Tax 401(k) Until Age 59½** *(File India `Form 40` / `10-EE`)* | **\$40,000** (`\$30k` deferral + `\$10k` match)                                                      | **\$50,000** *(compounds pre-tax until age 59½)*  | **`~31.2%–39%` Indian ROR slab tax** on *100% of withdrawals* at age 59½+ (`~\$15,600+` eqv.)  | **~\$30,500–\$34,400** *(present-value eqv. after ROR slab tax)* | **20–30+ years** (Locked until age `59½`)                         | **Low upfront, High long-term** (`Form 40` filing + 25 yrs of `Schedule FA` + **40% US Estate Tax** risk above \$60k)               |
+| **4. Alt C: Leave in Pre-Tax 401(k) Until Age 59½** *(File India `Form 40` / `Section 158`)* | **$40,000** (`$30k` deferral + `$10k` match)                                                      | **$50,000** *(compounds pre-tax until age 59½)*  | **US ECI/FDAP rates** at 59½ credited via **DTAA Art. 25 FTC (`Form 67`)** against Indian ROR slab taxes (~31.2%–39%) | **Compounded account balance less ROR taxes** *(Mathematically viable; exposes balance to 25+ yrs of estate tax risk)* | **20–30+ years** (Locked until age `59½`)                         | **Low upfront, High long-term** (`Form 40` election + 25 yrs of `Schedule FA` + **18%–40% US Estate Tax** risk above $60k)               |
 | **5. Alt D: Skip 401(k) Completely → Taxable Brokerage + RNOR Basis Reset**                  | **\$17,610** (`\$30k` less `\$12,390` upfront tax; `\$0` match)                                    | **\$22,013**                                         | **\$0 US tax & ₹0 Indian tax** on the `\$4,403` capital gain during RNOR                            | **\$22,013**                                                        | **Immediate** (`T_0 / T_1`)                                         | **Trivial** (Standard brokerage; zero retirement lockups, zero `1040-NR` pension filings)                                                   |
 
 <details>
@@ -492,8 +493,14 @@ Rather than pitching the Roth conversion pipeline as a one-size-fits-all solutio
 2. **When `Alt B (The Hybrid Split: Match-Only 401k + Taxable Brokerage)` Wins**:
    - The first dollars you contribute up to your employer's match cap earn an instant **50%–100% risk-free return** (`\$10,000` match), which overwhelms every downside.
    - However, for **unmatched contributions above the employer match cap**—especially if you live in a **0%-state-tax state (`WA / TX`)** or expect high investment growth—putting the excess into a **Taxable Brokerage (`Alt B`)** lets you keep half your savings 100% liquid from Day 1 and harvest the capital gains at **`0%` US tax and `₹0` Indian tax** during RNOR (instead of paying `30%` FDAP tax on growth inside the 401k).
-3. **When `Alt C (Leave in Pre-Tax 401k Until Age 59½ with Form 40)` Makes Sense**:
-   - If your 401(k) balance is very large (`\$400k+`), if you returned to India without an RNOR window (`< ~5.5–6 years` outside India), or if there is a high probability you will **move back to the US** later in your career, leaving the pre-tax 401(k) untouched and filing Indian **`Form 40` (`Section 158`)** avoids triggering a massive high-bracket tax bill today.
+3. **Objective Appraisal of `Alt C (Leave in Pre-Tax 401k Until Age 59½ with Form 40)`**:
+   - *The Upside (True Tax-Deferred Compounding)*: Leaving the funds inside the 401(k) allows the entire pre-tax corpus to continue compounding tax-deferred in the US. By filing Indian **`Form 40` (`Section 158`)**, India defers taxation on internal accrued dividends and capital gains until actual withdrawal. At age 59½, distributions face US ECI/FDAP rates, and taxes paid in the US can be credited against Indian tax liability via a **Foreign Tax Credit under DTAA Article 25 (`Form 67`)**.
+   - *When It Makes Sense*: If your 401(k) balance is very large (`\$400k+`), if you returned to India without an RNOR window (`< ~5.5–6 years` outside India), or if there is a strong probability you will **relocate back to the US** later in your career, leaving the pre-tax 401(k) intact avoids triggering high-bracket tax acceleration today.
+   - *The Severe Structural Trade-Offs*:
+     1. **Decadal US Estate Tax Exposure**: The account remains a US-situs asset for 20–30+ years while you reside in India as an NRA, exposing every dollar above \$60,000 to an **18%–40% US Estate Tax cliff** upon death (`IRC § 2101`).
+     2. **25+ Years of Compliance Overhead**: Requires continuous annual **Schedule FA** reporting on Indian tax returns for decades under the shadow of the Black Money Act.
+     3. **Custodian Access & Banking Risk**: Retaining a US retirement account for 25+ years from abroad risks custodian policy shifts, closed US bank accounts, or lost 2FA access.
+     4. **Ordinary Income vs. Capital Gains Drag**: Distributions at age 59½ are taxed in India as ordinary income at progressive slab rates (up to 39%), whereas capital extracted via the Roth pipeline and reinvested in Irish UCITS ETFs benefits from favorable foreign equity LTCG rates (12.5%).
 4. **Why `Alt D (Skipping the 401k Completely)` Almost Always Loses When a Match Exists**:
    - Even though a taxable brokerage enjoys **`0%` capital gains tax during RNOR** and zero paperwork, forfeiting the `\$10,000` employer match and paying `41.3%` upfront tax shrinks your starting principal from **\$40,000** down to **\$17,610**—creating a **-\$20,435 net wealth deficit** that `0%` capital gains tax can never recover over a normal working stint.
 
@@ -629,13 +636,13 @@ flowchart TD
   
     C2 -- Yes --> M2["Cohort 2: Mid-Flight Transition<br/>1. Convert via Fidelity on W-9<br/>2. Execute 60-day top-up for 10% withholding<br/>3. Submit W-8BEN upon full NRA status<br/>➔ Target State Achieved"]
   
-    C2 -- No --> C3{"Transferred to Indian Affiliate of<br/>Same Employer? (No break in service)"}
+    C2 -- No --> C3{"Already in India on W-8BEN,<br/>Trapped at Domestic Broker?<br/>(e.g., Fidelity conversion block)"}
   
-    C3 -- Yes --> M3["Cohort 4: Internal Multinational Transfer<br/>1. 401(k) locked under IRC § 414(b)/(c)<br/>2. Execute Path 3: In-Plan Roth 401(k) Conversion<br/>3. 0% mandatory withholding (No top-up needed)<br/>4. Roll to Roth IRA upon eventual separation"]
+    C3 -- Yes --> M3["Cohort 3: Brownfield Custodian Block<br/>1. Do NOT liquidate assets<br/>2. Execute ACATS in-kind transfer to Schwab Int'l<br/>3. Execute Path 2 conversion at Schwab on W-8BEN<br/>4. Complete 60-day withholding top-up via US bank"]
   
-    C3 -- No --> C4{"Already in India on W-8BEN,<br/>Trapped at Domestic Broker?<br/>(e.g., Fidelity conversion block)"}
+    C3 -- No --> C4{"Transferred to Indian Affiliate of<br/>Same Employer? (No break in service)"}
   
-    C4 -- Yes --> M4["Cohort 3: Brownfield Custodian Block<br/>1. Do NOT liquidate assets<br/>2. Execute ACATS in-kind transfer to Schwab Int'l<br/>3. Execute Path 2 conversion at Schwab on W-8BEN<br/>4. Complete 60-day withholding top-up via US bank"]
+    C4 -- Yes --> M4["Cohort 4: Internal Multinational Transfer<br/>1. 401(k) locked under IRC § 414(b)/(c)<br/>2. Execute Path 3: In-Plan Roth 401(k) Conversion<br/>3. 0% mandatory withholding (No top-up needed)<br/>4. Roll to Roth IRA upon eventual separation"]
   
     C4 -- No --> M5["Cohort 5: Degraded Legacy State (Already ROR)<br/>1. RNOR 0% India tax window EXPIRED<br/>2. DO NOT execute standard Roth conversion<br/>3. Cutover to Alt C: Defer via Form 40 (Section 158)<br/>4. Hold pre-tax until age 59½"]
 ```
@@ -868,8 +875,8 @@ Unlike complex organizational migrations, this personal finance pipeline require
 | :----------------------------------------------------- | :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------: | :---------------------------- |
 | **Stage 0: Pre-Departure Setup**                 | `Years ≤ T_0` (In US)      | Maximize pre-tax 401(k) contributions & capture 100% employer match; pre-open Schwab Traditional & Roth IRA shells (`Form W-9`); export cumulative 401(k) contribution split statements (`ECI` vs. `FDAP`); audit employer 401(k) SPD for In-Plan Roth support.                                                        | **~2–3 hours** *(One-time)* | Engineer                      |
 | **Stage 1: Arrival & Verification**              | `Year T_1` (Jan 1 in India) | Establish full US NRA status (`< 31 physical days` in US during `T_1`); file `Form W-8BEN` with custodians; confirm 2- or 3-year RNOR qualification window (`≤ 729 days` in India); execute an initial **\$1,000 pilot conversion** to verify withholding rails (noting post-2017 TCJA irreversibility).      |   **~1 hour** *(One-time)*   | Engineer                      |
-| **Stage 2: The RNOR Conversion Runway**          | `Years T_1 to T_3` (RNOR)   | Execute annual ~\$48k–\$50k Roth conversion tranche; fund 60-day cash top-up if 30% withholding is applied (`Path 2`); file US `Form 1040-NR` + `Schedule NEC` (+ `Form 8606 Part II` if Path 2) to reclaim excess withholding; file Indian ITR claiming RNOR (₹0 tax); reset taxable brokerage cost basis at 0% tax before RNOR ends. |       **~2 hours / yr**       | Engineer + US CPA / Indian CA |
-| **Stage 3: Holding & Seasoning**                 | `Years T_3 to T_5` (ROR)    | Let Roth conversion tranches season for 5 tax years each; declare foreign accounts annually on Indian ITR **`Schedule FA`**; hold residual post-conversion earnings in low/non-dividend growth ETFs with zero rebalancing.                                                                                           |        **~30 min / yr**        | Indian CA                     |
+| **Stage 2: The RNOR Conversion Runway**          | `Years T_1 to T_3` (RNOR)   | Execute annual ~\$48k–\$50k Roth conversion tranche; fund 60-day cash top-up if 30% withholding is applied (`Path 2`); file US `Form 1040-NR` + `Schedule NEC` (+ `Form 8606 Part II` if Path 2) to reclaim excess withholding; file Indian ITR claiming RNOR (₹0 tax); reset taxable brokerage cost basis at 0% tax before RNOR ends. | **~10–15 hours / yr** *(filings, records & CPA/CA reviews)* | Engineer + US CPA / Indian CA |
+| **Stage 3: Holding & Seasoning**                 | `Years T_3 to T_5` (ROR)    | Let Roth conversion tranches season for 5 tax years each; declare foreign accounts annually on Indian ITR **`Schedule FA`**; hold residual post-conversion earnings in low/non-dividend growth ETFs with zero rebalancing.                                                                                           | **~3–5 hours / yr** *(annual Schedule FA filings)* | Indian CA                     |
 | **Stage 4: Principal Dequeue & Estate Tax Exit** | `Year T+5+` (ROR)           | Withdraw seasoned conversion principal tax- and penalty-free under **Roth FIFO ordering**; redeploy USD into **Irish-domiciled UCITS ETFs** (reducing US estate tax exposure on migrated capital to **\$0** under `FEMA § 6(4)`); retain immutable basis archive for Indian scrutiny defense.           |   **~1 hour** *(One-time)*   | Engineer + Indian CA          |
 
 ---
@@ -939,6 +946,7 @@ Immigration timelines are non-deterministic—H-1B extensions, PERM/I-140 approv
 
 | Version  | Date       | Author       | Description                                                                                                                                                                                                                                  |
 | :------- | :--------- | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `v0.2` | 2026-11-02 | Aditya Goyal | Minor version bump (Adversarial Audit & Legal Hardening): corrected Form 8606 Part II vs Form 1040-NR reporting, documented IRC § 408(d)(2) Traditional IRA aggregation rules, calibrated graduated estate tax rates (18%–40%), detailed Year T+5 exit withholding refund cycles, mapped the 90-day Q1 cross-border window, strengthened Section 5(1)(c) accrual defense, incorporated the BMA ₹20 lakh safe harbor, and calibrated Alt C compound models. |
 | `v0.1` | 2026-11-01 | Aditya Goyal | Initial publication draft. Comprehensive technical design document for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and non-resident estate planning, reviewed manually and verified against US IRC and Indian Income-tax statutes. |
 
 ---
