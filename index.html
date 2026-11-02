@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Technical Design Document & Architectural Blueprint for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and cross-border estate planning for returning Indian software engineers.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
   <style>
     :root {
       --theme-color: #1a73e8;
@@ -50,6 +50,19 @@
   </script>
 </head>
 <body>
+  <noscript>
+    <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222;">
+      <h1>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</h1>
+      <p>An open-source, adversarially audited technical architecture and execution blueprint for Indian software engineers returning from the United States (H-1B / L-1) to India.</p>
+      <p><em>This web portal dynamically renders Markdown documentation via Docsify. Because JavaScript is currently disabled or unavailable, you can read the complete documents directly via the links below:</em></p>
+      <ul>
+        <li>📖 <strong><a href="TECHNICAL_DESIGN_DOCUMENT.md">Full Technical Design Document (TECHNICAL_DESIGN_DOCUMENT.md)</a></strong></li>
+        <li>🏠 <strong><a href="README.md">Overview & Executive Summary (README.md)</a></strong></li>
+        <li>📁 <strong><a href="https://github.com/mradityagoyal/us-india-401k-blueprint">GitHub Source Repository</a></strong></li>
+      </ul>
+    </div>
+  </noscript>
+
   <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
   <script>
     window.$docsify = {
@@ -87,15 +100,13 @@
       ]
     }
   </script>
-  <!-- Docsify Core -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-  <!-- Search Plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-  <!-- Copy Code Plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <!-- Mermaid Support -->
-  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-  <script src="//unpkg.com/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
+  <!-- Pinned Docsify Core & Plugins -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@3.0.2/dist/docsify-copy-code.min.js"></script>
+  <!-- Pinned Mermaid Diagrams Support -->
+  <script src="//cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
   <script>
     mermaid.initialize({ startOnLoad: false });
   </script>

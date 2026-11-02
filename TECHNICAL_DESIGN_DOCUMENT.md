@@ -147,6 +147,8 @@ This design requires no custom legal wrappers or loopholes; it chains seven stan
    - This pipeline is an advanced strategy requiring synchronization across two tax jurisdictions. Executing it safely involves non-resident US filings (`Form 1040-NR` + `Schedule NEC`; `Form 8606 Part II` for IRA conversions, and `Form 8606 Part III` for Year T+5 exit distributions), managing the 60-day indirect rollover top-up, certifying RNOR status in Indian ITR filings, and preparing defensible return-of-capital basis proof for Indian tax scrutiny in ROR.
    - Retaining a licensed US CPA and an Indian Chartered Accountant (CA)—or an integrated cross-border advisory firm—provides the human operational infrastructure needed to audit custodian tax slips (`1042-S` / `1099-R`) and avoid costly procedural errors.
 
+<a id="system-preconditions-statutory-certainty--assumptions"></a>
+<a id="system-preconditions-statutory-certainty-assumptions"></a>
 ### System Preconditions, Statutory Certainty & Assumptions
 
 #### 1. System Preconditions & Residency Invariants
@@ -212,11 +214,15 @@ sequenceDiagram
     Eng->>ITD: Disclose on Schedule FA (Return of Already-Taxed Capital = ₹0 ROR Tax)
 ```
 
+<a id="1-ingestion--match-capture-years--t_0--all-us-working-years"></a>
+<a id="1-ingestion-match-capture-years-t_0-all-us-working-years"></a>
 #### 1. Ingestion & Match Capture (`Years ≤ T_0` — All US Working Years)
 
 - Throughout every working year in the US (`Year T_0` and prior), max out pre-tax 401(k) contributions up to the annual IRS statutory limit and capture **100% of the available employer match**.
 - *Annual Impact*: Shelters the entire contribution amount from peak US Federal (24%–35%+) and State (up to 13.3%) marginal taxes every single year while locking in free employer-matched capital that would otherwise be forfeited.
 
+<a id="2-paced-roth-conversions-during-rnor-years-t_1-to-t_3--us-nra--india-rnor"></a>
+<a id="2-paced-roth-conversions-during-rnor-years-t_1-to-t_3-us-nra-india-rnor"></a>
 #### 2. Paced Roth Conversions During RNOR (`Years T_1 to T_3` — US NRA + India RNOR)
 
 After relocating to India and establishing **US Non-Resident Alien (`NRA`)** status (no longer meeting the Substantial Presence Test) while inside the **Indian RNOR** window, roll over and convert the 401(k) into a Roth IRA across multiple annual tranches.
@@ -294,6 +300,8 @@ flowchart LR
     - *The Disaster of Converting in May 2029*: If the engineer delays and executes the 2029 conversion in May, June, or November 2029, they are still a US NRA, **but they are now an Indian ROR**. India levies worldwide income tax on foreign receipts at progressive slab rates (up to **39%**), destroying the tax arbitrage and creating double taxation!
 - **Actionable Operational Invariant**: *Always execute your final annual conversion tranche within the first quarter (January 1 to March 31) of that calendar year before the Indian financial year closes on March 31.*
 
+<a id="3-five-year-seasoning--fifo-dequeue-year-t5--india-ror"></a>
+<a id="3-five-year-seasoning-fifo-dequeue-year-t5-india-ror"></a>
 #### 3. Five-Year Seasoning & FIFO Dequeue (`Year T+5` — India ROR)
 
 By Year `T+5`, the engineer's residency has reached its steady state: **US Non-Resident Alien (`NRA`)** and **Indian `ROR` (*Resident and Ordinarily Resident*)**. The goal of this stage is two-fold:
@@ -360,10 +368,14 @@ By chaining pre-tax US salary deferrals, RNOR packet splitting, and the Roth 5-y
 
 *Transition to Implementation*: However, while the statutory framework is fully supported by IRS and Indian tax codes, retail brokerage platforms and cross-border banking rails frequently impose friction on non-resident accounts. The following section details key production constraints, gotchas, and guardrails—navigating custodian `W-8BEN` blocks, executing the 60-day rollover top-up, resetting taxable brokerage basis, and preserving foreign first-receipt status—before evaluating the apples-to-apples [Alternatives Considered](#alternatives-considered), [Sensitivity Analysis](#sensitivity-analysis-boundary-conditions--failure-modes), and operational checklists in [Operations](#operations).
 
+<a id="production-constraints-gotchas--guardrails"></a>
+<a id="production-constraints-gotchas-guardrails"></a>
 ### Production Constraints, Gotchas & Guardrails
 
 While the statutory tax rules (`IRS Pub 519`, `IRC § 408A`, `Income-tax Act, 2025 § 5 & § 6(13)`) explicitly allow Non-Resident Aliens to execute Roth conversions, **plan provider rules, brokerage compliance systems, and cross-border banking constraints** require strict guardrails in production.
 
+<a id="1-custodian--plan-routing-gotchas-the-3-execution-paths"></a>
+<a id="1-custodian-plan-routing-gotchas-the-3-execution-paths"></a>
 #### 1. Custodian & Plan Routing Gotchas: The 3 Execution Paths
 
 Once you move to India, update your residential address, and replace `Form W-9` with `Form W-8BEN`, how you execute the conversion depends on **where your retirement balance sits** and **whether you separated from your employer**:
@@ -951,6 +963,8 @@ Immigration timelines are non-deterministic—H-1B extensions, PERM/I-140 approv
 
 ---
 
+<a id="appendix-statutory-references--primary-sources"></a>
+<a id="appendix-statutory-references-primary-sources"></a>
 ## Appendix: Statutory References & Primary Sources
 
 Because cross-border tax optimization relies on exact statutory definitions, this appendix indexes the primary US (`irs.gov` / Internal Revenue Code), Indian (`incometaxindia.gov.in` / Income-tax Act, 1961), and bilateral treaty sources referenced throughout this TDD.
