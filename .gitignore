@@ -12,5 +12,7 @@ Desktop.ini
 
 # Temporary / logs
 *.log
+__pycache__/
+*.py[cod]
 
 TODO.md

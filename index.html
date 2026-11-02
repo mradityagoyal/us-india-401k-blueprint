@@ -6,21 +6,333 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Technical Design Document & Architectural Blueprint for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and cross-border estate planning for returning Indian software engineers.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <script>
+    // Immediate Theme Detection (Prevents FOUC / White Flash on Dark Mode Devices)
+    (function() {
+      try {
+        var saved = localStorage.getItem('blueprint-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else if (saved === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
   <style>
+    /* CSS Variables for Light / Dark Themes */
     :root {
       --theme-color: #1a73e8;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f6f8fa;
+      --border-color: #e1e4e8;
+      --text-primary: #24292f;
+      --text-heading: #1f2328;
+      --text-muted: #57606a;
+      --link-color: #0969da;
+      --code-bg: #f6f8fa;
+      --code-color: #24292f;
+      --table-border: #d0d7de;
+      --table-zebra: #f6f8fa;
+      --blockquote-bg: #f6f8fa;
+      --blockquote-border: #0969da;
+      --search-input-bg: #ffffff;
+      --sidebar-toggle-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    /* System Dark Mode (Automatic default when OS prefers dark and no explicit light override) */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --theme-color: #58a6ff;
+        --bg-primary: #0d1117;
+        --bg-secondary: #161b22;
+        --border-color: #30363d;
+        --text-primary: #c9d1d9;
+        --text-heading: #f0f6fc;
+        --text-muted: #8b949e;
+        --link-color: #58a6ff;
+        --code-bg: #161b22;
+        --code-color: #e6edf3;
+        --table-border: #30363d;
+        --table-zebra: #161b22;
+        --blockquote-bg: #161b22;
+        --blockquote-border: #58a6ff;
+        --search-input-bg: #161b22;
+        --sidebar-toggle-bg: rgba(13, 17, 23, 0.85);
+      }
+    }
+
+    /* Explicit Dark Theme */
+    :root[data-theme="dark"] {
+      --theme-color: #58a6ff;
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --border-color: #30363d;
+      --text-primary: #c9d1d9;
+      --text-heading: #f0f6fc;
+      --text-muted: #8b949e;
+      --link-color: #58a6ff;
+      --code-bg: #161b22;
+      --code-color: #e6edf3;
+      --table-border: #30363d;
+      --table-zebra: #161b22;
+      --blockquote-bg: #161b22;
+      --blockquote-border: #58a6ff;
+      --search-input-bg: #161b22;
+      --sidebar-toggle-bg: rgba(13, 17, 23, 0.85);
+    }
+
+    /* Explicit Light Theme */
+    :root[data-theme="light"] {
+      --theme-color: #1a73e8;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f6f8fa;
+      --border-color: #e1e4e8;
+      --text-primary: #24292f;
+      --text-heading: #1f2328;
+      --text-muted: #57606a;
+      --link-color: #0969da;
+      --code-bg: #f6f8fa;
+      --code-color: #24292f;
+      --table-border: #d0d7de;
+      --table-zebra: #f6f8fa;
+      --blockquote-bg: #f6f8fa;
+      --blockquote-border: #0969da;
+      --search-input-bg: #ffffff;
+      --sidebar-toggle-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    body, html {
+      background-color: var(--bg-primary) !important;
+      color: var(--text-primary) !important;
     }
     .markdown-section {
       max-width: 900px;
       padding: 30px 40px;
+      color: var(--text-primary) !important;
     }
+    .markdown-section h1,
+    .markdown-section h2,
+    .markdown-section h3,
+    .markdown-section h4,
+    .markdown-section h5,
+    .markdown-section h6,
+    .markdown-section strong {
+      color: var(--text-heading) !important;
+    }
+    .markdown-section a {
+      color: var(--link-color) !important;
+    }
+    .markdown-section hr {
+      border: none !important;
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+    .markdown-section table {
+      color: var(--text-primary) !important;
+      border-collapse: collapse;
+      display: table !important;
+      width: 100%;
+      overflow-x: auto;
+    }
+    .markdown-section th {
+      background-color: var(--bg-secondary) !important;
+      color: var(--text-heading) !important;
+      border: 1px solid var(--table-border) !important;
+      font-weight: 600;
+    }
+    .markdown-section td {
+      border: 1px solid var(--table-border) !important;
+    }
+    .markdown-section tr {
+      border-top: 1px solid var(--table-border) !important;
+      background-color: var(--bg-primary) !important;
+    }
+    .markdown-section tr:nth-child(2n) {
+      background-color: var(--table-zebra) !important;
+    }
+    .markdown-section code {
+      background-color: var(--code-bg) !important;
+      color: var(--code-color) !important;
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+    .markdown-section pre {
+      background-color: var(--code-bg) !important;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+    .markdown-section pre > code {
+      background-color: var(--code-bg) !important;
+      color: var(--code-color) !important;
+    }
+    .markdown-section blockquote {
+      background-color: var(--blockquote-bg) !important;
+      border-left: 4px solid var(--blockquote-border) !important;
+      color: var(--text-muted) !important;
+    }
+    .markdown-section p.tip {
+      background-color: var(--blockquote-bg) !important;
+      color: var(--text-primary) !important;
+    }
+    .markdown-section p.warn {
+      background-color: rgba(234, 111, 90, 0.15) !important;
+      color: var(--text-primary) !important;
+    }
+
+    /* Sidebar */
     .sidebar {
+      background-color: var(--bg-primary) !important;
+      border-right: 1px solid var(--border-color) !important;
       font-size: 14px;
+      color: var(--text-primary) !important;
     }
+    .sidebar>h1 a {
+      color: var(--text-heading) !important;
+    }
+    .sidebar ul li a {
+      color: var(--text-muted) !important;
+      transition: color 0.2s ease;
+    }
+    .sidebar ul li a:hover,
+    .sidebar ul li.active > a {
+      color: var(--theme-color) !important;
+      font-weight: 600;
+    }
+    .sidebar-toggle {
+      background-color: var(--sidebar-toggle-bg) !important;
+    }
+
+    /* Search Plugin */
+    .search {
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+    .search input {
+      background-color: var(--search-input-bg) !important;
+      border: 1px solid var(--border-color) !important;
+      color: var(--text-primary) !important;
+      border-radius: 4px;
+    }
+    .search input:focus {
+      border-color: var(--theme-color) !important;
+    }
+    .search .results-panel {
+      background-color: var(--bg-primary) !important;
+    }
+    .search .matching-post {
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+    .search .matching-post p {
+      color: var(--text-muted) !important;
+    }
+
+    /* Copy Code Button */
+    .docsify-copy-code-button {
+      background-color: var(--bg-secondary) !important;
+      color: var(--text-muted) !important;
+      border: 1px solid var(--border-color) !important;
+    }
+
+    /* Mermaid */
     .mermaid {
       text-align: center;
       margin: 25px 0;
+    }
+
+    /* Floating Theme Toggle Pill (Thumb-friendly on mobile, top-layer) */
+    .theme-toggle-btn {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 1000;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      border-radius: 24px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+      transition: all 0.2s ease;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--border-color);
+      transform: translateY(-1px);
+    }
+
+    /* Syntax Highlighting for Dark Mode */
+    :root[data-theme="dark"] .token.comment,
+    :root[data-theme="dark"] .token.prolog,
+    :root[data-theme="dark"] .token.doctype,
+    :root[data-theme="dark"] .token.cdata,
+    :root[data-theme="dark"] .token.punctuation {
+      color: #8b949e !important;
+    }
+    :root[data-theme="dark"] .token.property,
+    :root[data-theme="dark"] .token.tag,
+    :root[data-theme="dark"] .token.boolean,
+    :root[data-theme="dark"] .token.number,
+    :root[data-theme="dark"] .token.constant {
+      color: #79c0ff !important;
+    }
+    :root[data-theme="dark"] .token.selector,
+    :root[data-theme="dark"] .token.attr-name,
+    :root[data-theme="dark"] .token.string,
+    :root[data-theme="dark"] .token.char,
+    :root[data-theme="dark"] .token.builtin {
+      color: #a5d6ff !important;
+    }
+    :root[data-theme="dark"] .token.operator,
+    :root[data-theme="dark"] .token.entity,
+    :root[data-theme="dark"] .token.url,
+    :root[data-theme="dark"] .token.variable {
+      color: #d2a8ff !important;
+    }
+    :root[data-theme="dark"] .token.atrule,
+    :root[data-theme="dark"] .token.attr-value,
+    :root[data-theme="dark"] .token.keyword {
+      color: #ff7b72 !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .token.comment,
+      :root:not([data-theme="light"]) .token.prolog,
+      :root:not([data-theme="light"]) .token.doctype,
+      :root:not([data-theme="light"]) .token.cdata,
+      :root:not([data-theme="light"]) .token.punctuation {
+        color: #8b949e !important;
+      }
+      :root:not([data-theme="light"]) .token.property,
+      :root:not([data-theme="light"]) .token.tag,
+      :root:not([data-theme="light"]) .token.boolean,
+      :root:not([data-theme="light"]) .token.number,
+      :root:not([data-theme="light"]) .token.constant {
+        color: #79c0ff !important;
+      }
+      :root:not([data-theme="light"]) .token.selector,
+      :root:not([data-theme="light"]) .token.attr-name,
+      :root:not([data-theme="light"]) .token.string,
+      :root:not([data-theme="light"]) .token.char,
+      :root:not([data-theme="light"]) .token.builtin {
+        color: #a5d6ff !important;
+      }
+      :root:not([data-theme="light"]) .token.operator,
+      :root:not([data-theme="light"]) .token.entity,
+      :root:not([data-theme="light"]) .token.url,
+      :root:not([data-theme="light"]) .token.variable {
+        color: #d2a8ff !important;
+      }
+      :root:not([data-theme="light"]) .token.atrule,
+      :root:not([data-theme="light"]) .token.attr-value,
+      :root:not([data-theme="light"]) .token.keyword {
+        color: #ff7b72 !important;
+      }
     }
   </style>
 
@@ -63,8 +375,52 @@
     </div>
   </noscript>
 
+  <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">🌓 Theme</button>
   <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
   <script>
+    function isDarkEffective() {
+      var attr = document.documentElement.getAttribute('data-theme');
+      if (attr === 'dark') return true;
+      if (attr === 'light') return false;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function updateThemeToggleUI() {
+      var btn = document.getElementById('theme-toggle-btn');
+      if (!btn) return;
+      var dark = isDarkEffective();
+      btn.innerHTML = dark ? '☀️ Light' : '🌙 Dark';
+      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+
+    function toggleTheme() {
+      var currentDark = isDarkEffective();
+      var nextTheme = currentDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('blueprint-theme', nextTheme);
+      updateThemeToggleUI();
+      // Reload to re-render Mermaid SVG palettes consistently
+      window.location.reload();
+    }
+
+    // Auto-update toggle UI when DOM is ready
+    document.addEventListener('DOMContentLoaded', updateThemeToggleUI);
+
+    // Listen to OS system color scheme changes if user hasn't explicitly set a local preference
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!localStorage.getItem('blueprint-theme')) {
+          if (e.matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.removeAttribute('data-theme');
+          }
+          updateThemeToggleUI();
+          window.location.reload();
+        }
+      });
+    }
+
     window.$docsify = {
       name: '401(k) Blueprint',
       repo: 'https://github.com/mradityagoyal/us-india-401k-blueprint',
@@ -95,6 +451,7 @@
                 page_path: window.location.hash || '/'
               });
             }
+            updateThemeToggleUI();
           });
         }
       ]
@@ -108,7 +465,10 @@
   <script src="//cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
   <script>
-    mermaid.initialize({ startOnLoad: false });
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDarkEffective() ? 'dark' : 'default'
+    });
   </script>
 </body>
 </html>

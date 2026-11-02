@@ -148,6 +148,27 @@ def test_external_links():
 
     return True
 
+def test_web_and_theme_support():
+    print("Checking web portal structure and dark mode integration...")
+    html = load_file("index.html")
+
+    required_snippets = [
+        ("FOUC prevention theme detection script", "localStorage.getItem('blueprint-theme')"),
+        ("prefers-color-scheme media query", "@media (prefers-color-scheme: dark)"),
+        ("Explicit dark mode data-theme CSS", ':root[data-theme="dark"]'),
+        ("Floating theme toggle button", 'id="theme-toggle-btn"'),
+        ("Mermaid dynamic dark theme support", "theme: isDarkEffective() ? 'dark' : 'default'"),
+        ("Noscript accessibility fallback", "<noscript>")
+    ]
+
+    for label, snippet in required_snippets:
+        if snippet not in html:
+            print(f"  ❌ Missing required web portal snippet: {label} ('{snippet}')")
+            return False
+
+    print("  ✅ Web portal dark mode, system theme detection, and noscript fallbacks verified.")
+    return True
+
 def main():
     print("=" * 60)
     print("RUNNING BLUEPRINT VERIFICATION TEST SUITE")
@@ -156,9 +177,10 @@ def main():
     p1 = test_anchors()
     p2 = test_math_consistency()
     p3 = test_external_links()
+    p4 = test_web_and_theme_support()
 
     print("=" * 60)
-    if p1 and p2 and p3:
+    if p1 and p2 and p3 and p4:
         print("ALL BLUEPRINT TESTS PASSED! ✅")
         print("=" * 60)
         sys.exit(0)
