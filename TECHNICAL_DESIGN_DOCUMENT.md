@@ -1,14 +1,16 @@
 # TDD: Cross-Border 401(k) Tax Arbitrage & Principal Unlock Pipeline
 
-**Self link**: [https://github.com/mradityagoyal/us-india-401k-blueprint](https://github.com/mradityagoyal/us-india-401k-blueprint)
-**Web version**: [https://mradityagoyal.github.io/us-india-401k-blueprint](https://mradityagoyal.github.io/us-india-401k-blueprint)
-**Visibility**: Public (US → India Engineering Returnee Community)
-**Status**: Published `v0.2` (Community Review / Open-Source RFC)
-**Authors**: [Aditya Goyal](https://www.linkedin.com/in/mradityagoyal/)
-**Methodology & Research**: Manual research and Automated Statutory Research & Cross-Border Systems Modeling
-**Adversarial Audit**: Multi-Model LLM Testing (Claude Opus 5.5, Gemini Pro 3.8) & Primary Statutory Code Verification
-**Community Call**: I actively solicit formal review and critique from licensed US CPAs, Enrolled Agents (EAs), and Indian Chartered Accountants (CAs).
-**Last major revision**: 2026-11-02
+| Metadata Field | Specification |
+| :--- | :--- |
+| **Self Link** | [github.com/mradityagoyal/us-india-401k-blueprint](https://github.com/mradityagoyal/us-india-401k-blueprint) |
+| **Web Version** | [mradityagoyal.github.io/us-india-401k-blueprint](https://mradityagoyal.github.io/us-india-401k-blueprint) |
+| **Visibility** | Public (US → India Engineering Returnee Community) |
+| **Status** | Published `v0.2` (Community Review / Open-Source RFC) |
+| **Author** | [Aditya Goyal](https://www.linkedin.com/in/mradityagoyal/) |
+| **Methodology & Research** | Manual research and Automated Statutory Research & Cross-Border Systems Modeling |
+| **Adversarial Audit** | Multi-Model LLM Testing (Claude Opus 5.5, Gemini Pro 3.8) & Primary Statutory Code Verification |
+| **Community Call** | I actively solicit formal review and critique from licensed US CPAs, Enrolled Agents (EAs), and Indian Chartered Accountants (CAs). |
+| **Last Major Revision** | 2026-11-02 |
 
 ---
 
