@@ -156,11 +156,17 @@ For this architecture to hold, the returning engineer must satisfy both the **US
   - **Default Rule — Wait Until January 1 Following Departure**: If you relocate to India mid-year (after spending `≥ 183 weighted days` in the US under the Substantial Presence Test), the IRS defaults to treating you as a **US Tax Resident through December 31** of that calendar year (`IRC § 7701(b)(2)(B)`). While a mid-year departee can technically establish an earlier **Residency Termination Date** via a **Dual-Status Return** (filing a closer-connection statement showing a foreign tax home in India for the remainder of the year), dual-status filings carry special restrictions and invite part-year residency audits from aggressive state tax boards like the California FTB. Therefore, the **recommended conservative default** is to wait until **January 1 of the first full calendar year outside the US (`Year T_1`)**, when you cleanly qualify as a full-year **US Non-Resident Alien (`NRA`)** and have severed state tax domicile.
   - **Critical `Year T_1` Return-Trip Rule (The `< 31-Day` SPT Safe Harbor under `IRC § 7701(b)(3)(A)(i)`)**: Because the Substantial Presence Test (SPT) counts **1/3 of your US days from `Year T_0`** and **1/6 of your US days from `Year T_-1`**, an engineer who lived in the US full-time prior to moving to India carries **~120–180 weighted carryover days** into `Year T_1`. Under `IRC § 7701(b)(3)(A)(i)`, **as long as you spend `< 31 physical days` in the US during `Year T_1`, you are automatically a US Non-Resident Alien (`NRA`) regardless of your 3-year weighted total**. However, if you return to the US for business or pleasure for **31 or more physical days** in `Year T_1` and your 3-year weighted total reaches `≥ 183 days`, you accidentally re-trigger **US Tax Resident** status for all of `Year T_1`! *(Note: While `Form 8840` — Closer Connection Exception — normally allows up to 182 physical days in `Year T_1`, **`Treas. Reg. § 301.7701(b)-2(f)`** permanently bars you from using `Form 8840` if you ever applied for a US Green Card or had an approved **`Form I-140`** immigrant petition! Therefore, keeping US visits strictly under **`< 31 physical days`** in `Year T_1` is the universal safe harbor).*
   - **Federal Bar on State Retirement Taxation (`4 U.S.C. § 114`)**: Once you have severed domicile in your former US state (e.g., California or New York), federal statutory law (**`4 U.S.C. § 114`** — *Limitation on State Income Taxation of Certain Pension Income*) explicitly prohibits any US state from taxing retirement plan distributions or Roth conversions paid to a non-resident.
-- **Precondition 2 — The Statutory RNOR Qualification Tests (`India IT Act, 1961 § 6(6)` / `Income-tax Act, 2025`)**:
-  - *Statutory Transition Note*: India's **Income-tax Act, 2025** took effect on **April 1, 2026** (replacing the *Income-tax Act, 1961* and unifying "Previous Year / Assessment Year" into **"Tax Year"**). Both the 1961 Act (`§ 6(6)` & `§ 5(1)`) and the 2025 Act preserve the exact same substantive RNOR qualification tests and foreign income exemptions.
-  - An individual qualifies as an RNOR in any Indian Financial / Tax Year (April 1 – March 31) if they satisfy *either* of two independent tests:
-    1. **The 9-of-10 Year NRI Test**: They were a Non-Resident in India in **at least 9 out of the 10 preceding tax years**; **OR**
-    2. **The 729-Day Physical Presence Test**: They spent a cumulative total of **≤ 729 days** in India during the **7 preceding tax years**.
+- **Precondition 2 — Indian Residency Determination & The RNOR Qualification Tests (`Section 6`, Income-tax Act)**:
+  - *Statutory Transition Note*: India's **Income-tax Act, 2025** took effect on **April 1, 2026** (replacing the *Income-tax Act, 1961* and unifying "Previous Year / Assessment Year" into **"Tax Year"**). Both the 1961 Act (`§ 6(1)` & `§ 6(6)`) and the 2025 Act (`Section 6`) preserve the exact same substantive residency tests and RNOR foreign income exemptions.
+  - **Step 1: First-Year Non-Resident (`NRI`) Qualification (`Section 6(1)`)**:
+    - Under Indian tax law, you are a **Resident** in India in any Financial Year (April 1 – March 31) if you satisfy *either* of two statutory conditions:
+      - **Leg 1 (`Section 6(1)(a)`)**: You are in India for **182 days or more** during that financial year; **OR**
+      - **Leg 2 (`Section 6(1)(c)`)**: You are in India for **60 days or more** during that financial year **AND** for **365 days or more** across the **4 preceding financial years**.
+    - *Why US Returnees Cleanly Win on Leg 2*: While the "visit exception" (which relaxes the 60-day threshold to 182 days for Indian citizens visiting India) is debated regarding whether it covers individuals returning permanently, returning engineers who worked in the US for 4+ years satisfy Leg 2 by definition: their cumulative vacation visits to India during the 4 preceding years (typically 2–4 weeks annually, totaling ~60–90 days) are **far below the 365-day threshold**. Therefore, arriving in India after October 1 (spending `< 182 days` in India that first financial year) guarantees **Non-Resident (`NRI`)** status in Year 1 because *neither* Leg 1 nor Leg 2 is satisfied.
+  - **Step 2: The Two RNOR Qualification Tests (`Section 6(13)` / formerly `§ 6(6)`)**:
+    - Once you cross into residency in Year 2, you qualify as **Resident but Not Ordinarily Resident (`RNOR`)** if you satisfy *either* of two independent statutory tests:
+      1. **The 9-of-10 Year NRI Test**: You were a Non-Resident in India in **at least 9 out of the 10 preceding tax years**; **OR**
+      2. **The 729-Day Physical Presence Test**: You spent a cumulative total of **≤ 729 days** in India during the **7 preceding tax years**.
 - **Minimum Time Outside India Assumption (`~5.5 to 6+ Years` Outside India)**:
   - **The 729-Day Arithmetic**: Seven Indian tax years contain `2,556 days`. Because `729 days` in India equals **`2.0 full years`**, you must have spent at least **`5.0 full years` (`1,827 days`) physically outside India** across those 7 preceding tax years. Once you factor in typical annual vacation visits to India of 2–4 weeks per year (`~100–200 days` over 5–6 years), an engineer generally needs **`~5.5 to 6+ consecutive years` living outside India** to satisfy the `≤ 729-day` test and unlock the multi-year RNOR window.
   - *Hard Failure Constraint*: If an engineer lived outside India for **less than ~5.5 years**, their cumulative physical presence in India over the 7 preceding tax years will exceed `729 days`, disqualifying them from the multi-year RNOR shield (unless they time an October–March return so their first partial year in India is `< 182 days` as an NRI).
@@ -253,6 +259,40 @@ Therefore, the rate-limiting protocol is designed **specifically to throttle the
 - **The Trailing FAANG RSU Variable**: For engineers relocating via internal transfer (or holding unvested US stock grants that vest post-departure), the trailing US-sourced portion of those vesting RSUs is reported on `Form W-2` / `1042-S` and qualifies as **US-sourced ECI**.
   - Because trailing US RSUs stack first and consume the 10% and 12% brackets, engineers should model their trailing vest schedule: either size conversion tranches to fit within remaining headroom or execute their conversions in tax years when trailing US vests drop off.
 
+##### 2.3. Cross-Border Calendar Asynchrony & The 90-Day Q1 Window (US Calendar Year vs. Indian Fiscal Year)
+
+A major timing trap that can inadvertently trigger 30%+ Indian slab tax is the calendar misalignment between the US and Indian tax systems:
+- **US Tax Year**: Runs on the calendar year (**January 1 to December 31**).
+- **Indian Financial Year (`FY`) / Tax Year**: Runs from **April 1 to March 31**.
+
+```mermaid
+flowchart LR
+    subgraph Indian_FY28 ["Indian FY 2028–29 (RNOR Shield Active)"]
+        direction TB
+        Q1_28["Apr 1, 2028 – Dec 31, 2028\n(US Tax Year 2028)"]
+        Q1_29["Jan 1, 2029 – Mar 31, 2029\n★ 90-DAY GOLDEN WINDOW ★\n(US Tax Year 2029 + Indian RNOR)"]
+    end
+
+    subgraph Indian_FY29 ["Indian FY 2029–30 (ROR Status Commences)"]
+        direction TB
+        Q2_29["Apr 1, 2029 – Dec 31, 2029\n⚠ DANGER ZONE ⚠\n(US NRA but Indian ROR: Worldwide Tax Applies!)"]
+    end
+
+    Indian_FY28 -->|March 31, 2029: RNOR Shield Expires| Indian_FY29
+```
+
+- **The Worked Case Study**:
+  - Suppose an engineer relocates to India in **June 2027**.
+  - **Indian RNOR Runway**: Spans **FY 2027–28** and **FY 2028–29**. The RNOR tax shield **expires permanently on March 31, 2029**. On **April 1, 2029**, the engineer transitions into **Indian ROR** (worldwide income taxable).
+  - **US NRA Status**: Begins **January 1, 2028** (first calendar year meeting `< 31 physical days` in the US).
+  - **Tranche 1 (US Tax Year 2028)**: Executed between January 1, 2028 and December 31, 2028. Covered 100% by both US NRA status and Indian RNOR (FY 2028–29).
+  - **Tranche 2 (US Tax Year 2029 — The 90-Day Q1 Execution Window)**:
+    - The US 2029 tax year begins on **January 1, 2029**, giving the engineer a fresh set of empty 10% ($12.4k) and 12% ($50.4k) US federal brackets.
+    - **HOWEVER**, Indian RNOR status terminates on **March 31, 2029**!
+    - **The Golden Window**: The 2029 conversion tranche **must be executed between January 1, 2029 and March 31, 2029** (a strict 90-day window).
+    - *The Disaster of Converting in May 2029*: If the engineer delays and executes the 2029 conversion in May, June, or November 2029, they are still a US NRA, **but they are now an Indian ROR**. India levies worldwide income tax on foreign receipts at progressive slab rates (up to **39%**), destroying the tax arbitrage and creating double taxation!
+- **Actionable Operational Invariant**: *Always execute your final annual conversion tranche within the first quarter (January 1 to March 31) of that calendar year before the Indian financial year closes on March 31.*
+
 #### 3. Five-Year Seasoning & FIFO Dequeue (`Year T+5` — India ROR)
 
 By Year `T+5`, the engineer's residency has reached its steady state: **US Non-Resident Alien (`NRA`)** and **Indian `ROR` (*Resident and Ordinarily Resident*)**. The goal of this stage is two-fold:
@@ -285,8 +325,23 @@ This unlock relies on three core mechanics:
 Withdrawing seasoned principal from a Roth IRA **does not require bringing or converting the money to India**—the funds can remain 100% in USD in a US or international brokerage account (or be moved into Irish-domiciled ETFs). In India ROR, your obligation is strictly **reporting**, not forced repatriation:
 
 - **FEMA § 6(4) Offshore Retention & Reinvestment Right**: Under **`Section 6(4) of the Foreign Exchange Management Act (FEMA), 1999`** (and the *FEMA Foreign Currency Accounts by a Person Resident in India Regulations*), a person resident in India is legally permitted to hold, own, transfer, or reinvest any foreign currency, foreign security, or offshore property if it was acquired when they were a resident outside India (and any income/proceeds arising therefrom), without being subject to Reserve Bank of India (RBI) Liberalised Remittance Scheme (LRS) caps—provided the funds remain offshore and are not repatriated into INR.
-- **Indian Tax Treatment (`₹0` Tax — Return of Capital Principle)**: Under the Indian Income-tax Act (`§ 2(24)` of the 1961 Act / *Income-tax Act, 2025*), tax applies to *income*, not to the recovery of capital. Because the conversion principal was already taxed upon entry into the Roth IRA during RNOR, withdrawing that principal in ROR is a tax-free **return of already-taxed capital corpus**. *(Note: Because Indian tax statutes do not explicitly codify "Roth IRAs" the way `Section 89A` codifies traditional retirement accounts, defending return-of-capital treatment during an Indian ITD assessment relies on general capital-vs-income principles and requires retaining your complete US tax basis archive (`Form 1099-R`, `Form 1040-NR`, and `Form 8606 Part III` upon exit distribution)).*
-- **Mandatory ROR Disclosure (`Schedule FA`)**: Once you transition from RNOR to ROR, you are legally required to declare your foreign retirement and brokerage accounts annually on **Schedule FA (Foreign Assets)** in your Indian ITR, backed by your US tax trail (`Form 1099-R`, `Form 1040-NR`, and `Form 8606`) to document your cost basis.
+- **Indian Tax Treatment (`₹0` Tax — The Dual-Pillar Accrual & Return-of-Capital Defense)**:
+  Because Indian tax statutes do not explicitly codify "Roth IRAs" the way `Section 158` (formerly `§ 89A`) codifies traditional retirement accounts, defending a tax-free `Year T+5` principal withdrawal during an Indian Income Tax Department (ITD) scrutiny assessment relies on two robust, complementary doctrines under Indian tax jurisprudence:
+  1. **Primary Defense — The Income Accrual Doctrine (`Section 5(1)(c)`)**:
+     - Under Indian tax jurisprudence, income is taxed based on the fundamental distinction between **accrual** and **subsequent receipt**.
+     - The taxable event occurred at the moment of the Roth conversion in the US during an **RNOR Financial Year**. Under **`Section 5(1)(c)`** of the *Income-tax Act, 2025* (and `§ 5(1)(c)` of the 1961 Act), income that accrues or arises outside India during an RNOR period is **100% statutorily exempt from Indian income tax**.
+     - Settled Supreme Court jurisprudence (*CIT v. Ashokbhai Chimanbhai [1965] 56 ITR 42 (SC)*; *E.D. Sassoon & Co. Ltd. v. CIT [1954] 26 ITR 27 (SC)*) establishes that **income accrues only once**, when the right to receive or the economic transformation crystallizes. A subsequent transfer, withdrawal, or receipt of already-accrued, tax-exempt capital corpus during an ROR year **cannot be legally re-characterized or taxed a second time as fresh taxable income**.
+  2. **Secondary Defense — The Return of Capital Principle (`Section 2(24)`)**:
+     - Under **`Section 2(24)`** of the *Income-tax Act, 2025*, Indian tax is levied strictly on *income*, not on the return or recovery of capital.
+     - Withdrawing converted principal is simply the realization of already-taxed capital corpus (on which US ECI/FDAP tax was discharged at conversion).
+     - Under seminal judicial authorities (*CIT v. Shaw Wallace & Co. (1932)*; *Padmaraje R. Kadambande v. CIT [1992] 195 ITR 877 (SC)*), a receipt that is capital in nature cannot be taxed unless explicitly deemed as income by statute (e.g., capital gains on the transfer of a capital asset). Withdrawing one's own funds from a personal custodial account involves no transfer of an asset and generates zero income.
+  - *Evidence Requirement*: Successfully presenting this dual-pillar defense during an Indian scrutiny assessment requires producing your complete, immutable US tax archive (`Form 1099-R`, filed `Form 1040-NR` transcripts, and `Form 8606 Part III` exit documentation) proving that 100% of the disbursed funds represent already-taxed conversion principal.
+- **Mandatory ROR Disclosure (`Schedule FA`) & The BMA ₹20 Lakh Safe Harbor**:
+  - Once you transition from RNOR to ROR, you are legally mandated to declare all foreign retirement, custodial, and brokerage accounts annually on **`Schedule FA` (Foreign Assets)** in your Indian ITR (`ITR-2` / `ITR-3`).
+  - **The Finance (No. 2) Act, 2024 Safe Harbor (`Effective Oct 1, 2024`)**:
+    - Under the **Black Money (Undisclosed Foreign Income and Assets) and Imposition of Tax Act, 2015**, failure to report a foreign asset on Schedule FA carried an automatic, draconian penalty of **₹10,00,000 (₹10 lakh) per assessment year** under `Section 43`.
+    - Effective October 1, 2024, the Indian Parliament enacted an amendment to **Sections 42 and 43 of the Black Money Act**: **no penalty of ₹10 lakh shall be leviable** if the failure to disclose relates to one or more foreign bank, retirement, or financial accounts whose aggregate value **does not exceed ₹20,00,000 (₹20 lakh, ~\$24,000 USD)** at any time during the financial year.
+    - *Operational Rule*: While this safe harbor provides critical statutory relief against inadvertent omissions for small residual balances, 401(k) balances typically exceed ₹20 lakh. Therefore, **annual disclosure on Schedule FA remains strictly mandatory** once ROR commences to maintain absolute immunity from inquiry.
 
 ##### 3.3. Managing Residual Post-Conversion Earnings (Tier 3) & The Indian ROR Tax Asymmetry
 
@@ -346,6 +401,10 @@ Once you move to India, update your residential address, and replace `Form W-9` 
 > 1. **Fund the Difference**: Within 60 calendar days of the conversion date, deposit out-of-pocket cash equal to the withheld amount (e.g., \$15,000) from an external bank account directly into the receiving Roth IRA as a rollover completion.
 > 2. **Preserve 100% Tax-Free Basis**: By topping up the \$15,000, 100% of the \$50,000 gross conversion lands safely inside the Roth IRA—completely eliminating the 10% early withdrawal penalty.
 > 3. **Reclaim the Buffer via Form 1040-NR**: When you file your annual non-resident tax return (`Form 1040-NR`), the IRS reconciles your true tax liability (e.g., **\$7,552** on the baseline \$50k balance) against the \$15,000 withheld on `Form 1042-S`, and direct-deposits the excess refund (**+\$7,448**) back into your US checking account.
+>
+> 4. **FEMA § 6(4) Capital Source Invariant (Strict Prohibition on LRS Remittances)**:
+>    - The out-of-pocket cash used to fund the 60-day top-up **must originate strictly from pre-existing offshore funds** (e.g., a US checking account or brokerage balance acquired while you were a US resident) under **`FEMA Section 6(4)`**.
+>    - **The LRS Commingling Violation**: You must **NEVER remit money from an Indian domestic bank account under the Liberalised Remittance Scheme (LRS) to fund the 60-day top-up!** Sending domestic Indian rupees into an offshore Roth rollover commingles domestic Indian wealth into the foreign retirement wrapper, violating the clean "foreign asset acquired while non-resident" shield under `FEMA § 6(4)`, triggering **20% Indian Tax Collected at Source (`TCS`)**, and subjecting the transaction to complex RBI reporting scrutiny. Always preserve a liquid USD cash buffer in your US checking account before departing the US.
 
 </details>
 
@@ -834,7 +893,7 @@ Unlike complex organizational migrations, this personal finance pipeline require
 
 #### The RNOR Conversion Runway (`Years T_1 to T_3`)
 
-- [ ] **Execute Annual Conversion Tranche**: Convert ~\$48,000–\$50,400 of ECI contribution principal annually to maximize your empty 10% and 12% US federal tax brackets.
+- [ ] **Execute Annual Conversion Tranche (Strict Q1 Timing)**: Convert ~\$48,000–\$50,400 of ECI contribution principal annually. **Crucial**: During your final RNOR calendar year, execute the conversion **between January 1 and March 31** before Indian ROR commences on April 1!
 - [ ] **Complete 60-Day Withholding Top-Up (If on `Path 2`)**: If 30% tax is withheld at conversion, deposit external cash equal to the withheld amount into the receiving Roth IRA within **60 calendar days** (`IRC § 402(c)(3)`).
 - [ ] **Reset Taxable Brokerage Cost Basis**: Liquidate and immediately repurchase all appreciated taxable holdings before your final RNOR financial year ends (March 31) to step up basis at **0% US and ₹0 Indian tax**.
 - [ ] **File Annual Cross-Border Tax Returns**: File US `Form 1040-NR` (`ECI` on main return, `FDAP` on `Schedule NEC`, and `Form 8606 Part II` if Path 2) backed by `Form 1099-R` to track conversion basis and claim excess withholding refunds; file Indian ITR confirming `RNOR` status.
@@ -1011,8 +1070,9 @@ Because cross-border tax optimization relies on exact statutory definitions, thi
    - **Relevance**: If an individual keeps a pre-tax 401(k)/IRA open *after* transitioning to **ROR**, India would otherwise tax annual accrued dividends and internal capital gains inside the plan every year on an accrual basis. Exercising the option under **`Section 158(1)` via `Form 40`** (formerly `Section 89A` via `Form 10-EE`) defers Indian taxation on internal plan growth until actual withdrawal, synchronizing the Indian tax event with the US withdrawal year so the taxpayer can claim a **Foreign Tax Credit (`Form 67`)**.
 4. **Section 90 & Rule 128 (`Form 67`) — *Foreign Tax Credit (FTC) in India***
    - **Relevance**: Governs how an Indian ROR claims a credit (via `Form 67`) for the 30% US tax paid on any FDAP growth distributions under the India–US DTAA.
-5. **Schedule FA (Foreign Assets) & Black Money Act, 2015**
-   - **Relevance**: During **RNOR** years, taxpayers are not required to file **Schedule FA (Foreign Assets)** in their Indian ITR, keeping them outside Black Money Act reporting until they transition to **ROR**. Once in **ROR**, all foreign custodial/retirement accounts must be declared annually in **Schedule FA** (`ITR-2` / `ITR-3`).
+5. **Schedule FA (Foreign Assets) & Black Money Act, 2015 (As Amended by Finance (No. 2) Act, 2024)**
+   - **Relevance**: During **RNOR** years, taxpayers are exempt from filing **Schedule FA (Foreign Assets)** in their Indian ITR, keeping them outside Black Money Act reporting until they transition to **ROR**. Once in **ROR**, all foreign custodial/retirement accounts must be declared annually in **Schedule FA** (`ITR-2` / `ITR-3`).
+   - **₹20 Lakh Safe Harbor (Effective Oct 1, 2024)**: Amendments to **Sections 42 and 43 of the Black Money Act** exempt undisclosed foreign movable financial assets with an aggregate value **≤ ₹20 lakh** from the ₹10 lakh penalty. For accounts above ₹20 lakh, rigorous annual Schedule FA filing is non-negotiable.
 6. **Foreign Exchange Management Act (FEMA), 1999 — *Section 6(4) (Holding & Reinvesting Foreign Assets Acquired While Non-Resident)***
    - **Relevance**: Under **`FEMA Section 6(4)`** and the *FEMA (Foreign Currency Accounts by a Person Resident in India) Regulations*, a person resident in India may hold, own, transfer, or invest in foreign currency, foreign security, or any immovable property situated outside India if such currency, security, or property was acquired, held, or owned by such person when they were resident outside India (including income and accumulations thereon). This allows an engineer who has returned to India to withdraw seasoned USD principal from a US Roth IRA and reinvest it directly into Irish-domiciled UCITS ETFs in an international brokerage account without triggering Liberalised Remittance Scheme (`LRS`) limits, provided the funds remain offshore and are not commingled with fresh LRS remittances from India.
 
