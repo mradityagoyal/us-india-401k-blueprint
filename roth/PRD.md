@@ -111,11 +111,12 @@ flowchart TB
   - **Dynamic Capacity Formula**: $\text{Capacity} = \min(100\% \text{ Compensation}, \$72,000) - \text{Elective Deferrals} - \text{Employer Match/Nonelective} - \text{Other Annual Additions}$ (subject to plan caps and ACP non-discrimination testing).
   - **Why `IRC § 408(d)(2)` IRA Pro-Rata Does Not Apply**: Complete namespace isolation between `IRC § 401(a)` workplace plans and `IRC § 408` IRAs.
   - **Sub-Account Pro-Rata & `IRS Notice 2014-54` Packet Splitting**: Clarifying that while a partial distribution from an After-Tax 401(k) sub-account pulls a proportionate slice of that sub-account's basis and pre-tax growth, `Notice 2014-54` allows allocating the pre-tax growth to a Traditional IRA and 100% of the after-tax basis to a Roth IRA (`Tier 2b`).
-  - **Routing Path 3A (`After-Tax 401k ➔ Direct In-Service Split Rollover to Roth IRA`)** vs. **Routing Path 3B (`After-Tax 401k ➔ In-Plan Designated Roth 401k ➔ Downstream Rollover to Roth IRA`)**:
-    - **The "Queue-Jumping Discovery" (`Treas. Reg. § 1.408A-10` Q&A-3)**:
-      - Path 3A writes after-tax basis into **`Tier 2b` (Non-Taxable Conversion Tranche)**—sitting *behind* any older `Tier 2a` taxable conversions.
-      - Path 3B (when rolling a *non-qualified* Designated Roth 401(k) into a Roth IRA under Q&A-3(b)) maps the basis ("investment in the contract") into **`Tier 1` (Regular Contributions)**—jumping *ahead* of all `Tier 2` conversions—and maps the 401(k) growth into **`Tier 3` (Earnings)**.
-      - **The Qualified 401(k) Rollover Bonus (`Treas. Reg. § 1.408A-10` Q&A-3(a))**: If the Designated Roth 401(k) distribution is already *qualified* (`Age >= 59½` + 5 years in the 401k) at the time of rollover, **100% of the rollover (both basis AND all 401k earnings)** enters the Roth IRA as **`Tier 1` (Regular Contribution Basis)**!
+  - **The Standard Execution Pipeline (`After-Tax 401(k) ➔ In-Plan Roth 401(k) ➔ Rollover to Roth IRA`)**:
+    - Stage 1: Automated daily in-plan conversion into Designated Roth 401(k); pro-rata lock while funds remain inside the 401(k) under `IRC § 402A(d)(4)`.
+    - Stage 2: Rollover into Roth IRA breaking the pro-rata lock (`Treas. Reg. § 1.408A-10` Q&A-3):
+      - Non-qualified rollover (`Age < 59½`, Q&A-3(b)): After-tax basis maps to **`Tier 1` (Regular Contributions)**—jumping ahead of `Tier 2` conversions—and growth maps to **`Tier 3` (Earnings)**.
+      - Qualified rollover bonus (`Age >= 59½` + 5 years in plan, Q&A-3(a)): 100% of both basis and earnings maps to **`Tier 1`**!
+    - Legacy plan edge case: Direct rollover of raw unconverted after-tax 401(k) funds to Roth IRA writing to `Tier 2b`.
 - **3.4 Adapter 4: Pre-Tax Conversion / Rollover (`Traditional 401(k) / IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2a`**:
   - Populating `Tier 2a` and initializing its per-tranche 5-year conversion recapture clock (`Clock A`).
 

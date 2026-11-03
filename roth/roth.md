@@ -155,7 +155,7 @@ To demystify these mechanics, we must replace fuzzy narrative terms with three f
    - **`Tier 1: Regular Contribution Basis`**: Pure post-tax deposits made directly or rolled over from a Designated Roth 401(k).
    - **`Tier 2: Converted Capital & Rollovers`**: Capital moved into the Roth container from other retirement accounts (Traditional IRAs, 401(k)s). Crucially, this tier splits into two fundamentally different sub-types based on tax provenance:
      - **`Subtype 2a (Taxable Conversion Principal)`**: This is what retail personal finance commonly calls a **"Roth Conversion"**, **"Taxable Rollover"**, or **"Roth Conversion Ladder"**. These are pre-tax dollars (from a Traditional IRA or pre-tax 401(k)) that were taxed as ordinary income *by the act of converting*. Because this capital was newly exposed to tax, it arms an independent 5-year penalty recapture timer.
-     - **`Subtype 2b (Non-Taxable Conversion Basis)`**: Dollars that were already taxed *before* converting. This is the landing ground for a clean **Backdoor Roth** or a direct **Mega Backdoor Roth** rollover. Because you already paid taxes on this money, it has a 0-day penalty wait.
+     - **`Subtype 2b (Non-Taxable Conversion Basis)`**: Dollars that were already taxed *before* converting. This is the landing ground for a clean **Backdoor Roth** (or a direct rollover from an unconverted after-tax 401(k)). Because you already paid taxes on this money, it has a 0-day penalty wait.
    - **`Tier 3: Accumulated Earnings`**: Dividends, interest, and capital growth generated inside the account.
 2. **The Queue (Withdrawal Ordering)**: When you withdraw money, you cannot choose which layer to tap. The tax code enforces a strict **Priority Queue**: `Tier 1` drains first, then `Tier 2` (FIFO by calendar year, with `2a` drained before `2b`), and `Tier 3` drains last.
 3. **The Timers (Recapture Clocks)**: Certain deposits arm statutory countdown timers. Specifically, each `Tier 2a` taxable conversion starts an independent 5-tax-year recapture clock that imposes a 10% penalty if touched prematurely.
@@ -164,14 +164,13 @@ To demystify these mechanics, we must replace fuzzy narrative terms with three f
 
 To bridge the gap between everyday financial advice and statutory reality, the table below maps common retail strategies to their formal systems adapters, destination tiers, and day-1 liquidity rights:
 
-| Common Retail Strategy                                         | Formal Systems Adapter                       | Destination Ledger Tier                                | Day-1 Early Liquidity Status                                                                      |
-| :------------------------------------------------------------- | :------------------------------------------- | :----------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| **"Direct Roth Contribution"**                           | **Adapter 1: Direct Ingestion**        | **`Tier 1` (Regular Contribution Basis)**      | **100% Liquid** ($0 tax, $0 penalty at any time, age, or reason)                            |
-| **"Backdoor Roth IRA"**                                  | **Adapter 2: Non-Deductible Proxy**    | **`Tier 2b` (Non-Taxable Conversion Basis)**   | **100% Liquid** (0-day wait per Q&A-5b; no 5-year lock unless blocked by older `Tier 2a`) |
-| **"Mega Backdoor Roth" (Direct Rollover)**               | **Adapter 3A: After-Tax 401(k) Split** | **`Tier 2b` (Non-Taxable Conversion Tranche)** | **100% Liquid** (0-day wait per Q&A-5b; no 5-year lock unless blocked by older `Tier 2a`) |
-| **"Mega Backdoor Roth" (In-Plan Conversion + Rollover)** | **Adapter 3B: Designated Roth 401(k)** | **`Tier 1` (Regular Contribution Basis!)**     | **100% Liquid** (Queue-jumps ahead of `Tier 2` under `Treas. Reg. § 1.408A-10` Q&A-3b) |
-| **"Pre-Tax Conversion" / "Roth Conversion Ladder"**      | **Adapter 4: Taxable Rollover**        | **`Tier 2a` (Taxable Conversion Principal)**   | **Locked for 5 Tax Years** (10% penalty if touched early before age 59½)                   |
-| **"Roth Investment Growth / Gains"**                     | *Internal Compounding (Not an adapter)*    | **`Tier 3` (Accumulated Earnings)**            | **Locked until Qualified Maturity** (Age 59½ + 5-year `Clock B`)                         |
+| Common Retail Strategy | Formal Systems Adapter | Destination Ledger Tier | Day-1 Early Liquidity Status |
+| :--- | :--- | :--- | :--- |
+| **"Direct Roth Contribution"** | **Adapter 1: Direct Ingestion** | **`Tier 1` (Regular Contribution Basis)** | **100% Liquid** ($0 tax, $0 penalty at any time, age, or reason) |
+| **"Backdoor Roth IRA"** | **Adapter 2: Non-Deductible Proxy** | **`Tier 2b` (Non-Taxable Conversion Basis)** | **100% Liquid** (0-day wait per Q&A-5b; no 5-year lock unless blocked by older `Tier 2a`) |
+| **"Mega Backdoor Roth"** *(In-Plan Roth 401k + Rollover)* | **Adapter 3: After-Tax 401(k) Pipeline** | **`Tier 1` (Regular Contribution Basis!)** | **100% Liquid** (Maps to `Tier 1` once rolled into a Roth IRA under `Treas. Reg. § 1.408A-10` Q&A-3b) |
+| **"Pre-Tax Conversion" / "Roth Conversion Ladder"** | **Adapter 4: Taxable Rollover** | **`Tier 2a` (Taxable Conversion Principal)** | **Locked for 5 Tax Years** (10% penalty if touched early before age 59½) |
+| **"Roth Investment Growth / Gains"** | *Internal Compounding (Not an adapter)* | **`Tier 3` (Accumulated Earnings)** | **Locked until Qualified Maturity** (Age 59½ + 5-year `Clock B`) |
 
 Every time capital enters the account—**the Write Path**—the specific statutory doorway stamps that dollar with an immutable tag determining **which Tier it lands in** and **whether a Timer is armed**.
 
@@ -357,50 +356,35 @@ Under **IRS Notice 2014-54**, the IRS technically allows splitting the distribut
 1. **Automated Daily In-Plan Conversion (Recommended Best Practice)**: Most modern tech 401(k) plans (such as Fidelity NetBenefits and Vanguard) offer automated daily conversions. The moment your after-tax payroll deduction posts, the recordkeeper sweeps it into the Roth account that exact day, keeping accrued earnings at **$0.00**.
 2. **Convert Growth to Roth & Absorb the Minor Tax**: If your plan only supports manual conversions and you accrued \$50 of earnings, convert the entire balance (basis + earnings) into your Roth account. You pay ordinary income tax on that \$50 (which enters your ledger as a tiny `Tier 2a` tranche), but your Traditional IRA balance remains at **$0**, keeping your Backdoor Roth pipeline clean.
 
-#### The Two Routing Architectures: Path 3A vs. Path 3B
+#### The Standard Execution Pipeline: In-Plan Conversion $\rightarrow$ Roth IRA Rollover
 
-How your employer plan implements the Mega Backdoor dictates the exact tier and queue priority your dollars receive:
+At almost all major tech employers (such as Google, Oracle, Meta, Microsoft, and Apple), the Mega Backdoor executes in two stages—first inside the 401(k) plan, and later into a personal Roth IRA:
 
 ```
-[ After-Tax 401(k) Contribution ]
-               │
-       ┌───────┴────────────────────────────────────────┐
-       ▼                                                ▼
-[ Path 3A: Direct In-Service Rollover ]   [ Path 3B: In-Plan Roth Conversion ]
-       │                                                │
-       ▼                                                ▼
-[ External Roth IRA ]                    [ Designated Roth 401(k) Sub-Account ]
-       │                                                │
-       ▼                                                ▼ (Later Job Departure Rollover)
-  Writes to: Tier 2b                       [ External Roth IRA ]
-  (Non-Taxable Conversion Tranche)                      │
-                                                        ▼
-                                                  Writes to: Tier 1 Basis!
-                                                  (Treas. Reg. § 1.408A-10 Q&A-3)
+Stage 1: Paycheck + Daily In-Plan Sweep        Stage 2: Rollover to Personal Roth IRA
+[ After-Tax 401(k) Contribution ]              [ Designated Roth 401(k) ]
+               │                                           │
+               ▼ (Auto In-Plan Conversion)                 ▼ (In-Service or Job Change)
+[ Designated Roth 401(k) Sub-Account ] ──────> [ External Roth IRA ]
+  (Pro-rata lock while inside 401k)              ├──> 401(k) Basis    ➔ Tier 1 (Contribution Basis!)
+                                                 └──> 401(k) Earnings ➔ Tier 3 (Accumulated Earnings)
 ```
 
-##### Path 3A: Direct In-Service Split Rollover to Roth IRA
+1. **Stage 1: Automated In-Plan Conversion to Designated Roth 401(k)**
+   - Each paycheck deposits post-tax dollars into the After-Tax 401(k) sub-account, and the plan immediately sweeps them into your **Designated Roth 401(k)** sub-account (`IRC § 402A`).
+   - *The Pro-Rata Lock While Inside the 401(k)*: As long as your money remains inside the employer's Designated Roth 401(k), you **cannot** withdraw just your basis. Under `IRC § 402A(d)(4)`, any early withdrawal taken directly from a Roth 401(k) is pulled **pro-rata** between basis and earnings (triggering ordinary income tax and a 10% penalty on the earnings slice).
 
-- The plan allows in-service distributions directly to an external IRA. The custodian cuts a check or sends a direct wire for the after-tax basis to your external Roth IRA.
-- **Ledger Ingestion**: Writes to **`Tier 2b: Non-Taxable Conversion Tranche`**.
-- **Queue Position**: In the Roth IRA withdrawal queue, it sits in `Tier 2`, behind any older `Tier 2a` taxable conversions in your ledger.
+2. **Stage 2: Rolling the Roth 401(k) into a Personal Roth IRA (`Treas. Reg. § 1.408A-10` Q&A-3)**
+   - To unlock early, penalty-free access to your principal, you roll the Designated Roth 401(k) into your personal Roth IRA (either via an in-service rollover while employed, if your plan permits, or when changing jobs).
+   - Rolling into a Roth IRA shatters the 401(k)'s pro-rata lock and splits the funds into the Roth IRA's strict priority queue:
+     - **Non-Qualified Rollover (`Age < 59½`, `Q&A-3(b)`)**:
+       - **100% of your Mega Backdoor Basis** maps directly into **`Tier 1: Regular Contribution Basis`**! It becomes 100% liquid on Day 1 at any age with `$0` tax and `$0` penalty—and even **jumps ahead of any older `Tier 2` conversions** in your withdrawal queue.
+       - **100% of your 401(k) Investment Growth** maps into **`Tier 3: Accumulated Earnings`**.
+     - **The Qualified 401(k) Rollover Bonus (`Age >= 59½` + 5 Years in Plan, `Q&A-3(a)`)**:
+       - If you execute the rollover after the Designated Roth 401(k) is already qualified, **100% of the rollover (both your after-tax basis AND all accumulated 401(k) investment growth) enters the Roth IRA as `Tier 1: Regular Contribution Basis`!**
 
-##### Path 3B: In-Plan Conversion to Designated Roth 401(k) $\rightarrow$ Downstream Rollover
-
-- Major tech employers (such as Google, Meta, Microsoft, and Apple) provide automated daily in-plan conversions. Each after-tax dollar is converted automatically within the 401(k) into a **Designated Roth 401(k)** sub-account.
-- When you eventually leave the company, you roll that Designated Roth 401(k) into your personal Roth IRA.
-
-##### The "Queue-Jumping" Discovery (`Treas. Reg. § 1.408A-10` Q&A-3)
-
-The Treasury Regulations reveal a dramatic structural divergence between Path 3A and Path 3B:
-
-1. **Non-Qualified Roth 401(k) Rollover (`Q&A-3(b)`)**: When you roll over a Designated Roth 401(k) before it satisfies qualified status (`Age < 59½`), the 401(k) administrator must report your basis ("investment in the contract") and earnings separately. Under `Treas. Reg. § 1.408A-10` Q&A-3(b):
-   - The 401(k) after-tax basis maps into **`Tier 1: Regular Contribution Basis`** in the Roth IRA!
-   - The 401(k) growth maps into **`Tier 3: Accumulated Earnings`**.
-   - **The Architectural Consequence**: By routing after-tax money through Path 3B rather than Path 3A, your after-tax capital enters your Roth IRA as **Tier 1 basis**—jumping *ahead* of older `Tier 2` taxable conversions in your withdrawal queue!
-2. **Qualified Roth 401(k) Rollover Bonus (`Q&A-3(a)`)**: If you execute the rollover after the Designated Roth 401(k) is already qualified (`Age >= 59½` and 5 years of plan participation):
-   - **100% of the rollover (both after-tax basis AND all accumulated 401(k) investment earnings) enters the Roth IRA as `Tier 1: Regular Contribution Basis`!**
-   - The entire balance becomes permanently classified as contribution basis on day one in the Roth IRA ledger.
+> [!NOTE]
+> **Legacy Plan Edge Case (Direct After-Tax-to-Roth-IRA Rollover)**: Some older 401(k) plans do not offer an in-plan Designated Roth 401(k) conversion, and instead require rolling raw After-Tax 401(k) funds directly out to an external Roth IRA. Because that transfer skips the Designated Roth 401(k), `Treas. Reg. § 1.408A-10` does not apply—the basis lands in **`Tier 2b` (Non-Taxable Conversion Basis)** rather than `Tier 1`. It still carries a 0-day penalty wait, but sits in `Tier 2` behind any older `Tier 2a` taxable conversions.
 
 ---
 
@@ -438,7 +422,7 @@ $$
 \text{Taxable Conversion Principal (Subtype 2a) is dequeued BEFORE Non-Taxable Basis (Subtype 2b)}
 $$
 
-If you execute a $50,000 pre-tax conversion in 2024 (`Tier 2a`), and subsequently execute a $35,000 Mega Backdoor conversion in 2026 (`Tier 2b`), you cannot pull out your 2026 basis without first draining the unseasoned 2024 taxable conversion—triggering a 10% penalty on the older tranche. This phenomenon is known as **Head-of-Line Blocking**.
+If you execute a $50,000 pre-tax conversion in 2024 (`Tier 2a`), and subsequently execute $15,000 of Backdoor Roth conversions in 2025–2026 (`Tier 2b`), you cannot pull out your 2025–2026 `Tier 2b` basis without first draining the unseasoned 2024 taxable conversion—triggering a 10% penalty on the older tranche. This phenomenon is known as **Head-of-Line Blocking**.
 
 ---
 
@@ -446,12 +430,11 @@ If you execute a $50,000 pre-tax conversion in 2024 (`Tier 2a`), and subsequentl
 
 Every dollar entering a Roth IRA is stamped with metadata that determines its destination tier, tax liability, and penalty conditions:
 
-| Ingestion Adapter                                                | Source Account Type                    | Statutory Authority                              | Destination Ledger Tier                            | Tax Event at Ingestion?                    | Recapture Clock Armed?                         | Day-1 Unconditional Liquidity?                  |
-| :--------------------------------------------------------------- | :------------------------------------- | :----------------------------------------------- | :------------------------------------------------- | :----------------------------------------- | :--------------------------------------------- | :---------------------------------------------- |
-| **Adapter 1: Direct Contribution**                         | Cash / Checking                        | `IRC § 408A(c)`                               | **Tier 1** (Contribution Basis)              | **No** (Funded with post-tax income) | **None**                                 | **Yes** ($0 tax, $0 penalty)              |
-| **Adapter 2: Clean Backdoor Proxy**                        | Traditional IRA (Zero pre-tax balance) | `IRC § 408A(d)(3)Form 8606`                   | **Tier 2b** (Non-Taxable Conversion Basis)   | **No** (Basis already taxed)         | **None** (0-day wait per Q&A-5b)         | **Yes** (unless blocked by older Tier 2a) |
-| **Adapter 3A: Mega Backdoor (Direct Rollover)**            | After-Tax 401(k) Sub-Account           | `IRC § 415(c)Notice 2014-54`                  | **Tier 2b** (Non-Taxable Conversion Tranche) | **No** (Basis already taxed)         | **None** (0-day wait per Q&A-5b)         | **Yes** (unless blocked by older Tier 2a) |
-| **Adapter 3B: Mega Backdoor (In-Plan Roth 401k Rollover)** | Designated Roth 401(k)                 | `IRC § 402ATreas. Reg. § 1.408A-10` Q&A-3(b) | **Tier 1** (Contribution Basis!)             | **No** (Basis already taxed)         | **None**                                 | **Yes** (Jumps ahead of Tier 2 in queue!) |
-| **Adapter 4: Pre-Tax Conversion**                          | Pre-Tax 401(k) or Traditional IRA      | `IRC § 408A(d)(3)`                            | **Tier 2a** (Taxable Conversion Principal)   | **Yes** (100% ordinary income tax)   | **Clock A** (5-tax-year recapture timer) | **No** (10% penalty if withdrawn < 5 yrs) |
+| Ingestion Adapter | Source Account Type | Statutory Authority | Destination Ledger Tier | Tax Event at Ingestion? | Recapture Clock Armed? | Day-1 Unconditional Liquidity? |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Adapter 1: Direct Contribution** | Cash / Checking | `IRC § 408A(c)` | **Tier 1** (Contribution Basis) | **No** (Funded with post-tax income) | **None** | **Yes** ($0 tax, $0 penalty) |
+| **Adapter 2: Clean Backdoor Proxy** | Traditional IRA (Zero pre-tax balance) | `IRC § 408A(d)(3)` | **Tier 2b** (Non-Taxable Conversion Basis) | **No** (Basis already taxed) | **None** (0-day wait per Q&A-5b) | **Yes** (unless blocked by older `Tier 2a`) |
+| **Adapter 3: Mega Backdoor Pipeline** *(In-Plan Roth 401k $\rightarrow$ Rollover)* | Designated Roth 401(k) *(from After-Tax 401k)* | `IRC § 415(c)` & `§ 402A`<br>`Treas. Reg. § 1.408A-10` Q&A-3 | **Tier 1** (Contribution Basis!) *(or `Tier 2b` if direct raw after-tax rollover)* | **No** (Basis already taxed) | **None** | **Yes** (Once rolled into a Roth IRA; jumps ahead of `Tier 2`!) |
+| **Adapter 4: Pre-Tax Conversion** | Pre-Tax 401(k) or Traditional IRA | `IRC § 408A(d)(3)` | **Tier 2a** (Taxable Conversion Principal) | **Yes** (100% ordinary income tax) | **Clock A** (5-tax-year recapture timer) | **No** (10% penalty if withdrawn < 5 yrs) |
 
 Because different pipelines produce different ledger tiers, multiple conversion years, and varying timer states, tracking your balance requires a formal domain model. In the next section, we define the exact data structures and state machine of the **Roth Taxpayer Ledger**.
