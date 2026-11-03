@@ -53,7 +53,7 @@ flowchart TB
 
     subgraph S3["3. Egress & Independent Evaluation Engines (Read Path)"]
         E1["Ordering Engine: dequeueWithdrawal()<br/>(Depletes Tier 1 ➔ Tier 2 FIFO [2a ➔ 2b] ➔ Tier 3)"]
-        E2["Timer Engine (3 Independent 5-Year Clocks)<br/>• Clock A: IRA Conversion Recapture (5-Yr/Tranche on 2a)<br/>• Clock B: IRA Qualified Distribution Maturity (5-Yr Global)<br/>• Clock C: In-Plan 401(k) Recapture Overlay (§ 402A(c)(4)(D))"]
+        E2["Timer Engine (3 Independent 5-Year Clocks)<br/>• Clock A: Per-Tranche Conversion Recapture (§ 408A(d)(3)(F) & § 402A(c)(4)(D))<br/>• Clock B: Global Roth IRA Maturity (§ 408A(d)(2)(B))<br/>• Clock C: Per-Plan Roth 401(k) Maturity (§ 402A(d)(2)(B))"]
         E3["Taxability & Penalty Engine<br/>• calculateTaxableIncome()<br/>• calculateAdditional10PctTax() (§ 72(t))"]
     end
 
@@ -98,24 +98,24 @@ flowchart TB
   - Bridging from English prose to formal systems primitives: **Tiers** (storage classification), **The Queue** (withdrawal ordering), and **Timers** (recapture clocks).
   - Highlighting the critical fork in Layer 2: `Tier 2a` (taxable conversion principal) vs. `Tier 2b` (non-taxable conversion basis).
   - Common Parlance to Systems Model Table (mapping "Direct", "Backdoor", "Mega Backdoor 3A/3B", "Pre-Tax Conversions", and "Earnings" to their formal tiers and Day-1 liquidity rights).
-  - Seamlessly integrating 2026 statutory execution parameters (`Rev. Proc. 2025-32`) contextually inside each adapter.
+  - Seamlessly integrating 2026 statutory execution parameters (`IRS Notice 2025-67`) contextually inside each adapter.
 - **3.1 Adapter 1: Direct Contribution (`IRC § 408A(c)`) $\rightarrow$ Writes to `Tier 1`**:
   - 2026 limits ($7,500 base, $8,600 age 50+), MAGI phaseout curve ($153k–$168k Single, $242k–$252k MFJ, $0–$10k MFS), shared Traditional/Roth IRA limit, and excess contribution remediation (`IRC § 408(d)(4)` return of excess contribution vs. recharacterization).
 - **3.2 Adapter 2: The Backdoor Roth Proxy (`Traditional IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2b` (and `2a`)**:
   - Two-phase mechanics: non-deductible Traditional IRA contribution (`Form 8606` Part I) followed by Roth conversion (`Form 8606` Part II).
-  - **Congressional Blessing & Debunking the "30-Day Wait" Myth**: Citing the **2017 TCJA Conference Report (H.R. Rep. No. 115-466, Footnote 268)** to show why the Step Transaction Doctrine does not invalidate immediate conversions, and why waiting 30 days merely generates nuisance taxable `Tier 2a` interest.
+  - **Congressional Blessing & Debunking the "30-Day Wait" Myth**: Citing the **2017 TCJA Conference Report (H.R. Rep. No. 115-466, Footnotes 268 & 269)** verbatim to show why immediate conversions are recognized by Congress and why waiting 30 days merely generates nuisance taxable `Tier 2a` interest.
   - **The December 31 Pro-Rata Reconciliation (`IRC § 408(d)(2)`)**: How all Traditional, Rollover, SEP, and SIMPLE IRAs are aggregated on Dec 31 to compute the non-taxable ratio.
-  - **The Mid-Year Job-Hop Bug (Retroactive Pro-Rata Pollution)**: Why rolling a pre-tax 401(k) into a Rollover IRA in October retroactively corrupts a clean Backdoor Roth executed in January of the same calendar year.
+  - **The Mid-Year Job-Hop Bug (Retroactive Pro-Rata Pollution)**: Why rolling a pre-tax 401(k) into a Rollover IRA in October retroactively corrupts a clean Backdoor Roth executed in January of the same calendar year (converting Rollover IRA pre-tax funds and trapping post-tax basis inside the Rollover IRA).
   - **Reverse Rollover Cleanup (`IRC § 408(d)(3)(A)(ii)`)**: Rolling pre-tax IRA dollars into an active employer 401(k) before Dec 31 to restore a `$0` year-end IRA balance (subject to employer plan acceptance of incoming rollovers).
 - **3.3 Adapter 3: The Mega Backdoor Pipeline (`After-Tax 401(k)` via `IRC § 415(c)`)**:
-  - **Dynamic Capacity Formula**: $\text{Capacity} = \min(100\% \text{ Compensation}, \$72,000) - \text{Elective Deferrals} - \text{Employer Match/Nonelective} - \text{Other Annual Additions}$ (subject to plan caps and ACP non-discrimination testing).
+  - **Dynamic Capacity Formula**: $\text{Capacity} = \min(100\% \text{ Compensation}, \$72,000) - \text{Base Elective Deferrals} - \text{Employer Match/Nonelective} - \text{Other Annual Additions}$ (with `IRC § 414(v)` catch-up deferrals of `$8,000` / `$11,250` sitting outside the `$72,000` cap).
   - **Why `IRC § 408(d)(2)` IRA Pro-Rata Does Not Apply**: Complete namespace isolation between `IRC § 401(a)` workplace plans and `IRC § 408` IRAs.
   - **Sub-Account Pro-Rata & `IRS Notice 2014-54` Packet Splitting**: Clarifying that while a partial distribution from an After-Tax 401(k) sub-account pulls a proportionate slice of that sub-account's basis and pre-tax growth, `Notice 2014-54` allows allocating the pre-tax growth to a Traditional IRA and 100% of the after-tax basis to a Roth IRA (`Tier 2b`).
   - **The Standard Execution Pipeline (`After-Tax 401(k) ➔ In-Plan Roth 401(k) ➔ Rollover to Roth IRA`)**:
     - Stage 1: Automated daily in-plan conversion into Designated Roth 401(k); pro-rata lock while funds remain inside the 401(k) under `IRC § 402A(d)(4)`.
-    - Stage 2: Rollover into Roth IRA breaking the pro-rata lock (`Treas. Reg. § 1.408A-10` Q&A-3):
-      - Non-qualified rollover (`Age < 59½`, Q&A-3(b)): After-tax basis maps to **`Tier 1` (Regular Contributions)**—jumping ahead of `Tier 2` conversions—and growth maps to **`Tier 3` (Earnings)**.
-      - Qualified rollover bonus (`Age >= 59½` + 5 years in plan, Q&A-3(a)): 100% of both basis and earnings maps to **`Tier 1`**!
+    - Stage 2: Rollover into Roth IRA breaking the pro-rata lock (`Treas. Reg. § 1.408A-10` Q&A-3(a)):
+      - Non-qualified rollover (`Age < 59½` or `< 5 years on Clock C`, Q&A-3(a)): After-tax basis maps to **`Tier 1` (Regular Contributions)**—jumping ahead of `Tier 2` conversions—and growth maps to **`Tier 3` (Earnings)**.
+      - Qualified rollover bonus (`Age >= 59½` + 5 years on Clock C in plan, Q&A-3(a)): 100% of both basis and earnings maps to **`Tier 1`**!
     - Legacy plan edge case: Direct rollover of raw unconverted after-tax 401(k) funds to Roth IRA writing to `Tier 2b`.
 - **3.4 Adapter 4: Pre-Tax Conversion / Rollover (`Traditional 401(k) / IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2a`**:
   - Populating `Tier 2a` and initializing its per-tranche 5-year conversion recapture clock (`Clock A`).
@@ -148,15 +148,15 @@ flowchart TB
 ### Section 6: The Timer Engine — De-Confusing the Three 5-Year Clocks
 - **6.1 Side-by-Side Comparison Matrix of Clocks A, B, and C**:
   - Scope, start date (`January 1` backdating rule), target tier, and failure consequence.
-- **6.2 Clock A: Per-Tranche IRA Conversion Recapture Clock (`IRC § 408A(d)(3)(F)`)**:
-  - 5-tax-year timer attached *exclusively* to `Tier 2a` taxable conversion principal to prevent bypassing the 10% early withdrawal penalty on pre-tax retirement funds.
+- **6.2 Clock A: Per-Tranche Conversion Recapture Clock (`IRC § 408A(d)(3)(F)` & `§ 402A(c)(4)(D)`)**:
+  - 5-tax-year timer attached *exclusively* to taxable conversion principal (`Tier 2a` IRA conversions and taxable in-plan 401(k) conversions) to prevent bypassing the 10% early withdrawal penalty on pre-tax retirement funds.
   - Statutory proof (`Treas. Reg. § 1.408A-6` Q&A-5(b)) that `Tier 2b` non-taxable conversion basis has **0-day** recapture wait.
 - **6.3 Clock B: Global Roth IRA Qualified Distribution Maturity Clock (`IRC § 408A(d)(2)(B)`)**:
   - Single taxpayer-level 5-tax-year timer starting Jan 1 of the earliest tax year for which a regular contribution, conversion, or rollover entered *any* Roth IRA owned by the taxpayer.
-  - **Critical Non-Transferability Rule (`Treas. Reg. § 1.408A-10` Q&A-4)**: A Designated Roth 401(k)'s 5-year participation clock does *not* transfer to a Roth IRA. Rolling a 10-year-old Roth 401(k) into a brand-new Roth IRA starts Clock B fresh on Jan 1 of the rollover year.
   - Qualifying Events required alongside Clock B to unlock `Tier 3` earnings tax-free: `Age >= 59½`, death, disability (`IRC § 72(m)(7)`), or qualified first-time homebuyer purchase (`$10,000` lifetime cap).
-- **6.4 Clock C: Designated Roth In-Plan Rollover Recapture Overlay (`IRC § 402A(c)(4)(D)`)**:
-  - How a *taxable* in-plan 401(k) conversion carries its own 5-tax-year recapture timer, and why rolling that Designated Roth 401(k) into a Roth IRA preserves Clock C as an independent overlay even though the rolled-over basis sits in `Tier 1`.
+- **6.4 Clock C: Per-Plan Designated Roth 401(k) Maturity Clock & Non-Transferability (`IRC § 402A(d)(2)(B)` & `Treas. Reg. § 1.408A-10` Q&A-4)**:
+  - Each employer's Designated Roth 401(k) maintains its own independent 5-tax-year participation clock (`Clock C`).
+  - **Critical Non-Transferability Rule (`Treas. Reg. § 1.408A-10` Q&A-4)**: `Clock C` does *not* transfer to `Clock B` upon rollover into a Roth IRA. Rolling a 10-year-old Roth 401(k) into a brand-new Roth IRA before age 59½ starts `Clock B` fresh on Jan 1 of the rollover year—whereas waiting until `Age >= 59½` (when `Clock C` is already satisfied inside the plan) converts 100% of both basis and 401(k) earnings into `Tier 1` regular contribution basis (`Q&A-3(a)`).
 
 ### Section 7: Executable State Traces & Unit Test Suite (`GIVEN / WHEN / THEN`)
 Six concrete, step-by-step traces showing before/after ledger state tables, TypeScript state transitions, ordering depletion, timer checks, and exact tax/penalty outputs:
