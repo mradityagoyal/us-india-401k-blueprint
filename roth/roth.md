@@ -231,12 +231,11 @@ Step 1: Non-Deductible Contribution               Step 2: Immediate Roth Convers
 [ Post-Tax Checking ]                             [ Traditional IRA ]
         │                                                  │
         ▼ ($7,500 Cash)                                    ▼ ($7,500 Balance)
-[ Traditional IRA ] ──(Reported: Form 8606 Part I)──> [ Roth IRA: Tier 2b Basis ]
-                                                      (Reported: Form 8606 Part II)
+[ Traditional IRA (Post-Tax Basis) ] ──────────────> [ Roth IRA: Tier 2b Basis ]
 ```
 
-1. **Step 1 (Non-Deductible Contribution)**: The taxpayer deposits up to $7,500 post-tax cash into a standard Traditional IRA. Because income exceeds deduction limits, no tax deduction is claimed. The taxpayer files **IRS Form 8606 (Part I)** with their tax return to establish **$7,500 of post-tax IRA basis**.
-2. **Step 2 (Conversion)**: The taxpayer immediately converts the entire Traditional IRA balance into their Roth IRA. The conversion is reported on **IRS Form 8606 (Part II)**.
+1. **Step 1 (Non-Deductible Contribution)**: The taxpayer deposits up to $7,500 post-tax cash into a standard Traditional IRA. Because income exceeds the statutory deduction limits, no tax deduction is claimed, creating **$7,500 of post-tax IRA basis**.
+2. **Step 2 (Immediate Conversion)**: The taxpayer immediately converts the entire Traditional IRA balance into their Roth IRA.
 
 #### The Ingestion Tag & Exit Rights
 

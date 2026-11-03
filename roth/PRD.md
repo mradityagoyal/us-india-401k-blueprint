@@ -166,14 +166,14 @@ Six concrete, step-by-step traces showing before/after ledger state tables, Type
 - **Trace 5 (`Active In-Plan Conversion Recapture Overlay — Clock C`)**: Rolling over a Designated Roth 401(k) that contains a recent *taxable* in-plan conversion (`IRC § 402A(c)(4)(D)`) and withdrawing within 5 years at age 35 $\rightarrow$ demonstrates how the independent Clock C overlay triggers the 10% recapture tax even when dequeued from `Tier 1`.
 - **Trace 6 (`First Roth IRA Established via Roth 401(k) Rollover — Treas. Reg. § 1.408A-10 Q&A-3 & Q&A-4`)**: Taxpayer participates in a Roth 401(k) for 10 years (`2016–2026`, `$60,000` basis + `$40,000` growth), retires and rolls it into their **very first Roth IRA in 2026 at age 58** (non-qualified rollover: `$60k` to `Tier 1`, `$40k` to `Tier 3`; Clock B starts Jan 1, 2026), and then withdraws `$80,000` in **2028 at age 60** $\rightarrow$ `$60k` `Tier 1` is tax-free, but the `$20k` pulled from `Tier 3` earnings is **taxable as ordinary income** (with `$0` penalty due to age 60) because the Roth IRA's independent 5-year Clock B doesn't mature until 2031! *(Includes comparison Box showing how waiting until age 59½ to execute the rollover makes 100% of the `$100k` enter `Tier 1` under Q&A-3(a)).*
 
-### Section 8: Compliance Telemetry & IRS Reporting Interfaces
-- **8.1 Architectural Separation Table**: Mapping responsibilities across `RothTaxpayerLedger` (conceptual truth), Custodian Reporting (`Form 1099-R`, `Form 5498`), `Form 8606` (Parts I, II, III), `Form 5329` (Part I), and the Taxpayer Evidence Archive.
-- **8.2 Why Custodian `Form 1099-R` Codes (`J`, `T`, `Q`, `G`, `H`) Are "Dumb Telemetry"**: Why brokerages do not track cross-account basis, mark every under-59½ Roth IRA withdrawal as `Code J` with Box 2b (*Taxable amount not determined*) checked, and leave the burden of proof on the taxpayer via `Form 8606` Part III.
-- **8.3 Conversion & Rollover Reporting (`Form 8606` Part II vs. `Form 1040` Line 5a/5b)**: Why Traditional IRA-to-Roth conversions flow through `Form 8606` Part II, whereas direct 401(k)-to-Roth-IRA rollovers are reported on `Form 1040` Lines 5a/5b in the rollover year and enter `Form 8606` Part III Line 24 upon withdrawal.
-
-### Section 9: Summary & Series Context (Preview of Part 2)
+### Section 8: Summary & Series Context (Preview of Part 2)
 - Synthesis of the domestic US Roth IRA Accounting Engine.
 - Forward pointer to **Document 2 (*Cross-Border Roth Integration for US $\rightarrow$ India Returnees*)**: How this exact `RothTaxpayerLedger` state machine interacts with Indian residency transitions (`RNOR` $\rightarrow$ `ROR` $\rightarrow$ `Age 59½ Exit`), why `Tier 1` and `Tier 2b` basis can be extracted tax- and penalty-free without waiting 5 years, and how `Tier 3` earnings behave across borders.
+
+### Appendix: Statutory Telemetry & IRS Reporting Cross-Reference
+- **A.1 Architectural Separation Table**: Mapping responsibilities across `RothTaxpayerLedger` (conceptual truth), Custodian Reporting (`Form 1099-R`, `Form 5498`), `Form 8606` (Parts I, II, III), `Form 5329` (Part I), and the Taxpayer Evidence Archive.
+- **A.2 Why Custodian `Form 1099-R` Codes (`J`, `T`, `Q`, `G`, `H`) Are "Dumb Telemetry"**: Why brokerages do not track cross-account basis, mark every under-59½ Roth IRA withdrawal as `Code J` with Box 2b (*Taxable amount not determined*) checked, and leave the burden of proof on the taxpayer via `Form 8606` Part III.
+- **A.3 Conversion & Rollover Reporting (`Form 8606` Part II vs. `Form 1040` Line 5a/5b)**: Why Traditional IRA-to-Roth conversions flow through `Form 8606` Part II, whereas direct 401(k)-to-Roth-IRA rollovers are reported on `Form 1040` Lines 5a/5b in the rollover year and enter `Form 8606` Part III Line 24 upon withdrawal.
 
 ---
 
@@ -191,7 +191,7 @@ Six concrete, step-by-step traces showing before/after ledger state tables, Type
   - Deterministic 3-Tier Dequeue algorithm, $2 \times 2$ Taxability vs. Penalty matrix, TypeScript evaluation functions (`dequeueWithdrawal`, `calculateTaxableIncome`, `calculateAdditional10PctTax`), and deep-dive into Clocks A, B, and C.
 - [ ] **Step 6: Author Section 7 (The 6 Executable State Traces & Unit Test Suite)**
   - Write Traces 1–6 (`GIVEN / WHEN / THEN`) with TypeScript state objects, before/after ledger tables, and exact tax/penalty calculations.
-- [ ] **Step 7: Author Sections 8 & 9 (Compliance Telemetry, IRS Forms, & Part 2 Preview)**
-  - Custodian `Form 1099-R` codes vs. `Form 8606` Parts I–III vs. `Form 1040` Lines 5a/5b vs. `Form 5329`, plus Summary and Part 2 cross-border preview.
+- [ ] **Step 7: Author Section 8 & Appendix (Summary & Part 2 Preview + Statutory Telemetry Cross-Reference)**
+  - Summary and Part 2 cross-border preview, plus Appendix for custodian `Form 1099-R` codes vs. `Form 8606` Parts I–III vs. `Form 1040` Lines 5a/5b vs. `Form 5329`.
 - [ ] **Step 8: Verification & Quality Audit**
   - Verify all arithmetic across Traces 1–6, check TypeScript syntax and statutory citations, and mark all tasks complete in `roth/PRD.md`.
