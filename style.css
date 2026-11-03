@@ -1,0 +1,325 @@
+/* ==========================================================================
+   US ➔ India 401(k) Blueprint - Docsify Shell & UI Styles
+   Complements github-markdown-css by styling the Docsify SPA shell
+   (Sidebar, Search, Mermaid Diagrams, Copy-Code, Theme Toggle, Scrollbars)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Theme Variables (Light / Dark)
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --theme-color: #0969da;
+  --shell-bg: #ffffff;
+  --shell-sidebar-bg: #f6f8fa;
+  --shell-border: #d0d7de;
+  --shell-text: #1f2328;
+  --shell-text-muted: #656d76;
+  --shell-sidebar-active: rgba(9, 105, 218, 0.1);
+  --shell-search-input: #ffffff;
+  --shell-scrollbar-thumb: #d0d7de;
+  --shell-scrollbar-thumb-hover: #8c959f;
+  --shell-scrollbar-track: #ffffff;
+  --shell-card-bg: #f6f8fa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --theme-color: #58a6ff;
+    --shell-bg: #0d1117;
+    --shell-sidebar-bg: #0d1117;
+    --shell-border: #30363d;
+    --shell-text: #e6edf3;
+    --shell-text-muted: #8b949e;
+    --shell-sidebar-active: rgba(56, 139, 253, 0.12);
+    --shell-search-input: #161b22;
+    --shell-scrollbar-thumb: #30363d;
+    --shell-scrollbar-thumb-hover: #8b949e;
+    --shell-scrollbar-track: #0d1117;
+    --shell-card-bg: #161b22;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --theme-color: #58a6ff;
+  --shell-bg: #0d1117;
+  --shell-sidebar-bg: #0d1117;
+  --shell-border: #30363d;
+  --shell-text: #e6edf3;
+  --shell-text-muted: #8b949e;
+  --shell-sidebar-active: rgba(56, 139, 253, 0.12);
+  --shell-search-input: #161b22;
+  --shell-scrollbar-thumb: #30363d;
+  --shell-scrollbar-thumb-hover: #8b949e;
+  --shell-scrollbar-track: #0d1117;
+  --shell-card-bg: #161b22;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --theme-color: #0969da;
+  --shell-bg: #ffffff;
+  --shell-sidebar-bg: #f6f8fa;
+  --shell-border: #d0d7de;
+  --shell-text: #1f2328;
+  --shell-text-muted: #656d76;
+  --shell-sidebar-active: rgba(9, 105, 218, 0.1);
+  --shell-search-input: #ffffff;
+  --shell-scrollbar-thumb: #d0d7de;
+  --shell-scrollbar-thumb-hover: #8c959f;
+  --shell-scrollbar-track: #ffffff;
+  --shell-card-bg: #f6f8fa;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base Document & Custom Scrollbars
+   -------------------------------------------------------------------------- */
+body, html {
+  background-color: var(--shell-bg) !important;
+  color: var(--shell-text) !important;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* VS Code style scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--shell-scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--shell-scrollbar-thumb);
+  border-radius: 5px;
+  border: 2px solid var(--shell-scrollbar-track);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--shell-scrollbar-thumb-hover);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--shell-scrollbar-thumb) var(--shell-scrollbar-track);
+}
+
+/* --------------------------------------------------------------------------
+   3. Markdown Content Container Integration
+   -------------------------------------------------------------------------- */
+.markdown-section {
+  max-width: 920px;
+  padding: 36px 48px;
+  box-sizing: border-box;
+}
+
+/* Override default Docsify Vue link colors to match GitHub Blue */
+.markdown-section a {
+  color: var(--theme-color) !important;
+  text-decoration: none;
+  font-weight: 500;
+}
+.markdown-section a:hover {
+  text-decoration: underline;
+}
+
+/* Subtle anchor hash icon on heading hover */
+.markdown-section .anchor {
+  text-decoration: none !important;
+}
+.markdown-section .anchor span {
+  color: var(--theme-color) !important;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.markdown-section h1:hover .anchor span,
+.markdown-section h2:hover .anchor span,
+.markdown-section h3:hover .anchor span,
+.markdown-section h4:hover .anchor span {
+  opacity: 0.8;
+}
+
+/* Table zebra and hover smoothing */
+.markdown-section table tr {
+  transition: background-color 0.15s ease;
+}
+.markdown-section table tr:hover {
+  background-color: rgba(110, 118, 129, 0.12) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Docsify Sidebar
+   -------------------------------------------------------------------------- */
+.sidebar {
+  background-color: var(--shell-sidebar-bg) !important;
+  border-right: 1px solid var(--shell-border) !important;
+  font-size: 14px;
+  color: var(--shell-text) !important;
+}
+.sidebar > h1 {
+  margin: 1.2rem 1.2rem 0 !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+}
+.sidebar > h1 a {
+  color: var(--shell-text) !important;
+  text-decoration: none !important;
+}
+.sidebar ul {
+  margin: 0 !important;
+  padding-left: 0 !important;
+}
+.sidebar ul li {
+  margin: 2px 0 !important;
+  list-style: none !important;
+}
+.sidebar ul li a {
+  color: var(--shell-text-muted) !important;
+  display: block !important;
+  padding: 6px 16px !important;
+  border-radius: 6px !important;
+  font-size: 13.5px !important;
+  line-height: 1.4 !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+.sidebar ul li a:hover {
+  color: var(--theme-color) !important;
+  background-color: rgba(110, 118, 129, 0.08) !important;
+}
+.sidebar ul li.active > a {
+  color: var(--theme-color) !important;
+  background-color: var(--shell-sidebar-active) !important;
+  font-weight: 600 !important;
+  border-right: none !important;
+}
+.sidebar-toggle {
+  background-color: var(--shell-sidebar-bg) !important;
+  border-radius: 0 8px 8px 0;
+  bottom: 24px !important;
+}
+.sidebar-toggle span {
+  background-color: var(--shell-text-muted) !important;
+}
+.sidebar-toggle:hover span {
+  background-color: var(--theme-color) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Search Plugin
+   -------------------------------------------------------------------------- */
+.search {
+  border-bottom: 1px solid var(--shell-border) !important;
+  padding: 14px 16px !important;
+}
+.search input {
+  background-color: var(--shell-search-input) !important;
+  border: 1px solid var(--shell-border) !important;
+  color: var(--shell-text) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search input:focus {
+  border-color: var(--theme-color) !important;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2) !important;
+}
+.search input::placeholder {
+  color: var(--shell-text-muted) !important;
+}
+.search .results-panel {
+  background-color: var(--shell-bg) !important;
+}
+.search .matching-post {
+  border-bottom: 1px solid var(--shell-border) !important;
+  padding: 12px 16px !important;
+}
+.search .matching-post h2 {
+  font-size: 15px !important;
+  margin: 0 0 6px !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.search .matching-post h2 a {
+  color: var(--theme-color) !important;
+}
+.search .matching-post p {
+  color: var(--shell-text-muted) !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+.search .search-keyword,
+.search .matching-post em {
+  background-color: rgba(240, 136, 62, 0.25) !important;
+  color: #ffa657 !important;
+  padding: 1px 3px !important;
+  border-radius: 3px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Copy Code Button
+   -------------------------------------------------------------------------- */
+.docsify-copy-code-button {
+  background-color: var(--shell-card-bg) !important;
+  color: var(--shell-text-muted) !important;
+  border: 1px solid var(--shell-border) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+  transition: all 0.2s ease !important;
+}
+.docsify-copy-code-button:hover {
+  background-color: var(--shell-border) !important;
+  color: var(--shell-text) !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. Mermaid Diagram Card Container
+   -------------------------------------------------------------------------- */
+.mermaid {
+  background-color: var(--shell-card-bg) !important;
+  border: 1px solid var(--shell-border) !important;
+  border-radius: 8px;
+  padding: 24px 16px;
+  margin: 24px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* --------------------------------------------------------------------------
+   8. Floating Theme Toggle Pill (Modern blurred glass style)
+   -------------------------------------------------------------------------- */
+.theme-toggle-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 1000;
+  background: var(--shell-card-bg);
+  border: 1px solid var(--shell-border);
+  color: var(--shell-text);
+  border-radius: 24px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.theme-toggle-btn:hover {
+  background: var(--shell-border);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+

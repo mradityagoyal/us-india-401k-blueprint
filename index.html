@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Technical Design Document & Architectural Blueprint for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and cross-border estate planning for returning Indian software engineers.">
+  <meta name="description"
+    content="Technical Design Document & Architectural Blueprint for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and cross-border estate planning for returning Indian software engineers.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <script>
     // Immediate Theme Detection (Prevents FOUC / White Flash on Dark Mode Devices)
-    (function() {
+    (function () {
       try {
         var saved = localStorage.getItem('blueprint-theme');
         var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -17,322 +19,26 @@
         } else if (saved === 'light') {
           document.documentElement.setAttribute('data-theme', 'light');
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
-  <style>
-    /* CSS Variables for Light / Dark Themes */
-    :root {
-      --theme-color: #1a73e8;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f6f8fa;
-      --border-color: #e1e4e8;
-      --text-primary: #24292f;
-      --text-heading: #1f2328;
-      --text-muted: #57606a;
-      --link-color: #0969da;
-      --code-bg: #f6f8fa;
-      --code-color: #24292f;
-      --table-border: #d0d7de;
-      --table-zebra: #f6f8fa;
-      --blockquote-bg: #f6f8fa;
-      --blockquote-border: #0969da;
-      --search-input-bg: #ffffff;
-      --sidebar-toggle-bg: rgba(255, 255, 255, 0.85);
-    }
 
-    /* System Dark Mode (Automatic default when OS prefers dark and no explicit light override) */
+  <!-- Docsify Core Theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
+  <!-- Standard Open-Source GitHub Markdown Stylesheet (VS Code / GitHub Dark & Light) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown.min.css">
+  <!-- Blueprint Shell & Navigation Layout -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* System & Explicit Theme Color-Scheme Signals */
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --theme-color: #58a6ff;
-        --bg-primary: #0d1117;
-        --bg-secondary: #161b22;
-        --border-color: #30363d;
-        --text-primary: #c9d1d9;
-        --text-heading: #f0f6fc;
-        --text-muted: #8b949e;
-        --link-color: #58a6ff;
-        --code-bg: #161b22;
-        --code-color: #e6edf3;
-        --table-border: #30363d;
-        --table-zebra: #161b22;
-        --blockquote-bg: #161b22;
-        --blockquote-border: #58a6ff;
-        --search-input-bg: #161b22;
-        --sidebar-toggle-bg: rgba(13, 17, 23, 0.85);
+        color-scheme: dark;
       }
     }
-
-    /* Explicit Dark Theme */
     :root[data-theme="dark"] {
-      --theme-color: #58a6ff;
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --border-color: #30363d;
-      --text-primary: #c9d1d9;
-      --text-heading: #f0f6fc;
-      --text-muted: #8b949e;
-      --link-color: #58a6ff;
-      --code-bg: #161b22;
-      --code-color: #e6edf3;
-      --table-border: #30363d;
-      --table-zebra: #161b22;
-      --blockquote-bg: #161b22;
-      --blockquote-border: #58a6ff;
-      --search-input-bg: #161b22;
-      --sidebar-toggle-bg: rgba(13, 17, 23, 0.85);
-    }
-
-    /* Explicit Light Theme */
-    :root[data-theme="light"] {
-      --theme-color: #1a73e8;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f6f8fa;
-      --border-color: #e1e4e8;
-      --text-primary: #24292f;
-      --text-heading: #1f2328;
-      --text-muted: #57606a;
-      --link-color: #0969da;
-      --code-bg: #f6f8fa;
-      --code-color: #24292f;
-      --table-border: #d0d7de;
-      --table-zebra: #f6f8fa;
-      --blockquote-bg: #f6f8fa;
-      --blockquote-border: #0969da;
-      --search-input-bg: #ffffff;
-      --sidebar-toggle-bg: rgba(255, 255, 255, 0.85);
-    }
-
-    body, html {
-      background-color: var(--bg-primary) !important;
-      color: var(--text-primary) !important;
-    }
-    .markdown-section {
-      max-width: 900px;
-      padding: 30px 40px;
-      color: var(--text-primary) !important;
-    }
-    .markdown-section h1,
-    .markdown-section h2,
-    .markdown-section h3,
-    .markdown-section h4,
-    .markdown-section h5,
-    .markdown-section h6,
-    .markdown-section strong {
-      color: var(--text-heading) !important;
-    }
-    .markdown-section a {
-      color: var(--link-color) !important;
-    }
-    .markdown-section hr {
-      border: none !important;
-      border-bottom: 1px solid var(--border-color) !important;
-    }
-    .markdown-section table {
-      color: var(--text-primary) !important;
-      border-collapse: collapse;
-      display: table !important;
-      width: 100%;
-      overflow-x: auto;
-    }
-    .markdown-section th {
-      background-color: var(--bg-secondary) !important;
-      color: var(--text-heading) !important;
-      border: 1px solid var(--table-border) !important;
-      font-weight: 600;
-    }
-    .markdown-section td {
-      border: 1px solid var(--table-border) !important;
-    }
-    .markdown-section tr {
-      border-top: 1px solid var(--table-border) !important;
-      background-color: var(--bg-primary) !important;
-    }
-    .markdown-section tr:nth-child(2n) {
-      background-color: var(--table-zebra) !important;
-    }
-    .markdown-section code {
-      background-color: var(--code-bg) !important;
-      color: var(--code-color) !important;
-      border-radius: 4px;
-      padding: 2px 6px;
-    }
-    .markdown-section pre {
-      background-color: var(--code-bg) !important;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-    }
-    .markdown-section pre > code {
-      background-color: var(--code-bg) !important;
-      color: var(--code-color) !important;
-    }
-    .markdown-section blockquote {
-      background-color: var(--blockquote-bg) !important;
-      border-left: 4px solid var(--blockquote-border) !important;
-      color: var(--text-muted) !important;
-    }
-    .markdown-section p.tip {
-      background-color: var(--blockquote-bg) !important;
-      color: var(--text-primary) !important;
-    }
-    .markdown-section p.warn {
-      background-color: rgba(234, 111, 90, 0.15) !important;
-      color: var(--text-primary) !important;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      background-color: var(--bg-primary) !important;
-      border-right: 1px solid var(--border-color) !important;
-      font-size: 14px;
-      color: var(--text-primary) !important;
-    }
-    .sidebar>h1 a {
-      color: var(--text-heading) !important;
-    }
-    .sidebar ul li a {
-      color: var(--text-muted) !important;
-      transition: color 0.2s ease;
-    }
-    .sidebar ul li a:hover,
-    .sidebar ul li.active > a {
-      color: var(--theme-color) !important;
-      font-weight: 600;
-    }
-    .sidebar-toggle {
-      background-color: var(--sidebar-toggle-bg) !important;
-    }
-
-    /* Search Plugin */
-    .search {
-      border-bottom: 1px solid var(--border-color) !important;
-    }
-    .search input {
-      background-color: var(--search-input-bg) !important;
-      border: 1px solid var(--border-color) !important;
-      color: var(--text-primary) !important;
-      border-radius: 4px;
-    }
-    .search input:focus {
-      border-color: var(--theme-color) !important;
-    }
-    .search .results-panel {
-      background-color: var(--bg-primary) !important;
-    }
-    .search .matching-post {
-      border-bottom: 1px solid var(--border-color) !important;
-    }
-    .search .matching-post p {
-      color: var(--text-muted) !important;
-    }
-
-    /* Copy Code Button */
-    .docsify-copy-code-button {
-      background-color: var(--bg-secondary) !important;
-      color: var(--text-muted) !important;
-      border: 1px solid var(--border-color) !important;
-    }
-
-    /* Mermaid */
-    .mermaid {
-      text-align: center;
-      margin: 25px 0;
-    }
-
-    /* Floating Theme Toggle Pill (Thumb-friendly on mobile, top-layer) */
-    .theme-toggle-btn {
-      position: fixed;
-      bottom: 22px;
-      right: 22px;
-      z-index: 1000;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      color: var(--text-primary);
-      border-radius: 24px;
-      padding: 8px 14px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
-      transition: all 0.2s ease;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    .theme-toggle-btn:hover {
-      background: var(--border-color);
-      transform: translateY(-1px);
-    }
-
-    /* Syntax Highlighting for Dark Mode */
-    :root[data-theme="dark"] .token.comment,
-    :root[data-theme="dark"] .token.prolog,
-    :root[data-theme="dark"] .token.doctype,
-    :root[data-theme="dark"] .token.cdata,
-    :root[data-theme="dark"] .token.punctuation {
-      color: #8b949e !important;
-    }
-    :root[data-theme="dark"] .token.property,
-    :root[data-theme="dark"] .token.tag,
-    :root[data-theme="dark"] .token.boolean,
-    :root[data-theme="dark"] .token.number,
-    :root[data-theme="dark"] .token.constant {
-      color: #79c0ff !important;
-    }
-    :root[data-theme="dark"] .token.selector,
-    :root[data-theme="dark"] .token.attr-name,
-    :root[data-theme="dark"] .token.string,
-    :root[data-theme="dark"] .token.char,
-    :root[data-theme="dark"] .token.builtin {
-      color: #a5d6ff !important;
-    }
-    :root[data-theme="dark"] .token.operator,
-    :root[data-theme="dark"] .token.entity,
-    :root[data-theme="dark"] .token.url,
-    :root[data-theme="dark"] .token.variable {
-      color: #d2a8ff !important;
-    }
-    :root[data-theme="dark"] .token.atrule,
-    :root[data-theme="dark"] .token.attr-value,
-    :root[data-theme="dark"] .token.keyword {
-      color: #ff7b72 !important;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) .token.comment,
-      :root:not([data-theme="light"]) .token.prolog,
-      :root:not([data-theme="light"]) .token.doctype,
-      :root:not([data-theme="light"]) .token.cdata,
-      :root:not([data-theme="light"]) .token.punctuation {
-        color: #8b949e !important;
-      }
-      :root:not([data-theme="light"]) .token.property,
-      :root:not([data-theme="light"]) .token.tag,
-      :root:not([data-theme="light"]) .token.boolean,
-      :root:not([data-theme="light"]) .token.number,
-      :root:not([data-theme="light"]) .token.constant {
-        color: #79c0ff !important;
-      }
-      :root:not([data-theme="light"]) .token.selector,
-      :root:not([data-theme="light"]) .token.attr-name,
-      :root:not([data-theme="light"]) .token.string,
-      :root:not([data-theme="light"]) .token.char,
-      :root:not([data-theme="light"]) .token.builtin {
-        color: #a5d6ff !important;
-      }
-      :root:not([data-theme="light"]) .token.operator,
-      :root:not([data-theme="light"]) .token.entity,
-      :root:not([data-theme="light"]) .token.url,
-      :root:not([data-theme="light"]) .token.variable {
-        color: #d2a8ff !important;
-      }
-      :root:not([data-theme="light"]) .token.atrule,
-      :root:not([data-theme="light"]) .token.attr-value,
-      :root:not([data-theme="light"]) .token.keyword {
-        color: #ff7b72 !important;
-      }
+      color-scheme: dark;
     }
   </style>
 
@@ -340,7 +46,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWQ3VYSY41"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
 
     // Privacy-centric Consent Mode: denies analytics & ad storage to prevent any cookies from being set
     gtag('consent', 'default', {
@@ -361,114 +67,211 @@
     });
   </script>
 </head>
-<body>
-  <noscript>
-    <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222;">
-      <h1>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</h1>
-      <p>An open-source, adversarially audited technical architecture and execution blueprint for Indian software engineers returning from the United States (H-1B / L-1) to India.</p>
-      <p><em>This web portal dynamically renders Markdown documentation via Docsify. Because JavaScript is currently disabled or unavailable, you can read the complete documents directly via the links below:</em></p>
-      <ul>
-        <li>📖 <strong><a href="TECHNICAL_DESIGN_DOCUMENT.md">Full Technical Design Document (TECHNICAL_DESIGN_DOCUMENT.md)</a></strong></li>
-        <li>🏠 <strong><a href="README.md">Overview & Executive Summary (README.md)</a></strong></li>
-        <li>📁 <strong><a href="https://github.com/mradityagoyal/us-india-401k-blueprint">GitHub Source Repository</a></strong></li>
-      </ul>
-    </div>
-  </noscript>
 
-  <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">🌓 Theme</button>
-  <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
-  <script>
-    function isDarkEffective() {
-      var attr = document.documentElement.getAttribute('data-theme');
-      if (attr === 'dark') return true;
-      if (attr === 'light') return false;
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
 
-    function updateThemeToggleUI() {
-      var btn = document.getElementById('theme-toggle-btn');
-      if (!btn) return;
-      var dark = isDarkEffective();
-      btn.innerHTML = dark ? '☀️ Light' : '🌙 Dark';
-      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-    }
+  <body class="markdown-body">
+    <noscript>
+      <div
+        style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222;">
+        <h1>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</h1>
+        <p>An open-source, adversarially audited technical architecture and execution blueprint for Indian software
+          engineers returning from the United States (H-1B / L-1) to India.</p>
+        <p><em>This web portal dynamically renders Markdown documentation via Docsify. Because JavaScript is currently
+            disabled or unavailable, you can read the complete documents directly via the links below:</em></p>
+        <ul>
+          <li>📖 <strong><a href="TECHNICAL_DESIGN_DOCUMENT.md">Full Technical Design Document
+                (TECHNICAL_DESIGN_DOCUMENT.md)</a></strong></li>
+          <li>🏠 <strong><a href="README.md">Overview & Executive Summary (README.md)</a></strong></li>
+          <li>📁 <strong><a href="https://github.com/mradityagoyal/us-india-401k-blueprint">GitHub Source
+                Repository</a></strong></li>
+        </ul>
+      </div>
+    </noscript>
 
-    function toggleTheme() {
-      var currentDark = isDarkEffective();
-      var nextTheme = currentDark ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', nextTheme);
-      localStorage.setItem('blueprint-theme', nextTheme);
-      updateThemeToggleUI();
-      // Reload to re-render Mermaid SVG palettes consistently
-      window.location.reload();
-    }
+    <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">🌓
+      Theme</button>
+    <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
+    <script>
+      function isDarkEffective() {
+        var attr = document.documentElement.getAttribute('data-theme');
+        if (attr === 'dark') return true;
+        if (attr === 'light') return false;
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
 
-    // Auto-update toggle UI when DOM is ready
-    document.addEventListener('DOMContentLoaded', updateThemeToggleUI);
+      function updateThemeToggleUI() {
+        var btn = document.getElementById('theme-toggle-btn');
+        if (!btn) return;
+        var dark = isDarkEffective();
+        btn.innerHTML = dark ? '☀️ Light' : '🌙 Dark';
+        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      }
 
-    // Listen to OS system color scheme changes if user hasn't explicitly set a local preference
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        if (!localStorage.getItem('blueprint-theme')) {
-          if (e.matches) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-          } else {
-            document.documentElement.removeAttribute('data-theme');
-          }
-          updateThemeToggleUI();
-          window.location.reload();
-        }
-      });
-    }
+      function toggleTheme() {
+        var currentDark = isDarkEffective();
+        var nextTheme = currentDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('blueprint-theme', nextTheme);
+        updateThemeToggleUI();
+        // Reload to re-render Mermaid SVG palettes consistently
+        window.location.reload();
+      }
 
-    window.$docsify = {
-      name: '401(k) Blueprint',
-      repo: 'https://github.com/mradityagoyal/us-india-401k-blueprint',
-      loadSidebar: true,
-      subMaxLevel: 3,
-      auto2top: true,
-      homepage: 'README.md',
-      search: {
-        maxAge: 86400000,
-        paths: 'auto',
-        placeholder: 'Search Blueprint...',
-        noData: 'No results found',
-        depth: 4
-      },
-      copyCode: {
-        buttonText: 'Copy',
-        errorText: 'Error',
-        successText: 'Copied'
-      },
-      plugins: [
-        function(hook) {
-          hook.doneEach(function() {
-            // Track pageviews on SPA route changes (e.g., #/ and #/TECHNICAL_DESIGN_DOCUMENT)
-            if (typeof gtag === 'function') {
-              gtag('event', 'page_view', {
-                page_title: document.title,
-                page_location: window.location.href,
-                page_path: window.location.hash || '/'
-              });
+      // Auto-update toggle UI when DOM is ready
+      document.addEventListener('DOMContentLoaded', updateThemeToggleUI);
+
+      // Listen to OS system color scheme changes if user hasn't explicitly set a local preference
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+          if (!localStorage.getItem('blueprint-theme')) {
+            if (e.matches) {
+              document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+              document.documentElement.removeAttribute('data-theme');
             }
             updateThemeToggleUI();
-          });
-        }
-      ]
-    }
-  </script>
-  <!-- Pinned Docsify Core & Plugins -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@3.0.2/dist/docsify-copy-code.min.js"></script>
-  <!-- Pinned Mermaid Diagrams Support -->
-  <script src="//cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
-  <script>
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: isDarkEffective() ? 'dark' : 'default'
-    });
-  </script>
-</body>
+            window.location.reload();
+          }
+        });
+      }
+
+      // GitHub-Flavored Markdown Alerts Transformer (converts > [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION])
+      function renderGitHubAlerts() {
+        var alerts = {
+          note: {
+            label: 'Note',
+            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
+          },
+          tip: {
+            label: 'Tip',
+            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.628-.756-1.346-1.62-1.346-3.279C2.75 2.56 5.092 0 8 0s5.25 2.56 5.25 5.25c0 1.659-.718 2.523-1.346 3.279-.174.209-.348.423-.542.68-.207.3-.33.565-.37.847a.751.751 0 0 1-1.485-.211c.084-.594.337-1.079.621-1.49.204-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5Zm1 3h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1 0-1.5Z"></path></svg>'
+          },
+          important: {
+            label: 'Important',
+            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2.5a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
+          },
+          warning: {
+            label: 'Warning',
+            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
+          },
+          caution: {
+            label: 'Caution',
+            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6c0 .199-.079.389-.22.53l-4.25 4.25a.749.749 0 0 1-.53.22H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
+          }
+        };
+
+        var bqs = document.querySelectorAll('.markdown-section blockquote');
+        bqs.forEach(function (bq) {
+          if (bq.classList.contains('markdown-alert')) return;
+          var p = bq.querySelector('p');
+          if (!p) return;
+          var match = p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>|\s*\n)?\s*/i);
+          if (match) {
+            var key = match[1].toLowerCase();
+            var alertConfig = alerts[key] || alerts.note;
+            bq.classList.add('markdown-alert', 'markdown-alert-' + key);
+            p.innerHTML = p.innerHTML.replace(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>|\s*\n)?\s*/i, '');
+            if (p.innerHTML.trim() === '') {
+              p.remove();
+            }
+            var titleElem = document.createElement('p');
+            titleElem.className = 'markdown-alert-title';
+            titleElem.innerHTML = alertConfig.icon + ' ' + alertConfig.label;
+            bq.insertBefore(titleElem, bq.firstChild);
+          }
+        });
+      }
+
+      window.$docsify = {
+        name: '401(k) Blueprint',
+        repo: 'https://github.com/mradityagoyal/us-india-401k-blueprint',
+        loadSidebar: true,
+        subMaxLevel: 3,
+        auto2top: true,
+        homepage: 'README.md',
+        search: {
+          maxAge: 86400000,
+          paths: 'auto',
+          placeholder: 'Search Blueprint...',
+          noData: 'No results found',
+          depth: 4
+        },
+        copyCode: {
+          buttonText: 'Copy',
+          errorText: 'Error',
+          successText: 'Copied'
+        },
+        plugins: [
+          function (hook) {
+            hook.doneEach(function () {
+              // Ensure Docsify content has github-markdown-css class
+              var article = document.querySelector('.markdown-section');
+              if (article && !article.classList.contains('markdown-body')) {
+                article.classList.add('markdown-body');
+              }
+
+              // Track pageviews on SPA route changes (e.g., #/ and #/TECHNICAL_DESIGN_DOCUMENT)
+              if (typeof gtag === 'function') {
+                gtag('event', 'page_view', {
+                  page_title: document.title,
+                  page_location: window.location.href,
+                  page_path: window.location.hash || '/'
+                });
+              }
+
+              renderGitHubAlerts();
+              updateThemeToggleUI();
+            });
+          }
+        ]
+      }
+    </script>
+    <!-- Pinned Docsify Core & Plugins -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@3.0.2/dist/docsify-copy-code.min.js"></script>
+    <!-- Additional Prism Languages for Syntax Highlighting -->
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+    <!-- Pinned Mermaid Diagrams Support -->
+    <script src="//cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
+    <script>
+      var isDarkMermaid = isDarkEffective();
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDarkEffective() ? 'dark' : 'default',
+        themeVariables: isDarkMermaid ? {
+          darkMode: true,
+          background: '#161b22',
+          mainBkg: '#161b22',
+          primaryColor: '#161b22',
+          primaryTextColor: '#e6edf3',
+          primaryBorderColor: '#58a6ff',
+          lineColor: '#58a6ff',
+          secondaryColor: '#21262d',
+          tertiaryColor: '#161b22',
+          noteBkgColor: '#21262d',
+          noteTextColor: '#c9d1d9',
+          noteBorderColor: '#30363d',
+          actorBkg: '#161b22',
+          actorBorder: '#58a6ff',
+          actorTextColor: '#f0f6fc',
+          actorLineColor: '#30363d',
+          signalColor: '#79c0ff',
+          signalTextColor: '#f0f6fc',
+          labelBoxBkgColor: '#161b22',
+          labelBoxBorderColor: '#30363d',
+          labelTextColor: '#f0f6fc',
+          loopTextColor: '#c9d1d9',
+          activationBorderColor: '#58a6ff',
+          activationBkgColor: '#21262d',
+          sequenceNumberColor: '#0d1117'
+        } : {}
+      });
+    </script>
+  </body>
+
 </html>
