@@ -14,11 +14,8 @@
       try {
         var saved = localStorage.getItem('blueprint-theme');
         var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (saved === 'dark' || (!saved && prefersDark)) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        } else if (saved === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-        }
+        var theme = (saved === 'dark' || (!saved && prefersDark)) ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
       } catch (e) { }
     })();
   </script>

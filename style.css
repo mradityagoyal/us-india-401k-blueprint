@@ -74,7 +74,81 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Base Document & Custom Scrollbars
+   2. Robust github-markdown-css Theme Synchronization
+   (Ensures explicit manual theme toggle completely overrides OS dark/light)
+   -------------------------------------------------------------------------- */
+:root[data-theme="light"],
+:root[data-theme="light"] body,
+:root[data-theme="light"] .markdown-body,
+:root[data-theme="light"] .markdown-section,
+[data-theme="light"] .markdown-body {
+  color-scheme: light !important;
+  --bgColor-default: #ffffff !important;
+  --bgColor-muted: #f6f8fa !important;
+  --bgColor-neutral-muted: rgba(129, 139, 152, 0.12) !important;
+  --bgColor-attention-muted: #fff8c5 !important;
+  --borderColor-default: #d1d9e0 !important;
+  --borderColor-muted: rgba(209, 217, 224, 0.7) !important;
+  --borderColor-neutral-muted: rgba(209, 217, 224, 0.7) !important;
+  --borderColor-accent-emphasis: #0969da !important;
+  --borderColor-success-emphasis: #1a7f37 !important;
+  --borderColor-attention-emphasis: #9a6700 !important;
+  --borderColor-danger-emphasis: #cf222e !important;
+  --borderColor-done-emphasis: #8250df !important;
+  --fgColor-default: #1f2328 !important;
+  --fgColor-muted: #59636e !important;
+  --fgColor-accent: #0969da !important;
+  --fgColor-success: #1a7f37 !important;
+  --fgColor-attention: #9a6700 !important;
+  --fgColor-danger: #d1242f !important;
+  --fgColor-done: #8250df !important;
+  --color-prettylights-syntax-comment: #59636e !important;
+  --color-prettylights-syntax-constant: #0550ae !important;
+  --color-prettylights-syntax-entity: #6639ba !important;
+  --color-prettylights-syntax-keyword: #cf222e !important;
+  --color-prettylights-syntax-string: #0a3069 !important;
+  --color-prettylights-syntax-variable: #953800 !important;
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+}
+
+:root[data-theme="dark"],
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .markdown-body,
+:root[data-theme="dark"] .markdown-section,
+[data-theme="dark"] .markdown-body {
+  color-scheme: dark !important;
+  --bgColor-default: #0d1117 !important;
+  --bgColor-muted: #151b23 !important;
+  --bgColor-neutral-muted: rgba(101, 108, 118, 0.2) !important;
+  --bgColor-attention-muted: rgba(187, 128, 9, 0.15) !important;
+  --borderColor-default: #3d444d !important;
+  --borderColor-muted: rgba(61, 68, 77, 0.7) !important;
+  --borderColor-neutral-muted: rgba(61, 68, 77, 0.7) !important;
+  --borderColor-accent-emphasis: #1f6feb !important;
+  --borderColor-success-emphasis: #238636 !important;
+  --borderColor-attention-emphasis: #9e6a03 !important;
+  --borderColor-danger-emphasis: #da3633 !important;
+  --borderColor-done-emphasis: #8957e5 !important;
+  --fgColor-default: #f0f6fc !important;
+  --fgColor-muted: #9198a1 !important;
+  --fgColor-accent: #4493f8 !important;
+  --fgColor-success: #3fb950 !important;
+  --fgColor-attention: #d29922 !important;
+  --fgColor-danger: #f85149 !important;
+  --fgColor-done: #ab7df8 !important;
+  --color-prettylights-syntax-comment: #9198a1 !important;
+  --color-prettylights-syntax-constant: #79c0ff !important;
+  --color-prettylights-syntax-entity: #d2a8ff !important;
+  --color-prettylights-syntax-keyword: #ff7b72 !important;
+  --color-prettylights-syntax-string: #a5d6ff !important;
+  --color-prettylights-syntax-variable: #ffa657 !important;
+  background-color: #0d1117 !important;
+  color: #f0f6fc !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base Document & Custom Scrollbars
    -------------------------------------------------------------------------- */
 body, html {
   background-color: var(--shell-bg) !important;
@@ -106,12 +180,30 @@ body, html {
 }
 
 /* --------------------------------------------------------------------------
-   3. Markdown Content Container Integration
+   4. Markdown Content Container Integration
    -------------------------------------------------------------------------- */
 .markdown-section {
   max-width: 920px;
   padding: 36px 48px;
   box-sizing: border-box;
+  background-color: transparent !important;
+  color: var(--fgColor-default) !important;
+}
+
+.markdown-section p,
+.markdown-section li,
+.markdown-section blockquote {
+  color: var(--fgColor-default) !important;
+}
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section h5,
+.markdown-section h6,
+.markdown-section strong {
+  color: var(--fgColor-default) !important;
 }
 
 /* Override default Docsify Vue link colors to match GitHub Blue */
@@ -140,16 +232,157 @@ body, html {
   opacity: 0.8;
 }
 
-/* Table zebra and hover smoothing */
+/* Table styling synchronized with theme tokens */
+.markdown-section table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+  margin: 20px 0 !important;
+  border: 1px solid var(--borderColor-default) !important;
+}
+.markdown-section table th {
+  background-color: var(--bgColor-muted) !important;
+  color: var(--fgColor-default) !important;
+  border: 1px solid var(--borderColor-default) !important;
+  font-weight: 600 !important;
+  padding: 10px 14px !important;
+}
+.markdown-section table td {
+  border: 1px solid var(--borderColor-default) !important;
+  color: var(--fgColor-default) !important;
+  padding: 10px 14px !important;
+}
 .markdown-section table tr {
+  background-color: var(--bgColor-default) !important;
   transition: background-color 0.15s ease;
 }
+.markdown-section table tr:nth-child(2n) {
+  background-color: var(--bgColor-muted) !important;
+}
 .markdown-section table tr:hover {
-  background-color: rgba(110, 118, 129, 0.12) !important;
+  background-color: var(--bgColor-neutral-muted) !important;
+}
+
+/* GitHub Alert styling with tinted backgrounds */
+.markdown-alert {
+  padding: 12px 16px !important;
+  margin: 18px 0 !important;
+  border-left: 4px solid !important;
+  border-radius: 0 6px 6px 0 !important;
+  color: var(--fgColor-default) !important;
+}
+.markdown-alert p {
+  color: var(--fgColor-default) !important;
+  margin: 6px 0 !important;
+}
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  margin: 0 0 8px 0 !important;
+}
+.markdown-alert .markdown-alert-title svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Tinted Alert Backgrounds in Light Theme */
+:root[data-theme="light"] .markdown-alert-note,
+.markdown-alert-note {
+  background-color: #ddf4ff !important;
+  border-left-color: #0969da !important;
+}
+:root[data-theme="light"] .markdown-alert-note .markdown-alert-title,
+.markdown-alert-note .markdown-alert-title {
+  color: #0969da !important;
+}
+
+:root[data-theme="light"] .markdown-alert-tip,
+.markdown-alert-tip {
+  background-color: #dafbe1 !important;
+  border-left-color: #1a7f37 !important;
+}
+:root[data-theme="light"] .markdown-alert-tip .markdown-alert-title,
+.markdown-alert-tip .markdown-alert-title {
+  color: #1a7f37 !important;
+}
+
+:root[data-theme="light"] .markdown-alert-important,
+.markdown-alert-important {
+  background-color: #fbefff !important;
+  border-left-color: #8250df !important;
+}
+:root[data-theme="light"] .markdown-alert-important .markdown-alert-title,
+.markdown-alert-important .markdown-alert-title {
+  color: #8250df !important;
+}
+
+:root[data-theme="light"] .markdown-alert-warning,
+.markdown-alert-warning {
+  background-color: #fff8c5 !important;
+  border-left-color: #9a6700 !important;
+}
+:root[data-theme="light"] .markdown-alert-warning .markdown-alert-title,
+.markdown-alert-warning .markdown-alert-title {
+  color: #9a6700 !important;
+}
+
+:root[data-theme="light"] .markdown-alert-caution,
+.markdown-alert-caution {
+  background-color: #ffebe9 !important;
+  border-left-color: #cf222e !important;
+}
+:root[data-theme="light"] .markdown-alert-caution .markdown-alert-title,
+.markdown-alert-caution .markdown-alert-title {
+  color: #cf222e !important;
+}
+
+/* Tinted Alert Backgrounds in Dark Theme */
+:root[data-theme="dark"] .markdown-alert-note {
+  background-color: rgba(56, 139, 253, 0.12) !important;
+  border-left-color: #388bfd !important;
+}
+:root[data-theme="dark"] .markdown-alert-note .markdown-alert-title {
+  color: #58a6ff !important;
+}
+
+:root[data-theme="dark"] .markdown-alert-tip {
+  background-color: rgba(63, 185, 80, 0.12) !important;
+  border-left-color: #238636 !important;
+}
+:root[data-theme="dark"] .markdown-alert-tip .markdown-alert-title {
+  color: #3fb950 !important;
+}
+
+:root[data-theme="dark"] .markdown-alert-important {
+  background-color: rgba(163, 113, 247, 0.12) !important;
+  border-left-color: #8957e5 !important;
+}
+:root[data-theme="dark"] .markdown-alert-important .markdown-alert-title {
+  color: #a371f7 !important;
+}
+
+:root[data-theme="dark"] .markdown-alert-warning {
+  background-color: rgba(210, 153, 34, 0.15) !important;
+  border-left-color: #9e6a03 !important;
+}
+:root[data-theme="dark"] .markdown-alert-warning .markdown-alert-title {
+  color: #d29922 !important;
+}
+
+:root[data-theme="dark"] .markdown-alert-caution {
+  background-color: rgba(248, 81, 73, 0.15) !important;
+  border-left-color: #da3633 !important;
+}
+:root[data-theme="dark"] .markdown-alert-caution .markdown-alert-title {
+  color: #f85149 !important;
 }
 
 /* --------------------------------------------------------------------------
-   4. Docsify Sidebar
+   5. Docsify Sidebar
    -------------------------------------------------------------------------- */
 .sidebar {
   background-color: var(--shell-sidebar-bg) !important;
@@ -207,7 +440,7 @@ body, html {
 }
 
 /* --------------------------------------------------------------------------
-   5. Search Plugin
+   6. Search Plugin
    -------------------------------------------------------------------------- */
 .search {
   border-bottom: 1px solid var(--shell-border) !important;
@@ -263,7 +496,7 @@ body, html {
 }
 
 /* --------------------------------------------------------------------------
-   6. Copy Code Button
+   7. Copy Code Button
    -------------------------------------------------------------------------- */
 .docsify-copy-code-button {
   background-color: var(--shell-card-bg) !important;
@@ -280,7 +513,7 @@ body, html {
 }
 
 /* --------------------------------------------------------------------------
-   7. Mermaid Diagram Card Container
+   8. Mermaid Diagram Card Container
    -------------------------------------------------------------------------- */
 .mermaid {
   background-color: var(--shell-card-bg) !important;
@@ -293,7 +526,7 @@ body, html {
 }
 
 /* --------------------------------------------------------------------------
-   8. Floating Theme Toggle Pill (Modern blurred glass style)
+   9. Floating Theme Toggle Pill (Modern blurred glass style)
    -------------------------------------------------------------------------- */
 .theme-toggle-btn {
   position: fixed;
@@ -322,4 +555,3 @@ body, html {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.3);
 }
-
