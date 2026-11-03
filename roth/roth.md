@@ -153,9 +153,9 @@ To demystify these mechanics, we must replace fuzzy narrative terms with three f
 
 1. **The Tiers (Storage Classification)**: In Section 1.3, we established that a Roth IRA does not blend money like a bucket, but stacks it into tagged layers. In statutory accounting, these layers become distinct ledger **Tiers**:
    - **`Tier 1: Regular Contribution Basis`**: Pure post-tax deposits made directly or rolled over from a Designated Roth 401(k).
-   - **`Tier 2: Converted Capital & Rollovers`**: Capital moved from other retirement accounts. Crucially, this tier splits into two fundamentally different sub-types:
-     - **`Subtype 2a (Taxable Conversion Principal)`**: Dollars that were taxed *by* the act of converting (such as converting pre-tax 401(k) balances or pre-tax Traditional IRAs).
-     - **`Subtype 2b (Non-Taxable Conversion Basis)`**: Dollars that were already taxed *before* converting (such as a clean **Backdoor Roth** or **Mega Backdoor Roth** after-tax basis).
+   - **`Tier 2: Converted Capital & Rollovers`**: Capital moved into the Roth container from other retirement accounts (Traditional IRAs, 401(k)s). Crucially, this tier splits into two fundamentally different sub-types based on tax provenance:
+     - **`Subtype 2a (Taxable Conversion Principal)`**: This is what retail personal finance commonly calls a **"Roth Conversion"**, **"Taxable Rollover"**, or **"Roth Conversion Ladder"**. These are pre-tax dollars (from a Traditional IRA or pre-tax 401(k)) that were taxed as ordinary income *by the act of converting*. Because this capital was newly exposed to tax, it arms an independent 5-year penalty recapture timer.
+     - **`Subtype 2b (Non-Taxable Conversion Basis)`**: Dollars that were already taxed *before* converting. This is the landing ground for a clean **Backdoor Roth** or a direct **Mega Backdoor Roth** rollover. Because you already paid taxes on this money, it has a 0-day penalty wait.
    - **`Tier 3: Accumulated Earnings`**: Dividends, interest, and capital growth generated inside the account.
 2. **The Queue (Withdrawal Ordering)**: When you withdraw money, you cannot choose which layer to tap. The tax code enforces a strict **Priority Queue**: `Tier 1` drains first, then `Tier 2` (FIFO by calendar year, with `2a` drained before `2b`), and `Tier 3` drains last.
 3. **The Timers (Recapture Clocks)**: Certain deposits arm statutory countdown timers. Specifically, each `Tier 2a` taxable conversion starts an independent 5-tax-year recapture clock that imposes a 10% penalty if touched prematurely.
