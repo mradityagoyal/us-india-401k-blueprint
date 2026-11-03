@@ -175,24 +175,7 @@ To bridge the gap between everyday financial advice and statutory reality, the t
 
 Every time capital enters the account—**the Write Path**—the specific statutory doorway stamps that dollar with an immutable tag determining **which Tier it lands in** and **whether a Timer is armed**.
 
-Before examining the step-by-step mechanics and edge cases of each adapter, we must examine the annual capacity ceilings set by the IRS that govern how much capital each pipeline can ingest.
-
----
-
-### 3.0 The Operating Parameters: 2026 Statutory Sandbox Rules
-
-The IRS indexes retirement contribution and addition limits annually for inflation. For tax year **2026** (IRS Revenue Procedure `2025-32` / Notice `2025-67`), the legal parameters governing each ingestion adapter are:
-
-| Parameter                                    | 2026 Statutory Limit                                                                                           | Governing Statute       | System Implication                                                                                                 |
-| :------------------------------------------- | :------------------------------------------------------------------------------------------------------------- | :---------------------- | :----------------------------------------------------------------------------------------------------------------- |
-| **IRA Base Contribution Limit**        | **$7,500** (`< age 50`)**$8,600** (`age 50+`)                                                  | `IRC § 219(b)(5)`    | Shared aggregate limit across all Traditional and Roth IRAs owned by the individual.                               |
-| **Direct Roth MAGI Phaseout (Single)** | **$153,000 – $168,000**                                                                                 | `IRC § 408A(c)(3)`   | Full direct eligibility below $153k; pro-rated reduction; $0 direct contribution capacity above $168k.             |
-| **Direct Roth MAGI Phaseout (MFJ)**    | **$242,000 – $252,000**                                                                                 | `IRC § 408A(c)(3)`   | Married Filing Jointly phaseout corridor; $0 direct capacity above $252k.                                          |
-| **Direct Roth MAGI Phaseout (MFS)**    | **$0 – $10,000**                                                                                        | `IRC § 408A(c)(3)`   | Married Filing Separately (if living together); effectively blocks the front door entirely.                        |
-| **401(k) Employee Elective Deferral**  | **$24,500** (`< age 50`)**$32,000** (`age 50–59` / `64+`)**$35,750** (`age 60–63`) | `IRC § 402(g)`       | Pre-tax and Designated Roth elective deferrals; shares the primary employee salary deferral limit.                 |
-| **401(k) Annual Additions Cap**        | **$72,000** (`< age 50`)                                                                               | `IRC § 415(c)(1)(A)` | Total defined contribution limit from all sources (employee deferrals + employer match + after-tax contributions). |
-
-With these parameters defined, we can trace how each adapter ingests capital, handles edge cases, and tags incoming dollars.
+Below, we trace the step-by-step mechanics, statutory parameters, and real-world failure modes of each of the four adapters.
 
 ---
 
@@ -202,7 +185,7 @@ The most straightforward way to fund a Roth IRA is an ordinary direct deposit fr
 
 #### Ingestion Mechanics
 
-If a taxpayer's Modified Adjusted Gross Income (MAGI) falls below the statutory phaseout threshold, they simply wire up to **$7,500** directly into their Roth IRA.
+For tax year 2026, the statutory limit for IRA contributions (`IRC § 219(b)(5)`) is **$7,500** ($8,600 for taxpayers aged 50 or older). If a taxpayer's Modified Adjusted Gross Income (MAGI) falls below the statutory phaseout threshold, they simply wire up to $7,500 directly from a checking account into their Roth IRA.
 
 ```
 [ Taxpayer Checking Account ] ──( Cash Deposit <= $7,500 )──> [ Roth IRA: Tier 1 Basis ]
@@ -219,7 +202,11 @@ Direct contributions write directly to **`Tier 1: Regular Contribution Basis`**.
 #### Structural Bottlenecks & Edge Cases
 
 1. **The Shared IRA Cap (`IRC § 219(b)(5)`)**: The $7,500 ceiling applies across *all* IRAs. If an engineer contributes $3,000 to a Traditional IRA, their remaining direct Roth IRA capacity for that calendar year is strictly $4,500.
-2. **The High-Earner Lockout**: Because base salary, annual bonuses, and RSU vesting routinely push tech professionals well past the MAGI phaseout ceiling ($168k Single / $252k MFJ), this front door is completely closed to senior engineers.
+2. **The High-Earner Lockout (`IRC § 408A(c)(3)`)**: Direct eligibility phases out aggressively based on tax filing status (`Rev. Proc. 2025-32`):
+   - **Single Filers**: Phaseout corridor between **$153,000 and $168,000** (pro-rated reduction within the band; $0 direct capacity above $168,000).
+   - **Married Filing Jointly (MFJ)**: Phaseout corridor between **$242,000 and $252,000** ($0 direct capacity above $252,000).
+   - **Married Filing Separately (MFS)**: Phaseout corridor between **$0 and $10,000** (effectively locking out married individuals filing separately who live together).
+   Because base salary, annual bonuses, and RSU vesting routinely push tech professionals well past these thresholds, this front door is completely closed to senior engineers.
 3. **Excess Contribution Traps (`IRC § 4973`)**: If a taxpayer contributes $7,500 in January assuming their income will remain below the phaseout, but a mid-year promotion, signing bonus, or stock spike pushes their MAGI above the ceiling, that contribution becomes an **excess contribution**:
    - Leaving an excess contribution in the account triggers a **6% excise tax every single year** it remains uncorrected.
    - *Remediation Route A (Return of Excess)*: Under `IRC § 408(d)(4)`, the taxpayer must withdraw the excess contribution plus the **Net Income Attributable (NIA)** earned by that money before the tax filing deadline (including extensions). The earnings are taxed as ordinary income in the year contributed.
@@ -324,8 +311,8 @@ While the Backdoor Roth provides a valuable $7,500 annual ingestion pipeline, th
 
 Retirement plans feature two independent statutory caps:
 
-1. **The Elective Deferral Limit (`IRC § 402(g)`)**: Caps employee salary deferrals (Pre-Tax or Designated Roth 401k) at **$24,500** (for 2026).
-2. **The Defined Contribution Annual Additions Cap (`IRC § 415(c)(1)(A)`)**: Caps the *total combined contributions* from all sources into a workplace plan at **$72,000** (for 2026) or 100% of compensation.
+1. **The Elective Deferral Limit (`IRC § 402(g)`)**: Caps employee salary deferrals (Pre-Tax or Designated Roth 401k) at **$24,500** for 2026 ($32,000 for age 50–59 / 64+, or $35,750 for age 60–63 under SECURE 2.0 catch-up rules).
+2. **The Defined Contribution Annual Additions Cap (`IRC § 415(c)(1)(A)`)**: Caps the *total combined contributions* from all sources into a workplace plan (employee deferrals + employer match + after-tax contributions) at **$72,000** for 2026 (or 100% of compensation).
 
 The spread between what you and your employer contribute and the $72,000 ceiling represents your **After-Tax 401(k) capacity**:
 

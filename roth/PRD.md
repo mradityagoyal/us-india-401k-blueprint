@@ -94,14 +94,13 @@ flowchart TB
   - Central thesis and mapping table from financial concepts to systems specification equivalents.
 
 ### Section 3: The Source Ingestion Adapters (Write Path — How Capital Enters the System)
-- **3.0 The 2026 Statutory Execution Sandbox (`Rev. Proc. 2025-32`)**:
-  - Isolated configuration block of inflation-indexed constants used by the ingestion pipelines:
-    - IRA Contribution Limit (`IRC § 219(b)(5)`): `$7,500` (`< age 50`) / `$8,600` (`age 50+`), shared across Traditional and Roth IRAs.
-    - Roth IRA Direct MAGI Phaseout Ranges (`IRC § 408A(c)(3)`): Single `$153,000 – $168,000` | MFJ `$242,000 – $252,000` | MFS `$0 – $10,000`.
-    - Employee 401(k) Elective Deferral Limit (`IRC § 402(g)`): `$24,500`.
-    - Defined Contribution Annual Additions Cap (`IRC § 415(c)`): `$72,000`.
+- **3.0 Mental Model Bridge & Common Parlance Mapping**:
+  - Bridging from English prose to formal systems primitives: **Tiers** (storage classification), **The Queue** (withdrawal ordering), and **Timers** (recapture clocks).
+  - Highlighting the critical fork in Layer 2: `Tier 2a` (taxable conversion principal) vs. `Tier 2b` (non-taxable conversion basis).
+  - Common Parlance to Systems Model Table (mapping "Direct", "Backdoor", "Mega Backdoor 3A/3B", "Pre-Tax Conversions", and "Earnings" to their formal tiers and Day-1 liquidity rights).
+  - Seamlessly integrating 2026 statutory execution parameters (`Rev. Proc. 2025-32`) contextually inside each adapter.
 - **3.1 Adapter 1: Direct Contribution (`IRC § 408A(c)`) $\rightarrow$ Writes to `Tier 1`**:
-  - MAGI phaseout curve, shared Traditional/Roth IRA limit, and excess contribution remediation (`IRC § 408(d)(4)` return of excess contribution vs. recharacterization).
+  - 2026 limits ($7,500 base, $8,600 age 50+), MAGI phaseout curve ($153k–$168k Single, $242k–$252k MFJ, $0–$10k MFS), shared Traditional/Roth IRA limit, and excess contribution remediation (`IRC § 408(d)(4)` return of excess contribution vs. recharacterization).
 - **3.2 Adapter 2: The Backdoor Roth Proxy (`Traditional IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2b` (and `2a`)**:
   - Two-phase mechanics: non-deductible Traditional IRA contribution (`Form 8606` Part I) followed by Roth conversion (`Form 8606` Part II).
   - **Congressional Blessing & Debunking the "30-Day Wait" Myth**: Citing the **2017 TCJA Conference Report (H.R. Rep. No. 115-466, Footnote 268)** to show why the Step Transaction Doctrine does not invalidate immediate conversions, and why waiting 30 days merely generates nuisance taxable `Tier 2a` interest.
