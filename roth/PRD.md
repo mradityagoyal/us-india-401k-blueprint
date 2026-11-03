@@ -4,10 +4,10 @@
 | :--- | :--- |
 | **Project / Series** | US Retirement Systems Engineering Blueprint (Document 1 of 2) |
 | **Working Title** | *The Roth IRA Accounting Engine: A Systems Specification for Direct, Backdoor, and Mega Backdoor Mechanics* |
-| **Target File** | `roth/ROTH_ACCOUNTING_ENGINE.md` |
+| **Target File** | `roth/roth.md` |
 | **Scope** | 100% Pure US Statutory & Regulatory Mechanics (`IRC § 408A`, `§ 408(d)(2)`, `§ 402A`, `§ 415(c)`, `§ 72(t)`) |
 | **Target Audience** | All software engineers in the US (H-1B, L-1, Green Card, US Citizens) + CPAs/Financial Systems Architects |
-| **Status** | `LOCKED — Ready for Step-by-Step Authoring` |
+| **Status** | `LOCKED — In Progress (Sections 1 & 2 Completed)` |
 
 ---
 
@@ -24,10 +24,10 @@ Conventional personal finance literature, brokerage guides, and CPA blog posts e
 > *"A Roth IRA is not simply a tax-free investment account. It is a taxpayer-level, tax-provenance-aware accounting system in which a three-tier priority queue and three independent statutory timers govern the tax and penalty treatment of every dollar."*
 
 ### 1.3 Design Guardrails (Synthesized from Gemini + ChatGPT Reviews)
-- **Domain Model Over Gimmicks**: Avoid forced REST/HTTP status code metaphors (`403 Forbidden`, `409 Conflict`, "garbage collection", "LIFO stack"). Instead, model the actual statutory machinery: a **Taxpayer-Level Accounting Ledger**, **Source Ingestion Adapters**, a **3-Tier Priority Queue (with FIFO conversion tranches)**, and **Independent Evaluation Engines**.
+- **Domain Model Over Gimmicks**: Avoid forced REST/HTTP status code metaphors (`403 Forbidden`, `409 Conflict`, "garbage collection", "LIFO stack"). Instead, model the actual statutory machinery: **Source Ingestion Adapters**, a **Taxpayer-Level Accounting Ledger**, a **3-Tier Priority Queue (with FIFO conversion tranches)**, and **Independent Evaluation Engines**.
 - **TypeScript-First Formal Specification (With Interactive Web Vision)**: Express all state schemas (`RothTaxpayerLedger`, `ConversionTranche`, `InPlanRecaptureClock`) and evaluation logic (`dequeueWithdrawal`, `calculateTaxableIncome`, `calculateAdditional10PctTax`) in clean, self-documenting TypeScript, paired with visual ASCII/Markdown ledger state snapshots. This exact TypeScript engine will later power an interactive browser simulator in Docsify (`index.html`).
 - **Explicit Separation of Statutory Truth vs. Conceptual Model vs. Tax Forms**: Clearly distinguish between the IRS statutory rules (`IRC` / `Treas. Reg.`), the conceptual software state model (`RothTaxpayerLedger`), and the paper reporting interface (`Form 8606`, `Form 1099-R`, `Form 5329`).
-- **Lifecycle Narrative Ordering (`Schema ➔ Write/Ingest ➔ Read/Dequeue & Clocks ➔ Traces`)**: Introduce the 3-Tier Ledger schema first, then explain how capital is *written* into the ledger via the 4 Ingestion Adapters (with the 2026 statutory limits embedded right where contribution rules are discussed), and only then explain how capital is *dequeued and evaluated* against the 3 five-year clocks.
+- **Concrete-First Narrative Ordering (`Write/Ingest ➔ Formal Domain Model & Interactive GUI ➔ Read/Dequeue & Clocks ➔ Traces`)**: First explain how capital enters the system via the 4 Ingestion Adapters (showing organically why different pipelines tag dollars differently), and *then* introduce the formal TypeScript Domain Model (`RothTaxpayerLedger`) and Interactive GUI Simulator to reason about the resulting state, followed by the Egress Ordering & Timer Engines.
 - **Complete Independence of Document 1**: Keep Document 1 strictly scoped to US federal tax law. Cross-border residency transitions (`RNOR`, `ROR`, DTAA, Indian LTCG parity, and expatriation/exit strategies) belong exclusively in Document 2, which will import Document 1's verified state model.
 
 ---
@@ -73,64 +73,42 @@ flowchart TB
 
 ---
 
-## 3. Document Structure & Outline (`roth/ROTH_ACCOUNTING_ENGINE.md`)
+## 3. Document Structure & Outline (`roth/roth.md`)
 
-### Section 1: Executive Overview & Background — What is a Roth IRA and Why Care?
-- **1.1 The Core Value Proposition**:
-  - The fundamental tax contract of a Roth vehicle: **tax-paid capital entering $\rightarrow$ permanently tax-free compounding $\rightarrow$ tax-free distributions**.
-  - Comparing the three foundational investment wrappers:
-    - *Taxable Brokerage*: Funded with post-tax dollars; suffers ongoing annual tax drag on dividends, interest, and portfolio rebalancing; taxed at capital gains rates on exit.
-    - *Traditional (Pre-Tax) 401(k) / IRA*: Funded with pre-tax dollars; avoids upfront tax; grows tax-deferred; 100% of distributions taxed as ordinary income at withdrawal.
-    - *Roth IRA*: Funded with post-tax dollars; immune to dividend tax drag and internal capital gains realizations; distributions of both basis and qualified earnings are **100% federal income tax-free**.
-- **1.2 Why High-Income Engineers Care**:
-  - Eliminating multi-decade dividend and rebalancing drag in high-tax jurisdictions (e.g., CA/NY where combined marginal rates reach 40%–50%+).
-  - The unique liquidity feature: Unlike traditional retirement accounts where any early withdrawal triggers ordinary income tax plus a 10% penalty, a Roth IRA allows **return of original contribution and non-taxable conversion basis at any time, for any reason, with \$0 tax and \$0 penalty**.
-- **1.3 The High-Earner Irony**:
-  - Congress designed direct Roth contributions with strict income phaseouts (Modified Adjusted Gross Income / MAGI limits).
-  - Most software engineers exceed these phaseouts early in their careers, creating the perceived barrier: *"I earn too much to have a Roth IRA."*
-  - The reality: The statutory code provides explicit ingestion pipelines—the **Backdoor Roth** and **Mega Backdoor Roth**—that legally route tens of thousands of dollars into the Roth container annually regardless of income.
+### Section 1: Background & Motivation — The Roth Container (`IRC § 408A`) *(Completed)*
+- **1.1 The Core Tax Contract: Post-Tax In, Tax-Free Growth Out**:
+  - Comparing post-tax dollars in a standard taxable brokerage vs. a Roth container across dividend drag, short/long-term capital gains rebalancing friction, and federal/state tax immunity.
+- **1.2 The Liquidity Asymmetry: Contribution Basis Is Liquid on Day 1**:
+  - Why original contribution basis can be withdrawn at any age, for any reason, with `$0` tax and `$0` penalty.
+- **1.3 The "Tagged Layers" Mental Model: Why Money Doesn't Blend**:
+  - Contrasting a fungible "bucket of water" brokerage account against the 3 tagged layers of a Roth IRA (Contributions, Conversions, Earnings).
+- **1.4 The High-Earner Paradox: The Front Door vs. The Backdoor**:
+  - The 2026 direct contribution income phaseouts vs. the uncapped Backdoor (`$7,500/yr`) and Mega Backdoor (`~$35k–$45k+/yr`) pipelines.
 
-### Section 2: The Mental Model Shift — Why Prose Fails & Why a Systems Spec is Needed
+### Section 2: The Mental Model Shift — Why Prose Fails & Why a Systems Spec Is Needed *(Completed)*
 - **2.1 The Misinformation Fog**:
-  - Deconstructing the top four myths repeated across retail finance blogs, forums, and brokerage FAQs:
-    1. *"Backdoor and Mega Backdoor contributions are locked for 5 years."*
-    2. *"Holding a pre-tax Rollover IRA blocks me from doing a Mega Backdoor Roth."*
-    3. *"Every Roth transaction follows the same single 5-year clock."*
-    4. *"Opening multiple Roth IRAs at different brokerages lets me isolate taxable and non-taxable conversions."*
+  - Deconstructing the top four myths repeated across retail finance blogs, forums, and brokerage FAQs.
 - **2.2 Why Narrative Prose Fails**:
-  - In conversational English, rolling over a pre-tax 401(k), sweeping after-tax 401(k) funds, and converting a non-deductible Traditional IRA are all casually called a *"Roth conversion."*
-  - Prose hides **state**, **tax provenance**, and **chronological ordering guarantees**.
+  - How calling every entry a *"Roth conversion"* hides Tax Provenance, Global State Side Effects, and Deterministic Queue Ordering.
 - **2.3 The Systems Formulation**:
-  - Treating `IRC § 408A` as an aggregated, taxpayer-level accounting ledger where dollars retain their tax provenance upon ingestion and dequeue deterministically upon withdrawal.
+  - Central thesis and mapping table from financial concepts to systems specification equivalents.
 
-### Section 3: The Domain Model — Taxpayer-Level Ledger & TypeScript State Schema
-- **3.1 Taxpayer-Level Aggregation (`IRC § 408A(d)(4)(A)`)**:
-  - Why the IRS evaluates all Roth IRAs under an individual's SSN as one unified logical ledger rather than isolated brokerage accounts.
-- **3.2 Priority Queue vs. Pro-Rata Pools**:
-  - Contrasting the three retirement account architectures:
-    - `IRC § 408A` (Roth IRA) = Deterministic 3-Tier Priority Queue.
-    - `IRC § 408(d)(2)` (Traditional / Rollover / SEP / SIMPLE IRA) = Blended Pro-Rata Pool across all non-Roth IRAs.
-    - `IRC § 402A(d)(4)` (Designated Roth 401k) = Blended Pro-Rata Sub-Account within the employer plan.
-- **3.3 Formal TypeScript Data Structures (`RothTaxpayerLedger`, `ConversionTranche`, `InPlanRecaptureClock`)**:
-  - Defining the exact TypeScript interfaces that separate **ordering tier (`Tier 1`, `Tier 2 [2a/2b]`, `Tier 3`)** from **transactional provenance and timer overlays**.
-  - Illustrative ASCII/Markdown ledger state dump showing how the data structure maps to a taxpayer's balance sheet.
-
-### Section 4: The Source Ingestion Adapters (Write Path — How Capital Enters the Ledger)
-- **4.0 The 2026 Statutory Execution Sandbox (`Rev. Proc. 2025-32`)**:
+### Section 3: The Source Ingestion Adapters (Write Path — How Capital Enters the System)
+- **3.0 The 2026 Statutory Execution Sandbox (`Rev. Proc. 2025-32`)**:
   - Isolated configuration block of inflation-indexed constants used by the ingestion pipelines:
     - IRA Contribution Limit (`IRC § 219(b)(5)`): `$7,500` (`< age 50`) / `$8,600` (`age 50+`), shared across Traditional and Roth IRAs.
     - Roth IRA Direct MAGI Phaseout Ranges (`IRC § 408A(c)(3)`): Single `$153,000 – $168,000` | MFJ `$242,000 – $252,000` | MFS `$0 – $10,000`.
     - Employee 401(k) Elective Deferral Limit (`IRC § 402(g)`): `$24,500`.
     - Defined Contribution Annual Additions Cap (`IRC § 415(c)`): `$72,000`.
-- **4.1 Adapter 1: Direct Contribution (`IRC § 408A(c)`) $\rightarrow$ Writes to `Tier 1`**:
+- **3.1 Adapter 1: Direct Contribution (`IRC § 408A(c)`) $\rightarrow$ Writes to `Tier 1`**:
   - MAGI phaseout curve, shared Traditional/Roth IRA limit, and excess contribution remediation (`IRC § 408(d)(4)` return of excess contribution vs. recharacterization).
-- **4.2 Adapter 2: The Backdoor Roth Proxy (`Traditional IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2b` (and `2a`)**:
+- **3.2 Adapter 2: The Backdoor Roth Proxy (`Traditional IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2b` (and `2a`)**:
   - Two-phase mechanics: non-deductible Traditional IRA contribution (`Form 8606` Part I) followed by Roth conversion (`Form 8606` Part II).
   - **Congressional Blessing & Debunking the "30-Day Wait" Myth**: Citing the **2017 TCJA Conference Report (H.R. Rep. No. 115-466, Footnote 268)** to show why the Step Transaction Doctrine does not invalidate immediate conversions, and why waiting 30 days merely generates nuisance taxable `Tier 2a` interest.
   - **The December 31 Pro-Rata Reconciliation (`IRC § 408(d)(2)`)**: How all Traditional, Rollover, SEP, and SIMPLE IRAs are aggregated on Dec 31 to compute the non-taxable ratio.
   - **The Mid-Year Job-Hop Bug (Retroactive Pro-Rata Pollution)**: Why rolling a pre-tax 401(k) into a Rollover IRA in October retroactively corrupts a clean Backdoor Roth executed in January of the same calendar year.
   - **Reverse Rollover Cleanup (`IRC § 408(d)(3)(A)(ii)`)**: Rolling pre-tax IRA dollars into an active employer 401(k) before Dec 31 to restore a `$0` year-end IRA balance (subject to employer plan acceptance of incoming rollovers).
-- **4.3 Adapter 3: The Mega Backdoor Pipeline (`After-Tax 401(k)` via `IRC § 415(c)`)**:
+- **3.3 Adapter 3: The Mega Backdoor Pipeline (`After-Tax 401(k)` via `IRC § 415(c)`)**:
   - **Dynamic Capacity Formula**: $\text{Capacity} = \min(100\% \text{ Compensation}, \$72,000) - \text{Elective Deferrals} - \text{Employer Match/Nonelective} - \text{Other Annual Additions}$ (subject to plan caps and ACP non-discrimination testing).
   - **Why `IRC § 408(d)(2)` IRA Pro-Rata Does Not Apply**: Complete namespace isolation between `IRC § 401(a)` workplace plans and `IRC § 408` IRAs.
   - **Sub-Account Pro-Rata & `IRS Notice 2014-54` Packet Splitting**: Clarifying that while a partial distribution from an After-Tax 401(k) sub-account pulls a proportionate slice of that sub-account's basis and pre-tax growth, `Notice 2014-54` allows allocating the pre-tax growth to a Traditional IRA and 100% of the after-tax basis to a Roth IRA (`Tier 2b`).
@@ -139,8 +117,22 @@ flowchart TB
       - Path 3A writes after-tax basis into **`Tier 2b` (Non-Taxable Conversion Tranche)**—sitting *behind* any older `Tier 2a` taxable conversions.
       - Path 3B (when rolling a *non-qualified* Designated Roth 401(k) into a Roth IRA under Q&A-3(b)) maps the basis ("investment in the contract") into **`Tier 1` (Regular Contributions)**—jumping *ahead* of all `Tier 2` conversions—and maps the 401(k) growth into **`Tier 3` (Earnings)**.
       - **The Qualified 401(k) Rollover Bonus (`Treas. Reg. § 1.408A-10` Q&A-3(a))**: If the Designated Roth 401(k) distribution is already *qualified* (`Age >= 59½` + 5 years in the 401k) at the time of rollover, **100% of the rollover (both basis AND all 401k earnings)** enters the Roth IRA as **`Tier 1` (Regular Contribution Basis)**!
-- **4.4 Adapter 4: Pre-Tax Conversion / Rollover (`Traditional 401(k) / IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2a`**:
+- **3.4 Adapter 4: Pre-Tax Conversion / Rollover (`Traditional 401(k) / IRA ➔ Roth IRA`) $\rightarrow$ Writes to `Tier 2a`**:
   - Populating `Tier 2a` and initializing its per-tranche 5-year conversion recapture clock (`Clock A`).
+
+### Section 4: The Formal Domain Model & Interactive Ledger (`RothTaxpayerLedger`)
+- **4.1 Why Multi-Pipeline Ingestion Requires a Formal State Model**:
+  - Synthesizing how the 4 ingestion adapters populate distinct buckets (`Tier 1`, `Tier 2a`, `Tier 2b`, `Tier 3`) with different timestamps and recapture clocks.
+- **4.2 Taxpayer-Level Aggregation (`IRC § 408A(d)(4)(A)`)**:
+  - Why the IRS evaluates all Roth IRAs under an individual's SSN as one unified logical ledger rather than isolated brokerage accounts.
+- **4.3 Priority Queue vs. Pro-Rata Pools**:
+  - Contrasting the three retirement account architectures:
+    - `IRC § 408A` (Roth IRA) = Deterministic 3-Tier Priority Queue.
+    - `IRC § 408(d)(2)` (Traditional / Rollover / SEP / SIMPLE IRA) = Blended Pro-Rata Pool across all non-Roth IRAs.
+    - `IRC § 402A(d)(4)` (Designated Roth 401k) = Blended Pro-Rata Sub-Account within the employer plan.
+- **4.4 Formal TypeScript Data Structures (`RothTaxpayerLedger`, `ConversionTranche`, `InPlanRecaptureClock`) & Interactive GUI Simulator**:
+  - Defining the exact TypeScript interfaces that separate **ordering tier (`Tier 1`, `Tier 2 [2a/2b]`, `Tier 3`)** from **transactional provenance and timer overlays**.
+  - Illustrative ASCII/Markdown ledger state dump + interactive simulator hook where readers can plug in their own contributions, conversions, and rollovers.
 
 ### Section 5: The Egress & Ordering Engine (Read Path — How Capital Leaves the Ledger)
 - **5.1 The 3-Tier Deterministic Dequeue Algorithm (`IRC § 408A(d)(4)(B)` & `Treas. Reg. § 1.408A-6` Q&A-8)**:
@@ -189,16 +181,18 @@ Six concrete, step-by-step traces showing before/after ledger state tables, Type
 ## 4. Implementation Checklist (Step-by-Step TODO)
 
 - [x] **Step 1: Align on Clarifying Questions, Refine Architecture, & Lock PRD** *(Completed)*
-  - Locked `Schema ➔ Write (Ingest) ➔ Read (Dequeue & Clocks) ➔ Traces` flow, TypeScript-first domain model, Trace 6 `Treas. Reg. § 1.408A-10` Q&A-3(a)/(b) & Q&A-4 precision, and Backdoor edge cases (retroactive Oct Rollover IRA bug + TCJA Footnote 268).
-- [ ] **Step 2: Author Sections 1, 2, & 3 in `roth/ROTH_ACCOUNTING_ENGINE.md`**
-  - Metadata block, legal disclaimer, Section 1 (Background & Why Care), Section 2 (The 4 Myths & Why Prose Fails), and Section 3 (Domain Model, Priority Queue vs. Pro-Rata Pools, and TypeScript `RothTaxpayerLedger` schema + ASCII state diagram).
-- [ ] **Step 3: Author Section 4 (The Four Source Ingestion Adapters & 2026 Sandbox)**
+  - Locked `Write (Ingest) ➔ Formal Domain Model & Interactive Ledger ➔ Read (Dequeue & Clocks) ➔ Traces` flow, TypeScript-first domain model, Trace 6 `Treas. Reg. § 1.408A-10` Q&A-3(a)/(b) & Q&A-4 precision, and Backdoor edge cases (retroactive Oct Rollover IRA bug + TCJA Footnote 268).
+- [x] **Step 2: Author Sections 1 & 2 in `roth/roth.md`** *(Completed)*
+  - Metadata block, legal disclaimer, Section 1 (Background, Core Tax Contract, Liquidity Asymmetry, Tagged Layers Mental Model, and High-Earner Paradox), and Section 2 (The 4 Myths, Why Prose Fails, and The Systems Formulation).
+- [x] **Step 3: Author Section 3 (The Four Source Ingestion Adapters & 2026 Sandbox)** *(Completed)*
   - 2026 `Rev. Proc. 2025-32` configuration constants, Adapter 1 (Direct), Adapter 2 (Backdoor Proxy, TCJA Footnote 268, Dec 31 Pro-Rata math, Mid-Year Job-Hop bug, Reverse Rollover fix), Adapter 3 (Mega Backdoor dynamic `§ 415(c)` formula, `Notice 2014-54`, Path 3A vs. Path 3B queue-jump under `§ 1.408A-10` Q&A-3(a)/(b)), and Adapter 4 (Pre-Tax Conversions).
-- [ ] **Step 4: Author Sections 5 & 6 (The Egress Ordering Engine & The 3-Clock Timer Engine)**
+- [ ] **Step 4: Author Section 4 (The Formal Domain Model & Interactive Ledger)**
+  - Taxpayer-level aggregation (`IRC § 408A(d)(4)(A)`), Priority Queue vs. Pro-Rata Pools, TypeScript `RothTaxpayerLedger` schema, ASCII state diagram, and interactive simulator hook.
+- [ ] **Step 5: Author Sections 5 & 6 (The Egress Ordering Engine & The 3-Clock Timer Engine)**
   - Deterministic 3-Tier Dequeue algorithm, $2 \times 2$ Taxability vs. Penalty matrix, TypeScript evaluation functions (`dequeueWithdrawal`, `calculateTaxableIncome`, `calculateAdditional10PctTax`), and deep-dive into Clocks A, B, and C.
-- [ ] **Step 5: Author Section 7 (The 6 Executable State Traces & Unit Test Suite)**
+- [ ] **Step 6: Author Section 7 (The 6 Executable State Traces & Unit Test Suite)**
   - Write Traces 1–6 (`GIVEN / WHEN / THEN`) with TypeScript state objects, before/after ledger tables, and exact tax/penalty calculations.
-- [ ] **Step 6: Author Sections 8 & 9 (Compliance Telemetry, IRS Forms, & Part 2 Preview)**
+- [ ] **Step 7: Author Sections 8 & 9 (Compliance Telemetry, IRS Forms, & Part 2 Preview)**
   - Custodian `Form 1099-R` codes vs. `Form 8606` Parts I–III vs. `Form 1040` Lines 5a/5b vs. `Form 5329`, plus Summary and Part 2 cross-border preview.
-- [ ] **Step 7: Verification & Quality Audit**
+- [ ] **Step 8: Verification & Quality Audit**
   - Verify all arithmetic across Traces 1–6, check TypeScript syntax and statutory citations, and mark all tasks complete in `roth/PRD.md`.
