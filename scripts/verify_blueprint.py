@@ -153,10 +153,9 @@ def test_web_and_theme_support():
     html = load_file("index.html")
 
     required_snippets = [
-        ("FOUC prevention theme detection script", "localStorage.getItem('blueprint-theme')"),
+        ("GitHub Markdown CSS stylesheet", "github-markdown-css"),
         ("prefers-color-scheme media query", "@media (prefers-color-scheme: dark)"),
-        ("Explicit dark mode data-theme CSS", ':root[data-theme="dark"]'),
-        ("Floating theme toggle button", 'id="theme-toggle-btn"'),
+        ("Markdown body container integration", "markdown-body"),
         ("Mermaid dynamic dark theme support", "theme: isDarkEffective() ? 'dark' : 'default'"),
         ("Noscript accessibility fallback", "<noscript>")
     ]

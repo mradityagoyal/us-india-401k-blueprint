@@ -1,41 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description"
-    content="Technical Design Document & Architectural Blueprint for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and cross-border estate planning for returning Indian software engineers.">
+  <meta name="description" content="Technical Design Document & Architectural Blueprint for US 401(k) to Roth IRA conversion, RNOR tax arbitrage, and cross-border estate planning for returning Indian software engineers.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <script>
-    // Immediate Theme Detection (Prevents FOUC / White Flash on Dark Mode Devices)
-    (function () {
-      try {
-        var saved = localStorage.getItem('blueprint-theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = (saved === 'dark' || (!saved && prefersDark)) ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-      } catch (e) { }
-    })();
-  </script>
 
   <!-- Docsify Core Theme -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/vue.css">
-  <!-- Standard Open-Source GitHub Markdown Stylesheet (VS Code / GitHub Dark & Light) -->
+  <!-- Standard Open-Source GitHub Markdown Stylesheet (Auto Dark/Light via prefers-color-scheme) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown.min.css">
-  <!-- Blueprint Shell & Navigation Layout -->
-  <link rel="stylesheet" href="style.css">
 
   <style>
-    /* System & Explicit Theme Color-Scheme Signals */
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        color-scheme: dark;
+    /* Default GitHub Markdown Layout */
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    @media (max-width: 767px) {
+      .markdown-body {
+        padding: 16px;
       }
     }
-    :root[data-theme="dark"] {
-      color-scheme: dark;
+
+    /* GitHub Dark Theme Alignment for Docsify Sidebar & Shell */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0d1117;
+      }
+      .sidebar {
+        background-color: #0d1117 !important;
+        border-right-color: #30363d !important;
+        color: #c9d1d9 !important;
+      }
+      .sidebar > h1 a {
+        color: #f0f6fc !important;
+      }
+      .sidebar ul li a {
+        color: #8b949e !important;
+      }
+      .sidebar ul li a:hover {
+        color: #58a6ff !important;
+      }
+      .sidebar ul li.active > a {
+        color: #58a6ff !important;
+        border-right-color: #58a6ff !important;
+      }
+      .sidebar-toggle {
+        background-color: rgba(13, 17, 23, 0.85) !important;
+      }
+      .sidebar-toggle span {
+        background-color: #8b949e !important;
+      }
+      .search {
+        border-bottom-color: #30363d !important;
+      }
+      .search input {
+        background-color: #161b22 !important;
+        border-color: #30363d !important;
+        color: #c9d1d9 !important;
+      }
+      .search .results-panel {
+        background-color: #0d1117 !important;
+      }
+      .search .matching-post {
+        border-bottom-color: #30363d !important;
+      }
+      .search .matching-post h2 a {
+        color: #58a6ff !important;
+      }
+      .search .matching-post p {
+        color: #8b949e !important;
+      }
+      .docsify-copy-code-button {
+        background-color: #161b22 !important;
+        border-color: #30363d !important;
+        color: #8b949e !important;
+      }
+      .mermaid {
+        background-color: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 20px 10px;
+      }
+    }
+
+    /* Light Theme Mermaid Container */
+    @media (prefers-color-scheme: light) {
+      .mermaid {
+        background-color: #f6f8fa;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 20px 10px;
+      }
     }
   </style>
 
@@ -43,7 +105,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWQ3VYSY41"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag(){dataLayer.push(arguments);}
 
     // Privacy-centric Consent Mode: denies analytics & ad storage to prevent any cookies from being set
     gtag('consent', 'default', {
@@ -64,211 +126,168 @@
     });
   </script>
 </head>
+<body>
+  <noscript>
+    <div style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222;">
+      <h1>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</h1>
+      <p>An open-source, adversarially audited technical architecture and execution blueprint for Indian software engineers returning from the United States (H-1B / L-1) to India.</p>
+      <p><em>This web portal dynamically renders Markdown documentation via Docsify. Because JavaScript is currently disabled or unavailable, you can read the complete documents directly via the links below:</em></p>
+      <ul>
+        <li>📖 <strong><a href="TECHNICAL_DESIGN_DOCUMENT.md">Full Technical Design Document (TECHNICAL_DESIGN_DOCUMENT.md)</a></strong></li>
+        <li>🏠 <strong><a href="README.md">Overview & Executive Summary (README.md)</a></strong></li>
+        <li>📁 <strong><a href="https://github.com/mradityagoyal/us-india-401k-blueprint">GitHub Source Repository</a></strong></li>
+      </ul>
+    </div>
+  </noscript>
 
+  <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
+  <script>
+    function isDarkEffective() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
 
-  <body class="markdown-body">
-    <noscript>
-      <div
-        style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222;">
-        <h1>US ➔ India 401(k) Tax Arbitrage & Retirement Blueprint</h1>
-        <p>An open-source, adversarially audited technical architecture and execution blueprint for Indian software
-          engineers returning from the United States (H-1B / L-1) to India.</p>
-        <p><em>This web portal dynamically renders Markdown documentation via Docsify. Because JavaScript is currently
-            disabled or unavailable, you can read the complete documents directly via the links below:</em></p>
-        <ul>
-          <li>📖 <strong><a href="TECHNICAL_DESIGN_DOCUMENT.md">Full Technical Design Document
-                (TECHNICAL_DESIGN_DOCUMENT.md)</a></strong></li>
-          <li>🏠 <strong><a href="README.md">Overview & Executive Summary (README.md)</a></strong></li>
-          <li>📁 <strong><a href="https://github.com/mradityagoyal/us-india-401k-blueprint">GitHub Source
-                Repository</a></strong></li>
-        </ul>
-      </div>
-    </noscript>
-
-    <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">🌓
-      Theme</button>
-    <div id="app">Loading US ➔ India 401(k) Blueprint...</div>
-    <script>
-      function isDarkEffective() {
-        var attr = document.documentElement.getAttribute('data-theme');
-        if (attr === 'dark') return true;
-        if (attr === 'light') return false;
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-
-      function updateThemeToggleUI() {
-        var btn = document.getElementById('theme-toggle-btn');
-        if (!btn) return;
-        var dark = isDarkEffective();
-        btn.innerHTML = dark ? '☀️ Light' : '🌙 Dark';
-        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-      }
-
-      function toggleTheme() {
-        var currentDark = isDarkEffective();
-        var nextTheme = currentDark ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        localStorage.setItem('blueprint-theme', nextTheme);
-        updateThemeToggleUI();
-        // Reload to re-render Mermaid SVG palettes consistently
+    // Auto-listen to OS system color scheme changes for Mermaid re-render
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
         window.location.reload();
-      }
-
-      // Auto-update toggle UI when DOM is ready
-      document.addEventListener('DOMContentLoaded', updateThemeToggleUI);
-
-      // Listen to OS system color scheme changes if user hasn't explicitly set a local preference
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
-          if (!localStorage.getItem('blueprint-theme')) {
-            if (e.matches) {
-              document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-              document.documentElement.removeAttribute('data-theme');
-            }
-            updateThemeToggleUI();
-            window.location.reload();
-          }
-        });
-      }
-
-      // GitHub-Flavored Markdown Alerts Transformer (converts > [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION])
-      function renderGitHubAlerts() {
-        var alerts = {
-          note: {
-            label: 'Note',
-            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
-          },
-          tip: {
-            label: 'Tip',
-            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.628-.756-1.346-1.62-1.346-3.279C2.75 2.56 5.092 0 8 0s5.25 2.56 5.25 5.25c0 1.659-.718 2.523-1.346 3.279-.174.209-.348.423-.542.68-.207.3-.33.565-.37.847a.751.751 0 0 1-1.485-.211c.084-.594.337-1.079.621-1.49.204-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5Zm1 3h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1 0-1.5Z"></path></svg>'
-          },
-          important: {
-            label: 'Important',
-            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2.5a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
-          },
-          warning: {
-            label: 'Warning',
-            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
-          },
-          caution: {
-            label: 'Caution',
-            icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6c0 .199-.079.389-.22.53l-4.25 4.25a.749.749 0 0 1-.53.22H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
-          }
-        };
-
-        var bqs = document.querySelectorAll('.markdown-section blockquote');
-        bqs.forEach(function (bq) {
-          if (bq.classList.contains('markdown-alert')) return;
-          var p = bq.querySelector('p');
-          if (!p) return;
-          var match = p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>|\s*\n)?\s*/i);
-          if (match) {
-            var key = match[1].toLowerCase();
-            var alertConfig = alerts[key] || alerts.note;
-            bq.classList.add('markdown-alert', 'markdown-alert-' + key);
-            p.innerHTML = p.innerHTML.replace(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>|\s*\n)?\s*/i, '');
-            if (p.innerHTML.trim() === '') {
-              p.remove();
-            }
-            var titleElem = document.createElement('p');
-            titleElem.className = 'markdown-alert-title';
-            titleElem.innerHTML = alertConfig.icon + ' ' + alertConfig.label;
-            bq.insertBefore(titleElem, bq.firstChild);
-          }
-        });
-      }
-
-      window.$docsify = {
-        name: '401(k) Blueprint',
-        repo: 'https://github.com/mradityagoyal/us-india-401k-blueprint',
-        loadSidebar: true,
-        subMaxLevel: 3,
-        auto2top: true,
-        homepage: 'README.md',
-        search: {
-          maxAge: 86400000,
-          paths: 'auto',
-          placeholder: 'Search Blueprint...',
-          noData: 'No results found',
-          depth: 4
-        },
-        copyCode: {
-          buttonText: 'Copy',
-          errorText: 'Error',
-          successText: 'Copied'
-        },
-        plugins: [
-          function (hook) {
-            hook.doneEach(function () {
-              // Ensure Docsify content has github-markdown-css class
-              var article = document.querySelector('.markdown-section');
-              if (article && !article.classList.contains('markdown-body')) {
-                article.classList.add('markdown-body');
-              }
-
-              // Track pageviews on SPA route changes (e.g., #/ and #/TECHNICAL_DESIGN_DOCUMENT)
-              if (typeof gtag === 'function') {
-                gtag('event', 'page_view', {
-                  page_title: document.title,
-                  page_location: window.location.href,
-                  page_path: window.location.hash || '/'
-                });
-              }
-
-              renderGitHubAlerts();
-              updateThemeToggleUI();
-            });
-          }
-        ]
-      }
-    </script>
-    <!-- Pinned Docsify Core & Plugins -->
-    <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@3.0.2/dist/docsify-copy-code.min.js"></script>
-    <!-- Additional Prism Languages for Syntax Highlighting -->
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
-    <!-- Pinned Mermaid Diagrams Support -->
-    <script src="//cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
-    <script>
-      var isDarkMermaid = isDarkEffective();
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: isDarkEffective() ? 'dark' : 'default',
-        themeVariables: isDarkMermaid ? {
-          darkMode: true,
-          background: '#161b22',
-          mainBkg: '#161b22',
-          primaryColor: '#161b22',
-          primaryTextColor: '#e6edf3',
-          primaryBorderColor: '#58a6ff',
-          lineColor: '#58a6ff',
-          secondaryColor: '#21262d',
-          tertiaryColor: '#161b22',
-          noteBkgColor: '#21262d',
-          noteTextColor: '#c9d1d9',
-          noteBorderColor: '#30363d',
-          actorBkg: '#161b22',
-          actorBorder: '#58a6ff',
-          actorTextColor: '#f0f6fc',
-          actorLineColor: '#30363d',
-          signalColor: '#79c0ff',
-          signalTextColor: '#f0f6fc',
-          labelBoxBkgColor: '#161b22',
-          labelBoxBorderColor: '#30363d',
-          labelTextColor: '#f0f6fc',
-          loopTextColor: '#c9d1d9',
-          activationBorderColor: '#58a6ff',
-          activationBkgColor: '#21262d',
-          sequenceNumberColor: '#0d1117'
-        } : {}
       });
-    </script>
-  </body>
+    }
 
+    // GitHub-Flavored Markdown Alerts Transformer (converts > [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION])
+    function renderGitHubAlerts() {
+      var alerts = {
+        note: {
+          label: 'Note',
+          icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
+        },
+        tip: {
+          label: 'Tip',
+          icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.628-.756-1.346-1.62-1.346-3.279C2.75 2.56 5.092 0 8 0s5.25 2.56 5.25 5.25c0 1.659-.718 2.523-1.346 3.279-.174.209-.348.423-.542.68-.207.3-.33.565-.37.847a.751.751 0 0 1-1.485-.211c.084-.594.337-1.079.621-1.49.204-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5Zm1 3h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1 0-1.5Z"></path></svg>'
+        },
+        important: {
+          label: 'Important',
+          icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2.5a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
+        },
+        warning: {
+          label: 'Warning',
+          icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>'
+        },
+        caution: {
+          label: 'Caution',
+          icon: '<svg class="octicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6c0 .199-.079.389-.22.53l-4.25 4.25a.749.749 0 0 1-.53.22H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>'
+        }
+      };
+
+      var bqs = document.querySelectorAll('.markdown-section blockquote');
+      bqs.forEach(function(bq) {
+        if (bq.classList.contains('markdown-alert')) return;
+        var p = bq.querySelector('p');
+        if (!p) return;
+        var match = p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>|\s*\n)?\s*/i);
+        if (match) {
+          var key = match[1].toLowerCase();
+          var alertConfig = alerts[key] || alerts.note;
+          bq.classList.add('markdown-alert', 'markdown-alert-' + key);
+          p.innerHTML = p.innerHTML.replace(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>|\s*\n)?\s*/i, '');
+          if (p.innerHTML.trim() === '') {
+            p.remove();
+          }
+          var titleElem = document.createElement('p');
+          titleElem.className = 'markdown-alert-title';
+          titleElem.innerHTML = alertConfig.icon + ' ' + alertConfig.label;
+          bq.insertBefore(titleElem, bq.firstChild);
+        }
+      });
+    }
+
+    window.$docsify = {
+      name: '401(k) Blueprint',
+      repo: 'https://github.com/mradityagoyal/us-india-401k-blueprint',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      homepage: 'README.md',
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Search Blueprint...',
+        noData: 'No results found',
+        depth: 4
+      },
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+      plugins: [
+        function(hook) {
+          hook.doneEach(function() {
+            // Apply standard github-markdown-css styling container
+            var article = document.querySelector('.markdown-section');
+            if (article && !article.classList.contains('markdown-body')) {
+              article.classList.add('markdown-body');
+            }
+
+            // Track pageviews on SPA route changes
+            if (typeof gtag === 'function') {
+              gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.hash || '/'
+              });
+            }
+
+            renderGitHubAlerts();
+          });
+        }
+      ]
+    }
+  </script>
+  <!-- Pinned Docsify Core & Plugins -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4.13.1/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@3.0.2/dist/docsify-copy-code.min.js"></script>
+  <!-- Additional Prism Languages for Code Highlighting -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+  <!-- Pinned Mermaid Diagrams Support -->
+  <script src="//cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
+  <script>
+    var isDark = isDarkEffective();
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDarkEffective() ? 'dark' : 'default',
+      themeVariables: isDark ? {
+        darkMode: true,
+        background: '#161b22',
+        mainBkg: '#161b22',
+        primaryColor: '#161b22',
+        primaryTextColor: '#e6edf3',
+        primaryBorderColor: '#58a6ff',
+        lineColor: '#58a6ff',
+        secondaryColor: '#21262d',
+        tertiaryColor: '#161b22',
+        noteBkgColor: '#21262d',
+        noteTextColor: '#c9d1d9',
+        noteBorderColor: '#30363d',
+        actorBkg: '#161b22',
+        actorBorder: '#58a6ff',
+        actorTextColor: '#f0f6fc',
+        actorLineColor: '#30363d',
+        signalColor: '#79c0ff',
+        signalTextColor: '#f0f6fc',
+        labelBoxBkgColor: '#161b22',
+        labelBoxBorderColor: '#30363d',
+        labelTextColor: '#f0f6fc',
+        loopTextColor: '#c9d1d9',
+        activationBorderColor: '#58a6ff',
+        activationBkgColor: '#21262d',
+        sequenceNumberColor: '#0d1117'
+      } : {}
+    });
+  </script>
+</body>
 </html>
