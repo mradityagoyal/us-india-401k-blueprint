@@ -327,24 +327,35 @@ $$
 
 of available after-tax contribution space.
 
-#### Why the IRA Pro-Rata Rule Does NOT Apply
+#### Namespace Isolation: Why Existing IRAs Cannot Pollute a Mega Backdoor
 
-The IRA Pro-Rata aggregation rule (`IRC § 408(d)(2)`) applies strictly to IRAs.
+After seeing how a pre-tax Rollover IRA can retroactively corrupt a standard Backdoor Roth (Adapter 2), engineers holding large traditional IRA balances often ask:
 
-Workplace qualified retirement plans governed by `IRC § 401(a)` operate in a **completely isolated statutory namespace**. Holding $500,000 in a Traditional Rollover IRA has **zero impact** on an After-Tax 401(k) contribution or conversion.
+> *"If I have a $500,000 Rollover IRA from a previous job, am I blocked from doing a Mega Backdoor Roth too?"*
 
-#### Sub-Account Pro-Rata & `IRS Notice 2014-54` Packet Splitting
+The answer is an emphatic **no**.
 
-Inside an employer 401(k), after-tax dollars are segregated into an **After-Tax sub-account**. If dollars sit in this sub-account before being converted, any dividends or capital gains generated are pre-tax growth.
+Under federal tax law, workplace retirement plans (`IRC § 401(a)`) and individual retirement accounts (`IRC § 408`) operate in **completely isolated statutory namespaces**:
+- The IRA Pro-Rata aggregation rule (`IRC § 408(d)(2)`) pools *only* non-Roth IRAs (Traditional, Rollover, SEP, and SIMPLE IRAs).
+- It has zero visibility into workplace 401(k) plans.
 
-Under `IRC § 72(e)(8)`, distributions from this sub-account carry a proportional mix of after-tax basis and pre-tax earnings. Historically, this caused tax friction.
+You could hold \$5,000,000 in a Rollover IRA, and your employer's after-tax 401(k) can still execute a \$40,000 Mega Backdoor conversion completely free from IRA pro-rata taxation.
 
-In 2014, the IRS resolved this through **IRS Notice 2014-54**, which established that when an employee takes a distribution from a plan containing both pre-tax and after-tax amounts, they can split the distribution simultaneously:
+#### Internal Sub-Account Pro-Rata & The "Accrued Earnings" Trap
 
-- **100% of After-Tax Basis** is routed directly to a Roth IRA (or Designated Roth 401k).
-- **100% of Pre-Tax Earnings** are routed directly to a Traditional IRA (or back into the pre-tax 401k).
+While your *external* IRAs cannot touch your 401(k), the 401(k) plan does enforce its own *internal* sub-account pro-rata rule.
 
-This eliminates tax friction: basis enters the Roth container cleanly, and earnings remain deferred in pre-tax storage.
+Inside your 401(k), after-tax contributions sit in a dedicated **After-Tax sub-account**. If dollars linger in this sub-account before being converted, any dividends or growth they generate are classified as pre-tax earnings. Under `IRC § 72(e)(8)`, you cannot withdraw *only* the after-tax basis—any partial distribution pulls a proportional slice of both basis and pre-tax growth.
+
+Under **IRS Notice 2014-54**, the IRS technically allows splitting the distribution: sending after-tax basis to a Roth IRA and pre-tax earnings to a Traditional IRA.
+
+> [!WARNING]
+> **The Pro-Rata Contagion Trap**: Never roll after-tax 401(k) earnings into a Traditional IRA. Doing so deposits pre-tax dollars into your IRA namespace, which immediately triggers the December 31 Pro-Rata rule and corrupts your annual **$7,500 Backdoor Roth**!
+
+#### Handling Accrued Earnings:
+
+1. **Automated Daily In-Plan Conversion (Recommended Best Practice)**: Most modern tech 401(k) plans (such as Fidelity NetBenefits and Vanguard) offer automated daily conversions. The moment your after-tax payroll deduction posts, the recordkeeper sweeps it into the Roth account that exact day, keeping accrued earnings at **$0.00**.
+2. **Convert Growth to Roth & Absorb the Minor Tax**: If your plan only supports manual conversions and you accrued \$50 of earnings, convert the entire balance (basis + earnings) into your Roth account. You pay ordinary income tax on that \$50 (which enters your ledger as a tiny `Tier 2a` tranche), but your Traditional IRA balance remains at **$0**, keeping your Backdoor Roth pipeline clean.
 
 #### The Two Routing Architectures: Path 3A vs. Path 3B
 
